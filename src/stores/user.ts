@@ -5,19 +5,19 @@ import type { UserInfo } from '@/types'
 export const useUserStore = defineStore('user', () => {
   const token = ref<string>(localStorage.getItem('token') || '')
   const userInfo = ref<UserInfo | null>(null)
-  
+
   // 设置token
   const setToken = (newToken: string) => {
     token.value = newToken
     localStorage.setItem('token', newToken)
   }
-  
+
   // 设置用户信息
   const setUserInfo = (info: UserInfo) => {
     userInfo.value = info
     localStorage.setItem('userInfo', JSON.stringify(info))
   }
-  
+
   // 登录
   const login = async (username: string, password: string) => {
     // 模拟登录API调用
@@ -42,7 +42,7 @@ export const useUserStore = defineStore('user', () => {
       }, 1000)
     })
   }
-  
+
   // 登出
   const logout = () => {
     token.value = ''
@@ -50,7 +50,7 @@ export const useUserStore = defineStore('user', () => {
     localStorage.removeItem('token')
     localStorage.removeItem('userInfo')
   }
-  
+
   // 初始化用户信息
   const initUserInfo = () => {
     const savedUserInfo = localStorage.getItem('userInfo')
@@ -62,10 +62,10 @@ export const useUserStore = defineStore('user', () => {
       }
     }
   }
-  
+
   // 初始化
   initUserInfo()
-  
+
   return {
     token,
     userInfo,

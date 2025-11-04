@@ -31,7 +31,7 @@ const goHome = () => {
 .not-found-content {
   text-align: center;
   color: #fff;
-  
+
   .error-code {
     font-size: 120px;
     font-weight: bold;
@@ -39,7 +39,7 @@ const goHome = () => {
     line-height: 1;
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
-  
+
   .error-message {
     font-size: 24px;
     margin: 20px 0 40px;

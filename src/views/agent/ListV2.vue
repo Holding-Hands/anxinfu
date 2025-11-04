@@ -7,7 +7,7 @@
           <el-button type="primary" :icon="Plus">新增代理</el-button>
         </div>
       </template>
-      
+
       <el-empty description="页面开发中..." />
     </el-card>
   </div>
@@ -23,7 +23,7 @@ import { Plus } from '@element-plus/icons-vue'
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     .card-title {
       font-size: 16px;
       font-weight: bold;

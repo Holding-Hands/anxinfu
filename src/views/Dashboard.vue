@@ -15,7 +15,7 @@
           </div>
         </el-card>
       </el-col>
-      
+
       <el-col :xs="24" :sm="12" :lg="6">
         <el-card class="stat-card">
           <div class="stat-item">
@@ -29,7 +29,7 @@
           </div>
         </el-card>
       </el-col>
-      
+
       <el-col :xs="24" :sm="12" :lg="6">
         <el-card class="stat-card">
           <div class="stat-item">
@@ -44,7 +44,7 @@
           </div>
         </el-card>
       </el-col>
-      
+
       <el-col :xs="24" :sm="12" :lg="6">
         <el-card class="stat-card">
           <div class="stat-item">
@@ -59,7 +59,7 @@
         </el-card>
       </el-col>
     </el-row>
-    
+
     <!-- 图表区域 -->
     <el-row :gutter="20" class="chart-row">
       <el-col :xs="24" :lg="16">
@@ -72,7 +72,7 @@
           <div ref="mainChartRef" class="chart" style="height: 400px"></div>
         </el-card>
       </el-col>
-      
+
       <el-col :xs="24" :lg="8">
         <el-card class="chart-card">
           <template #header>
@@ -84,7 +84,7 @@
         </el-card>
       </el-col>
     </el-row>
-    
+
     <!-- 快捷入口 -->
     <el-row :gutter="20">
       <el-col :span="24">
@@ -94,11 +94,11 @@
               <span class="card-title">快捷入口</span>
             </div>
           </template>
-          
+
           <div class="quick-entry-grid">
-            <div 
-              v-for="item in quickEntries" 
-              :key="item.path" 
+            <div
+              v-for="item in quickEntries"
+              :key="item.path"
               class="quick-entry-item"
               @click="handleQuickEntry(item.path)"
             >
@@ -168,9 +168,9 @@ const quickEntries = [
 // 初始化主图表
 const initMainChart = () => {
   if (!mainChartRef.value) return
-  
+
   mainChart = echarts.init(mainChartRef.value)
-  
+
   const option: EChartsOption = {
     tooltip: {
       trigger: 'axis',
@@ -236,16 +236,16 @@ const initMainChart = () => {
       }
     ]
   }
-  
+
   mainChart.setOption(option)
 }
 
 // 初始化饼图
 const initPieChart = () => {
   if (!pieChartRef.value) return
-  
+
   pieChart = echarts.init(pieChartRef.value)
-  
+
   const option: EChartsOption = {
     tooltip: {
       trigger: 'item',
@@ -282,23 +282,23 @@ const initPieChart = () => {
           show: false
         },
         data: [
-          { 
-            value: 1048, 
+          {
+            value: 1048,
             name: '已激活',
             itemStyle: { color: '#5470c6' }
           },
-          { 
-            value: 735, 
+          {
+            value: 735,
             name: '已绑定',
             itemStyle: { color: '#91cc75' }
           },
-          { 
-            value: 580, 
+          {
+            value: 580,
             name: '使用中',
             itemStyle: { color: '#fac858' }
           },
-          { 
-            value: 484, 
+          {
+            value: 484,
             name: '待审核',
             itemStyle: { color: '#ee6666' }
           }
@@ -306,7 +306,7 @@ const initPieChart = () => {
       }
     ]
   }
-  
+
   pieChart.setOption(option)
 }
 
@@ -346,12 +346,12 @@ onUnmounted(() => {
 .stat-card {
   transition: all 0.3s;
   cursor: pointer;
-  
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
-  
+
   :deep(.el-card__body) {
     padding: 20px;
   }
@@ -376,19 +376,19 @@ onUnmounted(() => {
 
 .stat-info {
   flex: 1;
-  
+
   .stat-label {
     font-size: 14px;
     color: #999;
     margin-bottom: 8px;
   }
-  
+
   .stat-value {
     font-size: 28px;
     font-weight: bold;
     color: #333;
   }
-  
+
   .stat-extra {
     font-size: 12px;
     color: #52c41a;
@@ -405,14 +405,14 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     .card-title {
       font-size: 16px;
       font-weight: bold;
       color: #333;
     }
   }
-  
+
   .chart {
     width: 100%;
   }
@@ -432,7 +432,7 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 20px;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 15px;
@@ -448,16 +448,16 @@ onUnmounted(() => {
   border-radius: 8px;
   transition: all 0.3s;
   cursor: pointer;
-  
+
   &:hover {
     background-color: #f5f5f5;
     transform: translateY(-5px);
-    
+
     .entry-icon {
       transform: scale(1.1);
     }
   }
-  
+
   .entry-icon {
     width: 56px;
     height: 56px;
@@ -468,7 +468,7 @@ onUnmounted(() => {
     color: #fff;
     transition: all 0.3s;
   }
-  
+
   .entry-title {
     font-size: 14px;
     color: #666;

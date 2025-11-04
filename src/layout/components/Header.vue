@@ -5,27 +5,27 @@
         <Fold v-if="!isCollapse" />
         <Expand v-else />
       </el-icon>
-      
+
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item v-if="currentRoute">{{ currentRoute }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    
+
     <div class="right-menu">
       <el-tooltip content="全屏" placement="bottom">
         <el-icon class="action-icon" @click="toggleFullscreen">
           <FullScreen />
         </el-icon>
       </el-tooltip>
-      
+
       <el-dropdown @command="handleCommand">
         <div class="user-info">
           <el-avatar :size="36" :src="userInfo?.avatar" />
           <span class="username">{{ userInfo?.nickname }}</span>
           <el-icon><CaretBottom /></el-icon>
         </div>
-        
+
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="profile">
@@ -133,12 +133,12 @@ const handleLogout = () => {
   display: flex;
   align-items: center;
   gap: 20px;
-  
+
   .menu-icon {
     font-size: 20px;
     cursor: pointer;
     transition: all 0.3s;
-    
+
     &:hover {
       color: #1890ff;
     }
@@ -149,17 +149,17 @@ const handleLogout = () => {
   display: flex;
   align-items: center;
   gap: 20px;
-  
+
   .action-icon {
     font-size: 20px;
     cursor: pointer;
     transition: all 0.3s;
-    
+
     &:hover {
       color: #1890ff;
     }
   }
-  
+
   .user-info {
     display: flex;
     align-items: center;
@@ -168,11 +168,11 @@ const handleLogout = () => {
     padding: 5px 10px;
     border-radius: 4px;
     transition: all 0.3s;
-    
+
     &:hover {
       background-color: #f5f5f5;
     }
-    
+
     .username {
       font-size: 14px;
       color: #333;

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { ElMessage } from 'element-plus'
 
@@ -236,7 +236,7 @@ const routes: RouteRecordRaw[] = [
 
 // 创建路由实例
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(), // 使用 Hash 模式以支持 GitHub Pages
   routes
 })
 
@@ -244,13 +244,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   const token = userStore.token
-  
+
   // 设置页面标题
   document.title = `${to.meta.title || '页面'} - 安心付后台管理系统`
-  
+
   // 白名单
   const whiteList = ['/login']
-  
+
   if (token) {
     // 已登录
     if (to.path === '/login') {

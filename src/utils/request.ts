@@ -32,26 +32,26 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse<ApiResponse>) => {
     const res = response.data
-    
+
     // 如果返回的状态码不是200，则为错误
     if (res.code !== 200) {
       ElMessage.error(res.message || '请求失败')
-      
+
       // 401: 未授权，token过期
       if (res.code === 401) {
         const userStore = useUserStore()
         userStore.logout()
         window.location.href = '/login'
       }
-      
+
       return Promise.reject(new Error(res.message || '请求失败'))
     }
-    
+
     return res.data
   },
   (error) => {
     console.error('Response error:', error)
-    
+
     let message = '请求失败'
     if (error.response) {
       switch (error.response.status) {
@@ -77,7 +77,7 @@ service.interceptors.response.use(
         message = '网络错误'
       }
     }
-    
+
     ElMessage.error(message)
     return Promise.reject(error)
   }
@@ -88,15 +88,15 @@ export const request = {
   get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
     return service.get(url, config)
   },
-  
+
   post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
     return service.post(url, data, config)
   },
-  
+
   put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
     return service.put(url, data, config)
   },
-  
+
   delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
     return service.delete(url, config)
   }
