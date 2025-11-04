@@ -1,0 +1,14 @@
+dist
+node_modules
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+*.local
+public
+.husky
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+

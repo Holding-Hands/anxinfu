@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 可以在这里添加commit message校验
+# 例如：npx --no -- commitlint --edit ${1}
+
