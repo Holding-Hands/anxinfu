@@ -4,11 +4,10 @@ import { useUserStore } from '@/stores/user'
 
 // 创建axios实例
 const service: AxiosInstance = axios.create({
-  // 开发环境使用代理，生产环境使用完整URL
-  baseURL: import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? '' : 'https://axf.anxinfupp.com'),
+  // 开发环境使用代理，生产环境使用 /api 前缀（通过 Vercel rewrites 代理）
+  baseURL: import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? '' : '/api'),
   timeout: 15000,
-  // 只在开发环境启用 withCredentials，生产环境由于CORS限制不使用
-  withCredentials: import.meta.env.DEV,
+  withCredentials: true, // 始终携带Cookie
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
   }

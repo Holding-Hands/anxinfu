@@ -72,8 +72,8 @@ export interface AllyListParams {
   limit: number
   mobile?: string // 手机号
   name?: string // 姓名
-  is_auth?: string // 实名状态
-  user_type?: string // 用户类别
+  is_auth?: string // 实名状态（all=全部, 0=未认证, 1=已实名）
+  user_type?: number | string // 用户类别（0=全部, 1=代理, 2=商户）
   level?: number // 等级 0 表示全部
 }
 

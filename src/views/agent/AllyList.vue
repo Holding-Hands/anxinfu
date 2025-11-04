@@ -100,9 +100,7 @@
 
     <!-- 统计标签 -->
     <div class="stats-tags">
-      <el-tag type="info" size="large" effect="plain">
-        总数: {{ statsData.total }}
-      </el-tag>
+      <el-tag type="info" size="large" effect="plain">总数: {{ statsData.total }}</el-tag>
       <el-tag type="warning" size="large" effect="plain">
         总金额: {{ formatAmount(statsData.total_amount) }}
       </el-tag>
@@ -166,32 +164,26 @@
         <el-table-column prop="alipay" label="支付宝" width="130" align="center">
           <template #default="{ row }">
             <div>{{ row.alipay }}</div>
-            <div style="font-size: 12px; color: #999;">{{ row.aliypayName }}</div>
+            <div style="font-size: 12px; color: #999">{{ row.aliypayName }}</div>
           </template>
         </el-table-column>
 
         <el-table-column prop="wallet1" label="分润钱包" width="110" align="center">
-          <template #default="{ row }">
-            ¥{{ row.wallet1 }}
-          </template>
+          <template #default="{ row }">¥{{ row.wallet1 }}</template>
         </el-table-column>
 
         <el-table-column prop="wallet2" label="返现钱包" width="110" align="center">
-          <template #default="{ row }">
-            ¥{{ row.wallet2 }}
-          </template>
+          <template #default="{ row }">¥{{ row.wallet2 }}</template>
         </el-table-column>
 
         <el-table-column prop="wallet3" label="流量费钱包" width="120" align="center">
-          <template #default="{ row }">
-            ¥{{ row.wallet3 }}
-          </template>
+          <template #default="{ row }">¥{{ row.wallet3 }}</template>
         </el-table-column>
 
         <!-- 冻结金额 -->
         <el-table-column prop="forz_acc_amt" label="冻结金额" width="110" align="center">
           <template #default="{ row }">
-            <span style="color: #f56c6c;">¥{{ row.forz_acc_amt || '0.00' }}</span>
+            <span style="color: #f56c6c">¥{{ row.forz_acc_amt || '0.00' }}</span>
           </template>
         </el-table-column>
 
@@ -200,7 +192,7 @@
         <!-- 机具 - 使用 stocks 或 stock 字段 -->
         <el-table-column prop="stocks" label="机具" width="100" align="center">
           <template #default="{ row }">
-            <el-tag type="warning">{{ row.stock || (row.stocks?.length || 0) }}</el-tag>
+            <el-tag type="warning">{{ row.stock || row.stocks?.length || 0 }}</el-tag>
           </template>
         </el-table-column>
 
@@ -334,12 +326,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import {
-  Search,
-  Refresh,
-  Check,
-  Close
-} from '@element-plus/icons-vue'
+import { Search, Refresh, Check, Close } from '@element-plus/icons-vue'
 import {
   getAllyListApi,
   editLevelApi,
@@ -347,12 +334,7 @@ import {
   type AllyListItem,
   type EditLevelParams
 } from '@/api/user'
-import {
-  USER_LEVEL_OPTIONS,
-  USER_TYPE_OPTIONS,
-  AUTH_STATUS_OPTIONS,
-  LEVEL_TAG_TYPE_MAP
-} from '@/constants'
+import { USER_LEVEL_OPTIONS, USER_TYPE_OPTIONS, AUTH_STATUS_OPTIONS } from '@/constants'
 
 // 查询参数
 const queryParams = reactive<AllyListParams>({
@@ -360,9 +342,9 @@ const queryParams = reactive<AllyListParams>({
   limit: 15,
   mobile: '',
   name: '',
-  is_auth: '',
-  user_type: '',
-  level: 0
+  is_auth: 'all', // 默认显示"全部"
+  user_type: 0, // 默认显示"全部"
+  level: 0 // 默认显示"全部"
 })
 
 // 表格数据
@@ -422,9 +404,9 @@ const handleReset = () => {
   queryParams.limit = 15
   queryParams.mobile = ''
   queryParams.name = ''
-  queryParams.is_auth = ''
-  queryParams.user_type = ''
-  queryParams.level = 0
+  queryParams.is_auth = 'all' // 重置为"全部"
+  queryParams.user_type = 0 // 重置为"全部"
+  queryParams.level = 0 // 重置为"全部"
   getList()
 }
 
@@ -579,11 +561,6 @@ const formatAmount = (amount: number) => {
   return amount?.toFixed(2) || '0.00'
 }
 
-// 获取等级标签类型
-const getLevelType = (level: string) => {
-  return LEVEL_TAG_TYPE_MAP[level] || ''
-}
-
 // 页面加载时获取数据
 onMounted(() => {
   getList()
@@ -662,5 +639,3 @@ onMounted(() => {
   }
 }
 </style>
-
-

@@ -6,8 +6,8 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
-  // GitHub Pages 部署路径配置
-  base: process.env.NODE_ENV === 'production' ? '/anxinfu/' : '/',
+  // Vercel 部署不需要特殊的 base 路径
+  base: '/',
   plugins: [
     vue(),
     // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
