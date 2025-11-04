@@ -192,7 +192,7 @@
         </el-table-column>
         <el-table-column prop="提现" label="提现" width="80" align="center" fixed="right">
           <template #default="{ row }">
-            <el-icon v-if="row.提现" color="#67c23a" :size="20">
+            <el-icon v-if="row.is_tixian" color="#67c23a" :size="20">
               <Check />
             </el-icon>
             <el-icon v-else color="#f56c6c" :size="20">
@@ -200,8 +200,20 @@
             </el-icon>
           </template>
         </el-table-column>
-        <el-table-column prop="operation_type" label="操作类型" width="100" align="center" fixed="right" />
-        <el-table-column prop="level_name" label="等级名称" width="120" align="center" fixed="right" />
+        <el-table-column
+          prop="operation_type"
+          label="操作类型"
+          width="100"
+          align="center"
+          fixed="right"
+        />
+        <el-table-column
+          prop="level_name"
+          label="等级名称"
+          width="120"
+          align="center"
+          fixed="right"
+        />
         <el-table-column label="操作" width="180" align="center" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" link :icon="View" @click="handleView(row)">详情</el-button>
@@ -341,12 +353,14 @@ const handleDelete = (row: AgentListItem) => {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
-  }).then(() => {
-    ElMessage.success('删除成功')
-    getList()
-  }).catch(() => {
-    // 取消删除
   })
+    .then(() => {
+      ElMessage.success('删除成功')
+      getList()
+    })
+    .catch(() => {
+      // 取消删除
+    })
 }
 
 // 格式化金额
@@ -361,7 +375,7 @@ const getAvatar = (name: string) => {
 
 // 获取等级标签类型
 const getLevelType = (level: string) => {
-  return LEVEL_TAG_TYPE_MAP[level] || ''
+  return LEVEL_TAG_TYPE_MAP[level] || undefined
 }
 
 // 页面加载时获取数据
@@ -442,4 +456,3 @@ onMounted(() => {
   }
 }
 </style>
-
