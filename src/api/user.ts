@@ -47,7 +47,7 @@ export interface AgentListItem {
   lottery_count: number // 抽奖次数
   machine_count: string // 机具数
   status: boolean // 状态
-    // is_tixian: boolean
+  is_tixian: boolean
   operation_type: string // 操作类型
   level_name: string // 等级名称
 }
@@ -106,7 +106,7 @@ export interface AllyListItem {
   forz_acc_amt: number // 冻结金额
   coin: string // 金币
   point: string // 积分
-  is_tixian: number // 是否可提现
+  is_tixian: boolean // 是否可提现
   wallet_status: number // 钱包状态
   wallet_status_name: string // 钱包状态名称
   create_time: string // 创建时间
