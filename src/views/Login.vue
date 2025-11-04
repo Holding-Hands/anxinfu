@@ -4,7 +4,7 @@
 
     <div class="login-card">
       <div class="login-header">
-        <h1 class="login-title">安心付</h1>
+        <h1 class="login-title">安鑫付</h1>
         <p class="login-subtitle">后台管理系统</p>
       </div>
 

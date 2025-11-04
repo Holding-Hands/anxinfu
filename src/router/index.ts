@@ -238,7 +238,7 @@ router.beforeEach((to, _from, next) => {
   const token = userStore.token
 
   // 设置页面标题
-  document.title = `${to.meta.title || '页面'} - 安心付后台管理系统`
+  document.title = `${to.meta.title || '页面'} - 安鑫付后台管理系统`
 
   // 白名单
   const whiteList = ['/login']

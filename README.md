@@ -1,4 +1,4 @@
-# 🎯 安心付 - 后台管理系统
+# 🎯 安鑫付 - 后台管理系统
 
 <div align="center">
 
@@ -424,7 +424,7 @@ docker run -d -p 80:80 anxinfu-admin
 ## 📁 项目结构
 
 ```
-安心付/
+安鑫付/
 ├── .husky/                  # Git Hooks
 ├── .vscode/                 # VS Code 配置
 ├── public/                  # 静态资源
@@ -698,6 +698,6 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=10r/s;
 
 **如果这个项目对你有帮助，请给一个 ⭐️ Star！**
 
-Made with ❤️ by 安心付团队
+Made with ❤️ by 安鑫付团队
 
 </div>

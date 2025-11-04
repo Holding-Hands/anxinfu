@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-container">
     <div class="logo-container" :class="{ 'is-collapse': isCollapse }">
-      <h1 v-if="!isCollapse" class="logo-title">安心付</h1>
+      <h1 v-if="!isCollapse" class="logo-title">安鑫付</h1>
       <h1 v-else class="logo-title-mini">安</h1>
     </div>
 
