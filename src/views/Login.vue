@@ -206,7 +206,6 @@ const animate = () => {
   for (let i = 0; i < positions.length; i += 3) {
     const x = positions[i]
     const y = positions[i + 1]
-    const z = positions[i + 2]
 
     positions[i + 1] = y + Math.sin(Date.now() * 0.001 + x) * 0.002
   }

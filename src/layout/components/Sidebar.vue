@@ -42,9 +42,6 @@
               :key="child.path"
               :index="child.path"
             >
-              <el-icon v-if="child.icon">
-                <component :is="child.icon" />
-              </el-icon>
               <template #title>{{ child.meta.title }}</template>
             </el-menu-item>
           </el-sub-menu>

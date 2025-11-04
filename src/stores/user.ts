@@ -37,17 +37,18 @@ export const useUserStore = defineStore('user', () => {
     }
 
     // 如果有 userInfo，则保存
-    if (data && data.userInfo) {
-      setUserInfo(data.userInfo)
+    if (data && (data as any).userInfo) {
+      setUserInfo((data as any).userInfo)
     } else {
       // 如果没有返回 userInfo，使用默认值
+      const apiData = data as any
       const defaultUserInfo: UserInfo = {
-        id: (data && data.id) || '1',
+        id: (apiData && apiData.id) || '1',
         username: username,
-        nickname: (data && data.nickname) || username,
-        avatar: (data && data.avatar) || 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
-        role: (data && data.role) || 'admin',
-        permissions: (data && data.permissions) || ['*']
+        nickname: (apiData && apiData.nickname) || username,
+        avatar: (apiData && apiData.avatar) || 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+        role: (apiData && apiData.role) || 'admin',
+        permissions: (apiData && apiData.permissions) || ['*']
       }
       setUserInfo(defaultUserInfo)
       console.log('用户信息已保存:', defaultUserInfo)
