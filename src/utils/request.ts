@@ -7,7 +7,8 @@ const service: AxiosInstance = axios.create({
   // 开发环境使用代理，生产环境使用完整URL
   baseURL: import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? '' : 'https://axf.anxinfupp.com'),
   timeout: 15000,
-  withCredentials: true, // 携带Cookie
+  // 只在开发环境启用 withCredentials，生产环境由于CORS限制不使用
+  withCredentials: import.meta.env.DEV,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
   }
