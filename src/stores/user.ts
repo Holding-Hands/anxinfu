@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { UserInfo } from '@/types'
+import { loginApi } from '@/api/user'
 
 export const useUserStore = defineStore('user', () => {
   const token = ref<string>(localStorage.getItem('token') || '')
@@ -19,28 +20,38 @@ export const useUserStore = defineStore('user', () => {
   }
 
   // 登录
-  const login = async (username: string, password: string) => {
-    // 模拟登录API调用
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (username === 'admin' && password === 'admin123') {
-          const mockToken = 'mock-token-' + Date.now()
-          const mockUserInfo: UserInfo = {
-            id: '1',
-            username: 'admin',
-            nickname: '超级管理员',
-            avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
-            role: 'admin',
-            permissions: ['*']
-          }
-          setToken(mockToken)
-          setUserInfo(mockUserInfo)
-          resolve()
-        } else {
-          reject(new Error('账号或密码错误'))
-        }
-      }, 1000)
-    })
+  const login = async (username: string, password: string, code?: string) => {
+    const data = await loginApi({ username, password, code })
+    console.log('登录响应数据:', data)
+
+    // 如果有 token，则保存
+    if (data && data.token) {
+      setToken(data.token)
+      console.log('Token 已保存:', data.token)
+    } else {
+      // 如果没有 token，可能整个响应就是 token，或者登录成功但没返回 token
+      // 先创建一个临时 token
+      const tempToken = 'session-' + Date.now()
+      setToken(tempToken)
+      console.log('使用临时 Token:', tempToken)
+    }
+
+    // 如果有 userInfo，则保存
+    if (data && data.userInfo) {
+      setUserInfo(data.userInfo)
+    } else {
+      // 如果没有返回 userInfo，使用默认值
+      const defaultUserInfo: UserInfo = {
+        id: (data && data.id) || '1',
+        username: username,
+        nickname: (data && data.nickname) || username,
+        avatar: (data && data.avatar) || 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+        role: (data && data.role) || 'admin',
+        permissions: (data && data.permissions) || ['*']
+      }
+      setUserInfo(defaultUserInfo)
+      console.log('用户信息已保存:', defaultUserInfo)
+    }
   }
 
   // 登出

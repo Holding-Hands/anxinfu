@@ -32,26 +32,18 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/agent',
     component: () => import('@/layout/index.vue'),
-    redirect: '/agent/list-v2',
+    redirect: '/agent/ally-list',
     meta: {
       title: '代理商管理',
       icon: 'User'
     },
     children: [
       {
-        path: 'list-v2',
-        name: 'AgentListV2',
-        component: () => import('@/views/agent/ListV2.vue'),
+        path: 'ally-list',
+        name: 'AllyList',
+        component: () => import('@/views/agent/AllyList.vue'),
         meta: {
-          title: '代理列表2.0'
-        }
-      },
-      {
-        path: 'list-v1',
-        name: 'AgentListV1',
-        component: () => import('@/views/agent/ListV1.vue'),
-        meta: {
-          title: '代理列表1.0'
+          title: '2.0盟友列表'
         }
       },
       {
@@ -78,22 +70,22 @@ const routes: RouteRecordRaw[] = [
           title: '每天业绩'
         }
       },
-      {
-        path: 'level-v2',
-        name: 'AgentLevelV2',
-        component: () => import('@/views/agent/LevelV2.vue'),
-        meta: {
-          title: '代理等级2.0'
-        }
-      },
-      {
-        path: 'level-v1',
-        name: 'AgentLevelV1',
-        component: () => import('@/views/agent/LevelV1.vue'),
-        meta: {
-          title: '代理结算价1.0'
-        }
-      }
+      // {
+      //   path: 'level-v2',
+      //   name: 'AgentLevelV2',
+      //   component: () => import('@/views/agent/LevelV2.vue'),
+      //   meta: {
+      //     title: '代理等级2.0'
+      //   }
+      // },
+      // {
+      //   path: 'level-v1',
+      //   name: 'AgentLevelV1',
+      //   component: () => import('@/views/agent/LevelV1.vue'),
+      //   meta: {
+      //     title: '代理结算价1.0'
+      //   }
+      // }
     ]
   },
   {

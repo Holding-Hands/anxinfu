@@ -12,6 +12,7 @@ export interface UserInfo {
 export interface LoginForm {
   username: string
   password: string
+  code?: string
   remember?: boolean
 }
 

@@ -37,6 +37,17 @@
           />
         </el-form-item>
 
+        <el-form-item prop="code">
+          <el-input
+            v-model="loginForm.code"
+            placeholder="请输入验证码"
+            size="large"
+            :prefix-icon="Key"
+            clearable
+            maxlength="6"
+          />
+        </el-form-item>
+
         <el-form-item>
           <el-checkbox v-model="loginForm.remember">记住密码</el-checkbox>
         </el-form-item>
@@ -55,7 +66,7 @@
       </el-form>
 
       <div class="login-footer">
-        <p>默认账号: admin / admin123</p>
+        <p>默认账号: anxinfuapp / anxinfu@321..</p>
       </div>
     </div>
   </div>
@@ -65,7 +76,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
-import { User, Lock } from '@element-plus/icons-vue'
+import { User, Lock, Key } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 import * as THREE from 'three'
 import type { LoginForm } from '@/types'
@@ -78,8 +89,9 @@ const formRef = ref<FormInstance>()
 const loading = ref(false)
 
 const loginForm = ref<LoginForm>({
-  username: 'admin',
-  password: 'admin123',
+  username: 'anxinfuapp',
+  password: 'anxinfu@321..',
+  code: '321',
   remember: true
 })
 
@@ -88,8 +100,10 @@ const loginRules: FormRules = {
     { required: true, message: '请输入账号', trigger: 'blur' }
   ],
   password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码长度不能小于6位', trigger: 'blur' }
+    { required: true, message: '请输入密码', trigger: 'blur' }
+  ],
+  code: [
+    { required: true, message: '请输入验证码', trigger: 'blur' }
   ]
 }
 
@@ -218,7 +232,11 @@ const handleLogin = async () => {
     if (valid) {
       loading.value = true
       try {
-        await userStore.login(loginForm.value.username, loginForm.value.password)
+        await userStore.login(
+          loginForm.value.username,
+          loginForm.value.password,
+          loginForm.value.code
+        )
         ElMessage.success('登录成功')
         router.push('/')
       } catch (error: any) {

@@ -38,7 +38,25 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    open: true
+    open: true,
+    proxy: {
+      '/admin': {
+        target: 'https://axf.anxinfupp.com',
+        changeOrigin: true,
+        secure: false,
+        cookieDomainRewrite: {
+          '*': ''
+        }
+      },
+      '/index': {
+        target: 'https://axf.anxinfupp.com',
+        changeOrigin: true,
+        secure: false,
+        cookieDomainRewrite: {
+          '*': ''
+        }
+      }
+    }
   },
   // 构建配置
   build: {

@@ -1,12 +1,13 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
-import type { ApiResponse } from '@/types'
 
 // 创建axios实例
 const service: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  // 开发环境使用代理，生产环境使用完整URL
+  baseURL: import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? '' : 'https://axf.anxinfupp.com'),
   timeout: 15000,
+  withCredentials: true, // 携带Cookie
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
   }
@@ -30,24 +31,36 @@ service.interceptors.request.use(
 
 // 响应拦截器
 service.interceptors.response.use(
-  (response: AxiosResponse<ApiResponse>) => {
+  (response: AxiosResponse) => {
     const res = response.data
+    console.log('响应拦截器 - 原始响应:', res)
 
-    // 如果返回的状态码不是200，则为错误
-    if (res.code !== 200) {
-      ElMessage.error(res.message || '请求失败')
+    // 如果响应数据有 code 字段，按照标准 API 响应处理
+    if (res && typeof res.code !== 'undefined') {
+      // 如果返回的状态码不是200和1和0，则为错误 (兼容不同的成功状态码)
+      if (res.code !== 200 && res.code !== 1 && res.code !== 0) {
+        ElMessage.error(res.message || res.msg || '请求失败')
 
-      // 401: 未授权，token过期
-      if (res.code === 401) {
-        const userStore = useUserStore()
-        userStore.logout()
-        window.location.href = '/login'
+        // 401: 未授权，token过期
+        if (res.code === 401) {
+          const userStore = useUserStore()
+          userStore.logout()
+          window.location.href = '/login'
+        }
+
+        return Promise.reject(new Error(res.message || res.msg || '请求失败'))
       }
 
-      return Promise.reject(new Error(res.message || '请求失败'))
+      // 返回实际数据
+      // const result = res.data !== undefined ? res.data : res
+      const result = res
+      console.log('响应拦截器 - 处理后数据:', result)
+      return result
     }
 
-    return res.data
+    // 如果没有 code 字段，直接返回响应数据
+    console.log('响应拦截器 - 直接返回:', res)
+    return res
   },
   (error) => {
     console.error('Response error:', error)
@@ -55,6 +68,12 @@ service.interceptors.response.use(
     let message = '请求失败'
     if (error.response) {
       switch (error.response.status) {
+        case 302:
+          message = '请先登录系统'
+          const userStore = useUserStore()
+          userStore.logout()
+          window.location.href = '/login'
+          break
         case 401:
           message = '未授权，请重新登录'
           break

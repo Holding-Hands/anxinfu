@@ -89,13 +89,10 @@ const menuList = [
     icon: User,
     meta: { title: '代理商管理' },
     children: [
-      { path: '/agent/list-v2', meta: { title: '代理列表2.0' } },
-      { path: '/agent/list-v1', meta: { title: '代理列表1.0' } },
+      { path: '/agent/ally-list', meta: { title: '2.0盟友列表' } },
       { path: '/agent/withdraw', meta: { title: '盟友业绩汇总' } },
       { path: '/agent/business', meta: { title: '盟友业绩' } },
-      { path: '/agent/daily', meta: { title: '每天业绩' } },
-      { path: '/agent/level-v2', meta: { title: '代理等级2.0' } },
-      { path: '/agent/level-v1', meta: { title: '代理结算价1.0' } }
+      { path: '/agent/daily', meta: { title: '每天业绩' } }
     ]
   },
   {
