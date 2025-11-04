@@ -47,7 +47,7 @@ export interface AgentListItem {
   lottery_count: number // 抽奖次数
   machine_count: string // 机具数
   status: boolean // 状态
-  提现: boolean
+    // is_tixian: boolean
   operation_type: string // 操作类型
   level_name: string // 等级名称
 }
@@ -152,6 +152,17 @@ export interface EditLevelParams {
 
 // 修改用户等级
 export const editLevelApi = (params: EditLevelParams) => {
-  return request.get('/index/user/edit_level.html', { params })
+  return request.post('/index/user/edit_level.html', params)
+}
+
+// 修改用户推荐码参数
+export interface EditUserCodeParams {
+  id: number // 用户ID
+  user_code: string // 新推荐码
+}
+
+// 修改用户推荐码
+export const editUserCodeApi = (params: EditUserCodeParams) => {
+  return request.post('/index/user/edit_user_code.html', params)
 }
 

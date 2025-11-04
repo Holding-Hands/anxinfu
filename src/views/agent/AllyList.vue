@@ -320,6 +320,35 @@
         <el-button type="primary" @click="handleLevelConfirm">确定</el-button>
       </template>
     </el-dialog>
+
+    <!-- 推荐码弹窗 -->
+    <el-dialog
+      v-model="codeDialogVisible"
+      :title="`${currentUser?.name ? extractName(currentUser.name) : ''}的邀请码`"
+      width="600px"
+      @close="handleCodeDialogClose"
+    >
+      <el-form :model="codeForm" label-width="100px">
+        <el-form-item label="原本邀请码">
+          <el-input v-model="codeForm.original_code" readonly disabled style="width: 100%" />
+        </el-form-item>
+
+        <el-form-item label="新邀请码">
+          <el-input
+            v-model="codeForm.user_code"
+            placeholder="请输入新邀请码"
+            clearable
+            maxlength="20"
+            style="width: 100%"
+          />
+        </el-form-item>
+      </el-form>
+
+      <template #footer>
+        <el-button @click="codeDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleCodeConfirm">确定</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -330,9 +359,11 @@ import { Search, Refresh, Check, Close } from '@element-plus/icons-vue'
 import {
   getAllyListApi,
   editLevelApi,
+  editUserCodeApi,
   type AllyListParams,
   type AllyListItem,
-  type EditLevelParams
+  type EditLevelParams,
+  type EditUserCodeParams
 } from '@/api/user'
 import { USER_LEVEL_OPTIONS, USER_TYPE_OPTIONS, AUTH_STATUS_OPTIONS } from '@/constants'
 
@@ -342,8 +373,8 @@ const queryParams = reactive<AllyListParams>({
   limit: 15,
   mobile: '',
   name: '',
-  is_auth: 'all', // 默认显示"全部"
-  user_type: 0, // 默认显示"全部"
+  is_auth: '', // 默认显示"全部"，传空字符串
+  user_type: '', // 默认显示"全部"，传空字符串
   level: 0 // 默认显示"全部"
 })
 
@@ -368,6 +399,14 @@ const levelForm = reactive<EditLevelParams>({
   level: 1,
   type: 2, // 默认选择"设定到期时间"
   level_month: ''
+})
+
+// 推荐码弹窗
+const codeDialogVisible = ref(false)
+const codeForm = reactive<EditUserCodeParams & { original_code: string }>({
+  id: 0,
+  user_code: '',
+  original_code: '' // 原本的推荐码（只用于显示）
 })
 
 // 获取列表数据
@@ -404,8 +443,8 @@ const handleReset = () => {
   queryParams.limit = 15
   queryParams.mobile = ''
   queryParams.name = ''
-  queryParams.is_auth = 'all' // 重置为"全部"
-  queryParams.user_type = 0 // 重置为"全部"
+  queryParams.is_auth = '' // 重置为"全部"，传空字符串
+  queryParams.user_type = '' // 重置为"全部"，传空字符串
   queryParams.level = 0 // 重置为"全部"
   getList()
 }
@@ -468,8 +507,14 @@ const handleSetLevel = (row: AllyListItem) => {
 
 // 推荐码
 const handleRecommendCode = (row: AllyListItem) => {
-  ElMessage.info(`推荐码: ${row.user_code}`)
-  // TODO: 这里可以实现复制推荐码或其他功能
+  currentUser.value = row
+
+  // 初始化表单
+  codeForm.id = row.id
+  codeForm.original_code = row.user_code
+  codeForm.user_code = '' // 清空新推荐码输入框
+
+  codeDialogVisible.value = true
 }
 
 // 设定等级确认
@@ -514,9 +559,46 @@ const handleLevelConfirm = async () => {
   }
 }
 
-// 关闭弹窗
+// 关闭等级弹窗
 const handleLevelDialogClose = () => {
   currentUser.value = null
+}
+
+// 推荐码确认
+const handleCodeConfirm = async () => {
+  try {
+    // 验证
+    if (!codeForm.user_code) {
+      ElMessage.warning('请输入新推荐码')
+      return
+    }
+
+    // 构建请求参数
+    const params: EditUserCodeParams = {
+      id: codeForm.id,
+      user_code: codeForm.user_code
+    }
+
+    console.log('修改推荐码参数:', params)
+
+    // 调用接口
+    await editUserCodeApi(params)
+
+    ElMessage.success('修改推荐码成功')
+    codeDialogVisible.value = false
+
+    // 刷新列表
+    getList()
+  } catch (error) {
+    console.error('修改推荐码失败:', error)
+    ElMessage.error('修改推荐码失败，请稍后重试')
+  }
+}
+
+// 关闭推荐码弹窗
+const handleCodeDialogClose = () => {
+  currentUser.value = null
+  codeForm.user_code = ''
 }
 
 // 从HTML中提取姓名

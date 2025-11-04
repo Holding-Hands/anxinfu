@@ -16,14 +16,14 @@ export const USER_LEVEL_OPTIONS = [
 
 // 用户类别选项
 export const USER_TYPE_OPTIONS = [
-  { label: '全部', value: 0 },
+  { label: '全部', value: '' },
   { label: '代理', value: 1 },
   { label: '商户', value: 2 }
 ]
 
 // 实名状态选项
 export const AUTH_STATUS_OPTIONS = [
-  { label: '全部', value: 'all' },
+  { label: '全部', value: '' },
   { label: '未认证', value: '0' },
   { label: '已实名', value: '1' }
 ]
@@ -46,15 +46,15 @@ export const USER_LEVEL_MAP: Record<string, string> = {
 }
 
 // 用户类别映射
-export const USER_TYPE_MAP: Record<number, string> = {
-  0: '全部',
-  1: '代理',
-  2: '商户'
+export const USER_TYPE_MAP: Record<string, string> = {
+  '': '全部',
+  '1': '代理',
+  '2': '商户'
 }
 
 // 实名状态映射
 export const AUTH_STATUS_MAP: Record<string, string> = {
-  'all': '全部',
+  '': '全部',
   '0': '未认证',
   '1': '已实名'
 }
