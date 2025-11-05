@@ -22,7 +22,8 @@
     "element-plus": "^2.4.4",
     "@element-plus/icons-vue": "^2.3.1",
     "three": "^0.159.0",
-    "echarts": "^5.4.3"
+    "echarts": "^5.4.3",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",

@@ -92,31 +92,18 @@
             <el-form-item label=" " class="filter-actions">
               <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
               <el-button :icon="Refresh" @click="handleReset">重置</el-button>
+              <el-button type="success" @click="handleExport">导出</el-button>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
     </el-card>
 
-    <!-- 统计标签 -->
-    <div class="stats-tags">
-      <el-tag type="info" size="large" effect="plain">总数: {{ statsData.total }}</el-tag>
-      <el-tag type="warning" size="large" effect="plain">
-        总金额: {{ formatAmount(statsData.total_amount) }}
-      </el-tag>
-      <el-tag type="success" size="large" effect="plain">
-        总提现: {{ formatAmount(statsData.total_withdraw) }}
-      </el-tag>
-      <el-tag type="danger" size="large" effect="plain">
-        代理总数: {{ statsData.total_agent_count }}
-      </el-tag>
-    </div>
-
     <!-- 数据表格 -->
     <el-card shadow="never">
       <template #header>
         <div class="card-header">
-          <span class="card-title">盟友列表</span>
+          <span class="card-title">2.0盟友列表</span>
         </div>
       </template>
 
@@ -144,9 +131,9 @@
         <el-table-column prop="mobile" label="手机号" width="130" align="center" />
 
         <!-- 分润等级 - 不确定字段，可能是 profit_ratio 或 level -->
-        <el-table-column prop="profit_ratio" label="分润等级" width="100" align="center">
+        <el-table-column prop="level" label="分润等级" width="100" align="center">
           <template #default="{ row }">
-            {{ row.profit_ratio || row.level }}
+            {{ row.level }}
           </template>
         </el-table-column>
 
@@ -154,7 +141,11 @@
 
         <el-table-column prop="is_auth" label="实名" width="100" align="center">
           <template #default="{ row }">
-            <el-tag :type="extractAuthStatus(row.is_auth) === '已实名' ? 'success' : 'info'">
+            <el-tag
+              :type="extractAuthStatus(row.is_auth) === '已实名' ? 'success' : 'info'"
+              style="cursor: pointer"
+              @click="handleAuthClick(row)"
+            >
               {{ extractAuthStatus(row.is_auth) }}
             </el-tag>
           </template>
@@ -169,15 +160,36 @@
         </el-table-column>
 
         <el-table-column prop="wallet1" label="分润钱包" width="110" align="center">
-          <template #default="{ row }">¥{{ row.wallet1 }}</template>
+          <template #default="{ row }">
+            <span
+              style="cursor: pointer; color: #409eff"
+              @click="handleWalletClick(row, 'wallet1', '分润钱包')"
+            >
+              ¥{{ row.wallet1 }}
+            </span>
+          </template>
         </el-table-column>
 
         <el-table-column prop="wallet2" label="返现钱包" width="110" align="center">
-          <template #default="{ row }">¥{{ row.wallet2 }}</template>
+          <template #default="{ row }">
+            <span
+              style="cursor: pointer; color: #409eff"
+              @click="handleWalletClick(row, 'wallet2', '返现钱包')"
+            >
+              ¥{{ row.wallet2 }}
+            </span>
+          </template>
         </el-table-column>
 
         <el-table-column prop="wallet3" label="流量费钱包" width="120" align="center">
-          <template #default="{ row }">¥{{ row.wallet3 }}</template>
+          <template #default="{ row }">
+            <span
+              style="cursor: pointer; color: #409eff"
+              @click="handleWalletClick(row, 'wallet3', '其他钱包')"
+            >
+              ¥{{ row.wallet3 }}
+            </span>
+          </template>
         </el-table-column>
 
         <!-- 冻结金额 -->
@@ -197,28 +209,42 @@
         </el-table-column>
 
         <!-- 状态 -->
-        <el-table-column prop="status" label="状态" width="80" align="center">
+        <el-table-column prop="status" label="状态" width="120" align="center">
           <template #default="{ row }">
-            <el-tag :type="row.status === 1 ? 'success' : 'danger'">
-              {{ row.status === 1 ? '正常' : '禁用' }}
-            </el-tag>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px">
+              <el-switch
+                v-model="row.status"
+                :active-value="1"
+                :inactive-value="0"
+                @change="handleStatusChange(row)"
+              />
+              <span>{{ row.status === 1 ? '正常' : '不正常' }}</span>
+            </div>
           </template>
         </el-table-column>
 
-        <el-table-column prop="is_tixian" label="提现" width="80" align="center">
+        <!-- 提现 -->
+        <el-table-column prop="is_tixian" label="提现" width="100" align="center">
           <template #default="{ row }">
-            <el-icon v-if="row.is_tixian === 1" color="#67c23a" :size="20">
-              <Check />
-            </el-icon>
-            <el-icon v-else color="#f56c6c" :size="20">
-              <Close />
-            </el-icon>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px">
+              <el-switch
+                v-model="row.is_tixian"
+                :active-value="1"
+                :inactive-value="0"
+                @change="handleWithdrawChange(row)"
+              />
+              <span>{{ row.is_tixian === 1 ? '是' : '否' }}</span>
+            </div>
           </template>
         </el-table-column>
 
         <el-table-column prop="wallet_status_name" label="收益状态" width="120" align="center">
           <template #default="{ row }">
-            <span v-html="row.wallet_status_name"></span>
+            <span
+              style="cursor: pointer; color: #409eff"
+              @click="handleWalletStatusClick(row)"
+              v-html="row.wallet_status_name"
+            ></span>
           </template>
         </el-table-column>
 
@@ -237,17 +263,33 @@
           </template>
         </el-table-column>
 
-        <!-- 运营中心 - 不确定字段，可能需要你告知 -->
-        <el-table-column prop="operation_center" label="运营中心" width="120" align="center">
+        <!-- 运营中心 -->
+        <el-table-column prop="is_yyzx" label="运营中心" width="120" align="center">
           <template #default="{ row }">
-            {{ row.operation_center || row.jgid || '--' }}
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px">
+              <el-switch
+                v-model="row.is_yyzx"
+                :active-value="1"
+                :inactive-value="0"
+                @change="handleOperationCenterChange(row)"
+              />
+              <span>{{ row.is_yyzx === 1 ? '是' : '否' }}</span>
+            </div>
           </template>
         </el-table-column>
 
-        <!-- 股东 - 不确定字段，可能需要你告知 -->
-        <el-table-column prop="shareholder" label="股东" width="100" align="center">
+        <!-- 股东 -->
+        <el-table-column prop="is_gd" label="股东" width="100" align="center">
           <template #default="{ row }">
-            {{ row.shareholder || row.is_gd || '--' }}
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px">
+              <el-switch
+                v-model="row.is_gd"
+                :active-value="1"
+                :inactive-value="0"
+                @change="handleShareholderChange(row)"
+              />
+              <span>{{ row.is_gd === 1 ? '是' : '否' }}</span>
+            </div>
           </template>
         </el-table-column>
 
@@ -349,23 +391,161 @@
         <el-button type="primary" @click="handleCodeConfirm">确定</el-button>
       </template>
     </el-dialog>
+
+    <!-- 收益状态弹窗 -->
+    <el-dialog
+      v-model="walletStatusDialogVisible"
+      :title="`${currentUser?.name ? extractName(currentUser.name) : ''}的收益状态`"
+      width="500px"
+      @close="handleWalletStatusDialogClose"
+    >
+      <el-form :model="walletStatusForm" label-width="100px">
+        <el-form-item label="收益状态">
+          <el-radio-group v-model="walletStatusForm.wallet_status">
+            <el-radio :label="2">收益正常</el-radio>
+            <el-radio :label="1">发给直属上级</el-radio>
+            <el-radio :label="0">收益关闭</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+
+      <template #footer>
+        <el-button @click="walletStatusDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleWalletStatusConfirm">确定</el-button>
+      </template>
+    </el-dialog>
+
+    <!-- 实名信息弹窗 -->
+    <el-dialog
+      v-model="authDialogVisible"
+      :title="`修改${currentUser?.name ? extractName(currentUser.name) : ''}的实名信息`"
+      width="600px"
+      @close="handleAuthDialogClose"
+    >
+      <el-form :model="authForm" label-width="100px">
+        <el-form-item label="姓名">
+          <el-input
+            v-model="authForm.name"
+            placeholder="请输入姓名"
+            clearable
+            style="width: 100%"
+          />
+        </el-form-item>
+
+        <el-form-item label="身份证号">
+          <el-input
+            v-model="authForm.ids_num"
+            placeholder="请输入身份证号"
+            clearable
+            maxlength="18"
+            style="width: 100%"
+          />
+        </el-form-item>
+
+        <el-form-item label="支付宝">
+          <el-input
+            v-model="authForm.alipay"
+            placeholder="请输入支付宝账号"
+            clearable
+            style="width: 100%"
+          />
+        </el-form-item>
+
+        <el-form-item label="支付宝姓名">
+          <el-input
+            v-model="authForm.aliypayName"
+            placeholder="请输入支付宝姓名"
+            clearable
+            style="width: 100%"
+          />
+        </el-form-item>
+      </el-form>
+
+      <template #footer>
+        <el-button @click="authDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleAuthConfirm">确定</el-button>
+      </template>
+    </el-dialog>
+
+    <!-- 钱包操作弹窗 -->
+    <el-dialog
+      v-model="walletDialogVisible"
+      :title="`操作${currentUser?.name ? extractName(currentUser.name) : ''}的${walletTypeLabel}`"
+      width="600px"
+      @close="handleWalletDialogClose"
+    >
+      <div style="color: #e6a23c; margin-bottom: 20px; text-align: center">
+        注意：正数为增加余额，负数为扣除余额，请谨慎操作
+      </div>
+
+      <el-form :model="walletForm" label-width="100px">
+        <el-form-item label="钱包类型">
+          <el-input v-model="walletTypeLabel" disabled style="width: 100%" />
+        </el-form-item>
+
+        <el-form-item label="钱包余额">
+          <el-input v-model="currentWalletBalance" disabled style="width: 100%" />
+        </el-form-item>
+
+        <el-form-item label="操作金额">
+          <el-input
+            v-model="walletForm.money"
+            type="number"
+            placeholder="正数为增加余额，负数为扣除余额"
+            clearable
+            style="width: 100%"
+          />
+        </el-form-item>
+
+        <el-form-item label="备注">
+          <el-input
+            v-model="walletForm.remark"
+            type="textarea"
+            :rows="3"
+            placeholder="备注"
+            maxlength="200"
+            style="width: 100%"
+          />
+        </el-form-item>
+      </el-form>
+
+      <template #footer>
+        <el-button @click="walletDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleWalletConfirm">确定</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { Search, Refresh, Check, Close } from '@element-plus/icons-vue'
+import { Search, Refresh } from '@element-plus/icons-vue'
 import {
   getAllyListApi,
   editLevelApi,
   editUserCodeApi,
+  setShareholderApi,
+  setOperationCenterApi,
+  changeWalletStatusApi,
+  setWithdrawApi,
+  setUserStatusApi,
+  editAuthInfoApi,
+  operateWalletApi,
   type AllyListParams,
   type AllyListItem,
   type EditLevelParams,
-  type EditUserCodeParams
+  type EditUserCodeParams,
+  type SetShareholderParams,
+  type SetOperationCenterParams,
+  type ChangeWalletStatusParams,
+  type SetWithdrawParams,
+  type SetUserStatusParams,
+  type EditAuthInfoParams,
+  type OperateWalletParams
 } from '@/api/user'
 import { USER_LEVEL_OPTIONS, USER_TYPE_OPTIONS, AUTH_STATUS_OPTIONS } from '@/constants'
+import { exportExcel, type ExportColumn } from '@/utils/export'
 
 // 查询参数
 const queryParams = reactive<AllyListParams>({
@@ -407,6 +587,34 @@ const codeForm = reactive<EditUserCodeParams & { original_code: string }>({
   id: 0,
   user_code: '',
   original_code: '' // 原本的推荐码（只用于显示）
+})
+
+// 收益状态弹窗
+const walletStatusDialogVisible = ref(false)
+const walletStatusForm = reactive<ChangeWalletStatusParams>({
+  id: 0,
+  wallet_status: 2 // 默认选择"收益正常"
+})
+
+// 实名信息弹窗
+const authDialogVisible = ref(false)
+const authForm = reactive<EditAuthInfoParams>({
+  id: 0,
+  name: '',
+  ids_num: '',
+  alipay: '',
+  aliypayName: ''
+})
+
+// 钱包操作弹窗
+const walletDialogVisible = ref(false)
+const walletTypeLabel = ref('') // 钱包类型显示名称
+const currentWalletBalance = ref('0.00') // 当前钱包余额
+const walletForm = reactive<OperateWalletParams>({
+  id: 0,
+  money: 0,
+  remark: '',
+  wallet: ''
 })
 
 // 获取列表数据
@@ -601,6 +809,173 @@ const handleCodeDialogClose = () => {
   codeForm.user_code = ''
 }
 
+// 点击收益状态
+const handleWalletStatusClick = (row: AllyListItem) => {
+  currentUser.value = row
+  walletStatusForm.id = row.id
+  walletStatusForm.wallet_status = row.wallet_status
+  walletStatusDialogVisible.value = true
+}
+
+// 收益状态确认
+const handleWalletStatusConfirm = async () => {
+  try {
+    // 构建请求参数
+    const params: ChangeWalletStatusParams = {
+      id: walletStatusForm.id,
+      wallet_status: walletStatusForm.wallet_status
+    }
+
+    console.log('修改收益状态参数:', params)
+
+    // 调用接口
+    await changeWalletStatusApi(params)
+
+    ElMessage.success('修改收益状态成功')
+    walletStatusDialogVisible.value = false
+
+    // 刷新列表
+    getList()
+  } catch (error) {
+    console.error('修改收益状态失败:', error)
+    ElMessage.error('修改收益状态失败，请稍后重试')
+  }
+}
+
+// 关闭收益状态弹窗
+const handleWalletStatusDialogClose = () => {
+  currentUser.value = null
+}
+
+// 点击实名状态
+const handleAuthClick = (row: AllyListItem) => {
+  currentUser.value = row
+  authForm.id = row.id
+  authForm.name = extractName(row.name)
+  authForm.ids_num = row.ids_num || ''
+  authForm.alipay = row.alipay || ''
+  authForm.aliypayName = row.aliypayName || ''
+  authDialogVisible.value = true
+}
+
+// 实名信息确认
+const handleAuthConfirm = async () => {
+  try {
+    // 验证
+    if (!authForm.name) {
+      ElMessage.warning('请输入姓名')
+      return
+    }
+    if (!authForm.ids_num) {
+      ElMessage.warning('请输入身份证号')
+      return
+    }
+    if (!authForm.alipay) {
+      ElMessage.warning('请输入支付宝账号')
+      return
+    }
+    if (!authForm.aliypayName) {
+      ElMessage.warning('请输入支付宝姓名')
+      return
+    }
+
+    // 构建请求参数
+    const params: EditAuthInfoParams = {
+      id: authForm.id,
+      name: authForm.name,
+      ids_num: authForm.ids_num,
+      alipay: authForm.alipay,
+      aliypayName: authForm.aliypayName
+    }
+
+    console.log('修改实名信息参数:', params)
+
+    // 调用接口
+    await editAuthInfoApi(params)
+
+    ElMessage.success('修改实名信息成功')
+    authDialogVisible.value = false
+
+    // 刷新列表
+    getList()
+  } catch (error) {
+    console.error('修改实名信息失败:', error)
+    ElMessage.error('修改实名信息失败，请稍后重试')
+  }
+}
+
+// 关闭实名信息弹窗
+const handleAuthDialogClose = () => {
+  currentUser.value = null
+  authForm.name = ''
+  authForm.ids_num = ''
+  authForm.alipay = ''
+  authForm.aliypayName = ''
+}
+
+// 点击钱包
+const handleWalletClick = (row: AllyListItem, walletField: string, walletLabel: string) => {
+  currentUser.value = row
+  walletTypeLabel.value = walletLabel
+  walletForm.id = row.id
+  walletForm.wallet = walletField
+  walletForm.money = 0
+  walletForm.remark = ''
+
+  // 设置当前钱包余额
+  const balanceMap: Record<string, string> = {
+    wallet1: row.wallet1,
+    wallet2: row.wallet2,
+    wallet3: row.wallet3
+  }
+  currentWalletBalance.value = balanceMap[walletField] || '0.00'
+
+  walletDialogVisible.value = true
+}
+
+// 钱包操作确认
+const handleWalletConfirm = async () => {
+  try {
+    // 验证
+    if (!walletForm.money) {
+      ElMessage.warning('请输入操作金额')
+      return
+    }
+
+    // 构建请求参数
+    const params: OperateWalletParams = {
+      id: walletForm.id,
+      money: Number(walletForm.money),
+      remark: walletForm.remark,
+      wallet: walletForm.wallet
+    }
+
+    console.log('操作钱包参数:', params)
+
+    // 调用接口
+    await operateWalletApi(params)
+
+    ElMessage.success('操作钱包成功')
+    walletDialogVisible.value = false
+
+    // 刷新列表
+    getList()
+  } catch (error) {
+    console.error('操作钱包失败:', error)
+    ElMessage.error('操作钱包失败，请稍后重试')
+  }
+}
+
+// 关闭钱包操作弹窗
+const handleWalletDialogClose = () => {
+  currentUser.value = null
+  walletForm.money = 0
+  walletForm.remark = ''
+  walletForm.wallet = ''
+  walletTypeLabel.value = ''
+  currentWalletBalance.value = '0.00'
+}
+
 // 从HTML中提取姓名
 const extractName = (nameHtml: string): string => {
   if (!nameHtml) return ''
@@ -638,9 +1013,154 @@ const extractAuthStatus = (authHtml: string): string => {
   return text || '未认证'
 }
 
-// 格式化金额
-const formatAmount = (amount: number) => {
-  return amount?.toFixed(2) || '0.00'
+// 处理运营中心状态变化
+const handleOperationCenterChange = async (row: AllyListItem) => {
+  try {
+    const params: SetOperationCenterParams = {
+      ids: row.id
+    }
+    await setOperationCenterApi(params)
+    ElMessage.success('运营中心状态更新成功')
+  } catch (error) {
+    // 如果失败，恢复原来的状态
+    row.is_yyzx = row.is_yyzx === 1 ? 0 : 1
+    ElMessage.error('运营中心状态更新失败')
+  }
+}
+
+// 处理股东状态变化
+const handleShareholderChange = async (row: AllyListItem) => {
+  try {
+    const params: SetShareholderParams = {
+      ids: row.id
+    }
+    await setShareholderApi(params)
+    ElMessage.success('股东状态更新成功')
+  } catch (error) {
+    // 如果失败，恢复原来的状态
+    row.is_gd = row.is_gd === 1 ? 0 : 1
+    ElMessage.error('股东状态更新失败')
+  }
+}
+
+// 处理状态变化
+const handleStatusChange = async (row: AllyListItem) => {
+  try {
+    const params: SetUserStatusParams = {
+      ids: row.id
+    }
+    await setUserStatusApi(params)
+    ElMessage.success('用户状态更新成功')
+  } catch (error) {
+    // 如果失败，恢复原来的状态
+    row.status = row.status === 1 ? 0 : 1
+    ElMessage.error('用户状态更新失败')
+  }
+}
+
+// 处理提现状态变化
+const handleWithdrawChange = async (row: AllyListItem) => {
+  try {
+    const params: SetWithdrawParams = {
+      ids: row.id
+    }
+    await setWithdrawApi(params)
+    ElMessage.success('提现状态更新成功')
+  } catch (error) {
+    // 如果失败，恢复原来的状态
+    row.is_tixian = row.is_tixian === 1 ? 0 : 1
+    ElMessage.error('提现状态更新失败')
+  }
+}
+
+// 导出Excel
+const handleExport = () => {
+  try {
+    if (!tableData.value || tableData.value.length === 0) {
+      ElMessage.warning('暂无数据可导出')
+      return
+    }
+
+    // 定义导出列
+    const columns: ExportColumn[] = [
+      { key: 'id', title: 'ID' },
+      {
+        key: 'name',
+        title: '姓名',
+        formatter: (value) => extractName(value)
+      },
+      { key: 'user_code', title: '推荐码' },
+      { key: 'mobile', title: '手机号' },
+      { key: 'level', title: '分润等级' },
+      { key: 'p_user', title: '推荐人' },
+      {
+        key: 'is_auth',
+        title: '实名',
+        formatter: (value) => extractAuthStatus(value)
+      },
+      { key: 'alipay', title: '支付宝账号' },
+      { key: 'aliypayName', title: '支付宝姓名' },
+      { key: 'wallet1', title: '分润钱包' },
+      { key: 'wallet2', title: '返现钱包' },
+      { key: 'wallet3', title: '流量费钱包' },
+      { key: 'forz_acc_amt', title: '冻结金额' },
+      { key: 'coin', title: '金币' },
+      { key: 'point', title: '积分' },
+      {
+        key: 'stock',
+        title: '机具',
+        formatter: (_value, row) => Number(row?.stock || (row?.stocks as unknown[])?.length || 0)
+      },
+      {
+        key: 'status',
+        title: '状态',
+        formatter: (value) => (value === 1 ? '正常' : '禁用')
+      },
+      {
+        key: 'is_tixian',
+        title: '提现',
+        formatter: (value) => (value === 1 ? '是' : '否')
+      },
+      {
+        key: 'wallet_status_name',
+        title: '收益状态',
+        formatter: (value) => value?.replace(/<[^>]*>/g, '').trim() || ''
+      },
+      {
+        key: 'user_type',
+        title: '用户类别',
+        formatter: (value) => (value === 1 ? '代理' : value === 2 ? '商户' : '全部')
+      },
+      {
+        key: 'level_month',
+        title: '等级时效',
+        formatter: (value) => value?.replace(/<[^>]*>/g, '').trim() || ''
+      },
+      {
+        key: 'is_yyzx',
+        title: '运营中心',
+        formatter: (value) => (value === 1 ? '是' : value === 0 ? '否' : '')
+      },
+      {
+        key: 'is_gd',
+        title: '股东',
+        formatter: (value) => (value === 1 ? '是' : value === 0 ? '否' : '')
+      },
+      { key: 'create_time', title: '注册时间' }
+    ]
+
+    // 执行导出
+    exportExcel({
+      data: tableData.value,
+      columns,
+      filename: '盟友列表'
+    })
+
+    ElMessage.success('导出成功')
+  } catch (error) {
+    console.error('导出失败:', error)
+    ElMessage.error('导出失败，请稍后重试')
+  }
 }
 
 // 页面加载时获取数据

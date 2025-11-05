@@ -106,7 +106,7 @@ export interface AllyListItem {
   forz_acc_amt: number // 冻结金额
   coin: string // 金币
   point: string // 积分
-  is_tixian: boolean // 是否可提现
+  is_tixian: number // 是否可提现 0-否 1-是
   wallet_status: number // 钱包状态
   wallet_status_name: string // 钱包状态名称
   create_time: string // 创建时间
@@ -115,13 +115,15 @@ export interface AllyListItem {
   stocks: AllyStock[] // 库存列表
   stock?: string // 机具数量（可能是字符串格式 "6/0"）
   profit_ratio: string // 分润比例
+  ids_num?: string // 身份证号
   alipay: string // 支付宝账号
   aliypayName: string // 支付宝姓名
   status: number // 状态 1:正常 0:禁用
   level_month: string // 等级时效（包含HTML）
   jgid?: string // 机构ID（可能是运营中心）
   operation_center?: string // 运营中心
-  is_gd?: number // 是否股东
+  is_gd?: number // 是否股东 0-否 1-是
+  is_yyzx?: number // 是否运营中心 0-否 1-是
   shareholder?: string // 股东信息
 }
 
@@ -166,3 +168,80 @@ export const editUserCodeApi = (params: EditUserCodeParams) => {
   return request.post('/index/user/edit_user_code.html', params)
 }
 
+// 设置股东状态参数
+export interface SetShareholderParams {
+  ids: number // 用户ID
+}
+
+// 设置股东状态
+export const setShareholderApi = (params: SetShareholderParams) => {
+  return request.post('/index/user/setdisgd.html', params)
+}
+
+// 设置运营中心状态参数
+export interface SetOperationCenterParams {
+  ids: number // 用户ID
+}
+
+// 设置运营中心状态
+export const setOperationCenterApi = (params: SetOperationCenterParams) => {
+  return request.post('/index/user/setdisyyzx.html', params)
+}
+
+// 修改收益状态参数
+export interface ChangeWalletStatusParams {
+  id: number // 用户ID
+  wallet_status: number // 0:收益关闭 1:发给直属上级 2:收益正常
+}
+
+// 修改收益状态
+export const changeWalletStatusApi = (params: ChangeWalletStatusParams) => {
+  return request.post('/index/user/change_wallet_status.html', params)
+}
+
+// 设置提现状态参数
+export interface SetWithdrawParams {
+  ids: number // 用户ID
+}
+
+// 设置提现状态
+export const setWithdrawApi = (params: SetWithdrawParams) => {
+  return request.post('/index/user/setdistixian.html', params)
+}
+
+// 设置用户状态参数
+export interface SetUserStatusParams {
+  ids: number // 用户ID
+}
+
+// 设置用户状态
+export const setUserStatusApi = (params: SetUserStatusParams) => {
+  return request.post('/index/user/setdisable.html', params)
+}
+
+// 修改实名信息参数
+export interface EditAuthInfoParams {
+  id: number // 用户ID
+  name: string // 姓名
+  ids_num: string // 身份证号
+  alipay: string // 支付宝账号
+  aliypayName: string // 支付宝姓名
+}
+
+// 修改实名信息
+export const editAuthInfoApi = (params: EditAuthInfoParams) => {
+  return request.post('/index/user/edit_is_auth.html', params)
+}
+
+// 操作钱包余额参数
+export interface OperateWalletParams {
+  id: number // 用户ID
+  money: number // 操作金额（正数为增加，负数为扣除）
+  remark: string // 备注
+  wallet: string // 钱包类型 wallet1:分润钱包 wallet2:返现钱包 wallet3:流量费钱包
+}
+
+// 操作钱包余额
+export const operateWalletApi = (params: OperateWalletParams) => {
+  return request.post('/index/user/kou_kuan_wallet.html', params)
+}
