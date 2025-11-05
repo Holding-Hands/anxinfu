@@ -267,3 +267,37 @@ export const operateWallet10Api = (params: OperateWalletParams) => {
 export const setWithdraw10Api = (params: SetWithdrawParams) => {
   return request.post('/index/user/setdistixian.html', params)
 }
+
+// ==================== 盟友业绩汇总接口 ====================
+
+// 盟友业绩汇总查询参数
+export interface AllySummaryParams {
+  page: number
+  limit: number
+  sys_type?: number | string // 模式 1:1.0模式 2:2.0模式 或空字符串表示全部
+  mobile?: string // 手机号
+  month?: string // 月份 格式: 2025-11
+}
+
+// 盟友业绩汇总数据项
+export interface AllySummaryItem {
+  id: number
+  user_name: string // 所属盟友
+  zy_money: string // 直营交易
+  td_money: string // 团队交易
+  month: string // 月份
+}
+
+// 盟友业绩汇总响应
+export interface AllySummaryResponse {
+  code: number
+  msg: string
+  count: number
+  data: AllySummaryItem[]
+  total: number
+}
+
+// 获取盟友业绩汇总
+export const getAllySummaryApi = (params: AllySummaryParams) => {
+  return request.get<AllySummaryResponse>('/index/trade_sum/getlistsum.html', { params })
+}

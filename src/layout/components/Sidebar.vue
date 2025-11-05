@@ -81,7 +81,7 @@ const menuList = [
     children: [
       { path: '/agent/ally-list-10', meta: { title: '1.0盟友列表' } },
       { path: '/agent/ally-list', meta: { title: '2.0盟友列表' } },
-      { path: '/agent/withdraw', meta: { title: '盟友业绩汇总' } },
+      { path: '/agent/ally-summary', meta: { title: '盟友业绩汇总' } },
       { path: '/agent/business', meta: { title: '盟友业绩' } },
       { path: '/agent/daily', meta: { title: '每天业绩' } }
     ]

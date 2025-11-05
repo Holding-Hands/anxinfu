@@ -76,4 +76,16 @@ export const LEVEL_TAG_TYPE_MAP: Record<string, '' | 'success' | 'info' | 'warni
   V7: 'success'
 }
 
+// 系统模式选项
+export const SYS_TYPE_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '1.0模式', value: 1 },
+  { label: '2.0模式', value: 2 }
+]
 
+// 系统模式映射
+export const SYS_TYPE_MAP: Record<string | number, string> = {
+  '': '全部',
+  1: '1.0模式',
+  2: '2.0模式'
+}

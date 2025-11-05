@@ -55,9 +55,9 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
-        path: 'withdraw',
-        name: 'AgentWithdraw',
-        component: () => import('@/views/agent/Withdraw.vue'),
+        path: 'ally-summary',
+        name: 'AllySummary',
+        component: () => import('@/views/agent/AllySummary.vue'),
         meta: {
           title: '盟友业绩汇总'
         }
