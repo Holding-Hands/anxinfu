@@ -39,7 +39,7 @@ export const exportExcel = <T = Record<string, unknown>>(options: ExportOptions<
     // 构建数据行
     const rows = data.map((row) => {
       return columns.map((col) => {
-        const value = row[col.key]
+        const value = (row as Record<string, any>)[col.key]
         // 如果有格式化函数，使用格式化函数
         if (col.formatter) {
           return col.formatter(value, row)
