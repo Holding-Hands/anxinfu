@@ -245,3 +245,25 @@ export interface OperateWalletParams {
 export const operateWalletApi = (params: OperateWalletParams) => {
   return request.post('/index/user/kou_kuan_wallet.html', params)
 }
+
+// ==================== 1.0盟友列表接口 ====================
+
+// 获取1.0盟友列表
+export const getAllyList10Api = (params: AllyListParams) => {
+  return request.get<AllyListResponse>('/index/user/getlisty.html', { params })
+}
+
+// 设置1.0用户状态
+export const setUserStatus10Api = (params: SetUserStatusParams) => {
+  return request.post('/index/user/setenable.html', params)
+}
+
+// 操作1.0钱包余额（分润钱包、返现钱包、其它钱包）
+export const operateWallet10Api = (params: OperateWalletParams) => {
+  return request.post('/index/user/kou_kuan_wallet.html', params)
+}
+
+// 设置1.0提现状态
+export const setWithdraw10Api = (params: SetWithdrawParams) => {
+  return request.post('/index/user/setdistixian.html', params)
+}

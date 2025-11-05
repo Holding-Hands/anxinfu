@@ -18,10 +18,7 @@
       >
         <template v-for="item in menuList" :key="item.path">
           <!-- 无子菜单 -->
-          <el-menu-item
-            v-if="!item.children || item.children.length === 0"
-            :index="item.path"
-          >
+          <el-menu-item v-if="!item.children || item.children.length === 0" :index="item.path">
             <el-icon>
               <component :is="item.icon" />
             </el-icon>
@@ -37,11 +34,7 @@
               <span>{{ item.meta.title }}</span>
             </template>
 
-            <el-menu-item
-              v-for="child in item.children"
-              :key="child.path"
-              :index="child.path"
-            >
+            <el-menu-item v-for="child in item.children" :key="child.path" :index="child.path">
               <template #title>{{ child.meta.title }}</template>
             </el-menu-item>
           </el-sub-menu>
@@ -86,6 +79,7 @@ const menuList = [
     icon: User,
     meta: { title: '代理商管理' },
     children: [
+      { path: '/agent/ally-list-10', meta: { title: '1.0盟友列表' } },
       { path: '/agent/ally-list', meta: { title: '2.0盟友列表' } },
       { path: '/agent/withdraw', meta: { title: '盟友业绩汇总' } },
       { path: '/agent/business', meta: { title: '盟友业绩' } },
@@ -194,8 +188,7 @@ const menuList = [
 
   .el-menu-item.is-active {
     background-color: #ecf5ff !important;
-    color: #409EFF !important;
+    color: #409eff !important;
   }
 }
 </style>
-

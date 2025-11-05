@@ -47,6 +47,14 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
+        path: 'ally-list-10',
+        name: 'AllyList10',
+        component: () => import('@/views/agent/AllyList10.vue'),
+        meta: {
+          title: '1.0盟友列表'
+        }
+      },
+      {
         path: 'withdraw',
         name: 'AgentWithdraw',
         component: () => import('@/views/agent/Withdraw.vue'),
@@ -69,7 +77,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '每天业绩'
         }
-      },
+      }
       // {
       //   path: 'level-v2',
       //   name: 'AgentLevelV2',
@@ -263,4 +271,3 @@ router.beforeEach((to, _from, next) => {
 })
 
 export default router
-

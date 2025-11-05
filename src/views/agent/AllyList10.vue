@@ -68,27 +68,7 @@
         </el-row>
 
         <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item label="等级">
-              <el-select
-                v-model="queryParams.level"
-                placeholder="请选择等级"
-                clearable
-                filterable
-                @change="handleQuery"
-              >
-                <el-option label="全部" :value="0" />
-                <el-option
-                  v-for="item in USER_LEVEL_OPTIONS.slice(1)"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="parseInt(item.value)"
-                />
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="18">
+          <el-col :span="24">
             <el-form-item label=" " class="filter-actions">
               <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
               <el-button :icon="Refresh" @click="handleReset">重置</el-button>
@@ -103,7 +83,7 @@
     <el-card shadow="never">
       <template #header>
         <div class="card-header">
-          <span class="card-title">2.0盟友列表</span>
+          <span class="card-title">1.0盟友列表</span>
         </div>
       </template>
 
@@ -181,7 +161,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="wallet3" label="流量费钱包" width="120" align="center">
+        <el-table-column prop="wallet3" label="其他钱包" width="120" align="center">
           <template #default="{ row }">
             <span
               style="cursor: pointer; color: #409eff"
@@ -522,16 +502,16 @@ import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { Search, Refresh } from '@element-plus/icons-vue'
 import {
-  getAllyListApi,
+  getAllyList10Api,
   editLevelApi,
   editUserCodeApi,
   setShareholderApi,
   setOperationCenterApi,
   changeWalletStatusApi,
-  setWithdrawApi,
-  setUserStatusApi,
+  setWithdraw10Api,
+  setUserStatus10Api,
   editAuthInfoApi,
-  operateWalletApi,
+  operateWallet10Api,
   type AllyListParams,
   type AllyListItem,
   type EditLevelParams,
@@ -544,7 +524,7 @@ import {
   type EditAuthInfoParams,
   type OperateWalletParams
 } from '@/api/user'
-import { USER_LEVEL_OPTIONS, USER_TYPE_OPTIONS, AUTH_STATUS_OPTIONS } from '@/constants'
+import { USER_TYPE_OPTIONS, AUTH_STATUS_OPTIONS } from '@/constants'
 import { exportExcel, type ExportColumn } from '@/utils/export'
 
 // 查询参数
@@ -554,8 +534,7 @@ const queryParams = reactive<AllyListParams>({
   mobile: '',
   name: '',
   is_auth: '', // 默认显示"全部"，传空字符串
-  user_type: '', // 默认显示"全部"，传空字符串
-  level: 0 // 默认显示"全部"
+  user_type: '' // 默认显示"全部"，传空字符串
 })
 
 // 表格数据
@@ -621,8 +600,8 @@ const walletForm = reactive<OperateWalletParams>({
 const getList = async () => {
   loading.value = true
   try {
-    const res = await getAllyListApi(queryParams)
-    console.log('盟友列表响应:', res)
+    const res = await getAllyList10Api(queryParams)
+    console.log('1.0盟友列表响应:', res)
 
     // 根据实际返回的数据结构处理
     tableData.value = res.data || []
@@ -653,7 +632,6 @@ const handleReset = () => {
   queryParams.name = ''
   queryParams.is_auth = '' // 重置为"全部"，传空字符串
   queryParams.user_type = '' // 重置为"全部"，传空字符串
-  queryParams.level = 0 // 重置为"全部"
   getList()
 }
 
@@ -952,8 +930,8 @@ const handleWalletConfirm = async () => {
 
     console.log('操作钱包参数:', params)
 
-    // 调用接口
-    await operateWalletApi(params)
+    // 调用接口 - 使用1.0版本的钱包操作接口
+    await operateWallet10Api(params)
 
     ElMessage.success('操作钱包成功')
     walletDialogVisible.value = false
@@ -1043,13 +1021,13 @@ const handleShareholderChange = async (row: AllyListItem) => {
   }
 }
 
-// 处理状态变化
+// 处理状态变化 - 使用1.0版本的接口
 const handleStatusChange = async (row: AllyListItem) => {
   try {
     const params: SetUserStatusParams = {
       ids: row.id
     }
-    await setUserStatusApi(params)
+    await setUserStatus10Api(params)
     ElMessage.success('用户状态更新成功')
   } catch (error) {
     // 如果失败，恢复原来的状态
@@ -1058,13 +1036,13 @@ const handleStatusChange = async (row: AllyListItem) => {
   }
 }
 
-// 处理提现状态变化
+// 处理提现状态变化 - 使用1.0版本的接口
 const handleWithdrawChange = async (row: AllyListItem) => {
   try {
     const params: SetWithdrawParams = {
       ids: row.id
     }
-    await setWithdrawApi(params)
+    await setWithdraw10Api(params)
     ElMessage.success('提现状态更新成功')
   } catch (error) {
     // 如果失败，恢复原来的状态
@@ -1102,7 +1080,7 @@ const handleExport = () => {
       { key: 'aliypayName', title: '支付宝姓名' },
       { key: 'wallet1', title: '分润钱包' },
       { key: 'wallet2', title: '返现钱包' },
-      { key: 'wallet3', title: '流量费钱包' },
+      { key: 'wallet3', title: '其他钱包' },
       { key: 'forz_acc_amt', title: '冻结金额' },
       { key: 'coin', title: '金币' },
       { key: 'point', title: '积分' },
@@ -1153,7 +1131,7 @@ const handleExport = () => {
     exportExcel({
       data: tableData.value,
       columns,
-      filename: '盟友列表'
+      filename: '1.0盟友列表'
     })
 
     ElMessage.success('导出成功')
