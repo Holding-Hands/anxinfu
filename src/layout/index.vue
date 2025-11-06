@@ -34,32 +34,35 @@ const isCollapse = computed(() => appStore.isCollapse)
 .layout-container {
   width: 100%;
   height: 100vh;
+  background-color: var(--bg-page);
 }
 
 .layout-aside {
-  background: #ffffff;
-  transition: width 0.3s;
+  background: var(--sidebar-bg);
+  transition: width 0.3s, background-color 0.3s;
   overflow-x: hidden;
-  border-right: 1px solid #e8e8e8;
+  border-right: 1px solid var(--border-base);
 }
 
 .main-container {
-  background: #f0f2f5;
+  background: var(--bg-page);
 }
 
 .layout-header {
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  background: var(--header-bg);
+  box-shadow: var(--shadow-base);
   padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid var(--header-border);
 }
 
 .layout-main {
   padding: 20px;
   overflow-y: auto;
   height: calc(100vh - 60px);
+  background-color: var(--bg-page);
 }
 
 // 页面切换动画

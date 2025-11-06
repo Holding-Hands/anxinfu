@@ -379,19 +379,19 @@ onUnmounted(() => {
 
   .stat-label {
     font-size: 14px;
-    color: #999;
+    color: var(--text-secondary);
     margin-bottom: 8px;
   }
 
   .stat-value {
     font-size: 28px;
     font-weight: bold;
-    color: #333;
+    color: var(--text-primary);
   }
 
   .stat-extra {
     font-size: 12px;
-    color: #52c41a;
+    color: var(--success-color);
     margin-top: 4px;
   }
 }
@@ -409,7 +409,7 @@ onUnmounted(() => {
     .card-title {
       font-size: 16px;
       font-weight: bold;
-      color: #333;
+      color: var(--text-primary);
     }
   }
 
@@ -423,7 +423,7 @@ onUnmounted(() => {
     .card-title {
       font-size: 16px;
       font-weight: bold;
-      color: #333;
+      color: var(--text-primary);
     }
   }
 }
@@ -450,7 +450,7 @@ onUnmounted(() => {
   cursor: pointer;
 
   &:hover {
-    background-color: #f5f5f5;
+    background-color: var(--primary-light);
     transform: translateY(-5px);
 
     .entry-icon {
@@ -471,7 +471,7 @@ onUnmounted(() => {
 
   .entry-title {
     font-size: 14px;
-    color: #666;
+    color: var(--text-regular);
     text-align: center;
   }
 }

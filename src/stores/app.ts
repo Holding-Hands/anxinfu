@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+
+export type ThemeType = 'default' | 'dark' | 'blue' | 'green' | 'purple' | 'orange' | 'pink' | 'red'
 
 export const useAppStore = defineStore('app', () => {
   // 侧边栏是否折叠
@@ -23,12 +25,37 @@ export const useAppStore = defineStore('app', () => {
     device.value = value
   }
 
+  // 主题设置
+  const theme = ref<ThemeType>((localStorage.getItem('theme') as ThemeType) || 'default')
+
+  // 设置主题
+  const setTheme = (value: ThemeType) => {
+    theme.value = value
+    localStorage.setItem('theme', value)
+    applyTheme(value)
+  }
+
+  // 应用主题到 DOM
+  const applyTheme = (themeValue: ThemeType) => {
+    document.documentElement.setAttribute('data-theme', themeValue)
+  }
+
+  // 初始化主题
+  applyTheme(theme.value)
+
+  // 监听主题变化
+  watch(theme, (newTheme) => {
+    applyTheme(newTheme)
+  })
+
   return {
     isCollapse,
     toggleCollapse,
     setCollapse,
     device,
-    setDevice
+    setDevice,
+    theme,
+    setTheme
   }
 })
 

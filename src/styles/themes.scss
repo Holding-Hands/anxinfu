@@ -1,0 +1,752 @@
+// 主题颜色变量配置
+// 默认主题
+:root,
+[data-theme='default'] {
+  // 主色调
+  --primary-color: #409eff;
+  --primary-light: #ecf5ff;
+  --primary-lighter: #b3d8ff;
+
+  // 成功色
+  --success-color: #67c23a;
+  --success-light: #e1f3d8;
+
+  // 警告色
+  --warning-color: #e6a23c;
+  --warning-light: #faecd8;
+
+  // 危险色
+  --danger-color: #f56c6c;
+  --danger-light: #fde2e2;
+
+  // 信息色
+  --info-color: #909399;
+  --info-light: #e9e9eb;
+
+  // 文字颜色
+  --text-primary: #303133;
+  --text-regular: #606266;
+  --text-secondary: #909399;
+  --text-placeholder: #c0c4cc;
+
+  // 边框颜色
+  --border-base: #dcdfe6;
+  --border-light: #e4e7ed;
+  --border-lighter: #ebeef5;
+  --border-extra-light: #f2f6fc;
+
+  // 背景颜色
+  --bg-color: #ffffff;
+  --bg-page: #f5f7fa;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  // 侧边栏
+  --sidebar-bg: #304156;
+  --sidebar-text: #bfcbd9;
+  --sidebar-text-active: #ffffff;
+  --sidebar-item-hover: #263445;
+
+  // 头部
+  --header-bg: #ffffff;
+  --header-text: #303133;
+  --header-border: #f0f0f0;
+
+  // 阴影
+  --shadow-base: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  --shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  --shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.12);
+}
+
+// 暗黑主题
+[data-theme='dark'] {
+  // 主色调
+  --primary-color: #409eff;
+  --primary-light: #263a4f;
+  --primary-lighter: #2d5a85;
+
+  // 成功色
+  --success-color: #67c23a;
+  --success-light: #2a4a1a;
+
+  // 警告色
+  --warning-color: #e6a23c;
+  --warning-light: #4a3a1a;
+
+  // 危险色
+  --danger-color: #f56c6c;
+  --danger-light: #4a2a2a;
+
+  // 信息色
+  --info-color: #909399;
+  --info-light: #3a3a3a;
+
+  // 文字颜色
+  --text-primary: #e8e8e8;
+  --text-regular: #c8c8c8;
+  --text-secondary: #a0a0a0;
+  --text-placeholder: #707070;
+
+  // 边框颜色
+  --border-base: #3a3a3a;
+  --border-light: #2f2f2f;
+  --border-lighter: #282828;
+  --border-extra-light: #222222;
+
+  // 背景颜色
+  --bg-color: #1a1a1a;
+  --bg-page: #0f0f0f;
+  --bg-overlay: rgba(0, 0, 0, 0.7);
+
+  // 侧边栏
+  --sidebar-bg: #0d0d0d;
+  --sidebar-text: #a0a0a0;
+  --sidebar-text-active: #409eff;
+  --sidebar-item-hover: #1f1f1f;
+
+  // 头部
+  --header-bg: #1a1a1a;
+  --header-text: #e8e8e8;
+  --header-border: #2a2a2a;
+
+  // 阴影
+  --shadow-base: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 6px rgba(0, 0, 0, 0.3);
+  --shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
+  --shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+// 科技蓝主题
+[data-theme='blue'] {
+  // 主色调
+  --primary-color: #1890ff;
+  --primary-light: #e6f7ff;
+  --primary-lighter: #91d5ff;
+
+  // 成功色
+  --success-color: #52c41a;
+  --success-light: #d9f7be;
+
+  // 警告色
+  --warning-color: #faad14;
+  --warning-light: #fff7e6;
+
+  // 危险色
+  --danger-color: #ff4d4f;
+  --danger-light: #fff1f0;
+
+  // 信息色
+  --info-color: #909399;
+  --info-light: #e9e9eb;
+
+  // 文字颜色
+  --text-primary: #001529;
+  --text-regular: #304156;
+  --text-secondary: #606266;
+  --text-placeholder: #909399;
+
+  // 边框颜色
+  --border-base: #d9d9d9;
+  --border-light: #e8e8e8;
+  --border-lighter: #f0f0f0;
+  --border-extra-light: #fafafa;
+
+  // 背景颜色
+  --bg-color: #ffffff;
+  --bg-page: #f0f2f5;
+  --bg-overlay: rgba(0, 0, 0, 0.45);
+
+  // 侧边栏
+  --sidebar-bg: #001529;
+  --sidebar-text: #8c8c8c;
+  --sidebar-text-active: #1890ff;
+  --sidebar-item-hover: #000c17;
+
+  // 头部
+  --header-bg: #001529;
+  --header-text: #ffffff;
+  --header-border: #002140;
+
+  // 阴影
+  --shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-dark: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+// 清新绿主题
+[data-theme='green'] {
+  // 主色调
+  --primary-color: #52c41a;
+  --primary-light: #f6ffed;
+  --primary-lighter: #b7eb8f;
+
+  // 成功色
+  --success-color: #52c41a;
+  --success-light: #d9f7be;
+
+  // 警告色
+  --warning-color: #faad14;
+  --warning-light: #fff7e6;
+
+  // 危险色
+  --danger-color: #ff4d4f;
+  --danger-light: #fff1f0;
+
+  // 信息色
+  --info-color: #909399;
+  --info-light: #e9e9eb;
+
+  // 文字颜色
+  --text-primary: #262626;
+  --text-regular: #595959;
+  --text-secondary: #8c8c8c;
+  --text-placeholder: #bfbfbf;
+
+  // 边框颜色
+  --border-base: #d9d9d9;
+  --border-light: #e8e8e8;
+  --border-lighter: #f0f0f0;
+  --border-extra-light: #fafafa;
+
+  // 背景颜色
+  --bg-color: #ffffff;
+  --bg-page: #f5f9f3;
+  --bg-overlay: rgba(0, 0, 0, 0.45);
+
+  // 侧边栏
+  --sidebar-bg: #1a3a1f;
+  --sidebar-text: #95de64;
+  --sidebar-text-active: #ffffff;
+  --sidebar-item-hover: #0f2012;
+
+  // 头部
+  --header-bg: #ffffff;
+  --header-text: #262626;
+  --header-border: #f0f0f0;
+
+  // 阴影
+  --shadow-base: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-dark: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+// 优雅紫主题
+[data-theme='purple'] {
+  // 主色调
+  --primary-color: #9c27b0;
+  --primary-light: #f3e5f5;
+  --primary-lighter: #ce93d8;
+
+  // 成功色
+  --success-color: #4caf50;
+  --success-light: #e8f5e9;
+
+  // 警告色
+  --warning-color: #ff9800;
+  --warning-light: #fff3e0;
+
+  // 危险色
+  --danger-color: #f44336;
+  --danger-light: #ffebee;
+
+  // 信息色
+  --info-color: #9e9e9e;
+  --info-light: #f5f5f5;
+
+  // 文字颜色
+  --text-primary: #1a1a1a;
+  --text-regular: #424242;
+  --text-secondary: #757575;
+  --text-placeholder: #bdbdbd;
+
+  // 边框颜色
+  --border-base: #e0e0e0;
+  --border-light: #eeeeee;
+  --border-lighter: #f5f5f5;
+  --border-extra-light: #fafafa;
+
+  // 背景颜色
+  --bg-color: #ffffff;
+  --bg-page: #faf8fc;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  // 侧边栏
+  --sidebar-bg: #4a148c;
+  --sidebar-text: #e1bee7;
+  --sidebar-text-active: #ffffff;
+  --sidebar-item-hover: #38006b;
+
+  // 头部
+  --header-bg: #ffffff;
+  --header-text: #1a1a1a;
+  --header-border: #f5f5f5;
+
+  // 阴影
+  --shadow-base: 0 2px 8px rgba(156, 39, 176, 0.15);
+  --shadow-light: 0 4px 12px rgba(156, 39, 176, 0.1);
+  --shadow-dark: 0 2px 8px rgba(156, 39, 176, 0.25);
+}
+
+// 活力橙主题
+[data-theme='orange'] {
+  // 主色调
+  --primary-color: #ff9800;
+  --primary-light: #fff3e0;
+  --primary-lighter: #ffcc80;
+
+  // 成功色
+  --success-color: #4caf50;
+  --success-light: #e8f5e9;
+
+  // 警告色
+  --warning-color: #ff9800;
+  --warning-light: #fff3e0;
+
+  // 危险色
+  --danger-color: #f44336;
+  --danger-light: #ffebee;
+
+  // 信息色
+  --info-color: #9e9e9e;
+  --info-light: #f5f5f5;
+
+  // 文字颜色
+  --text-primary: #212121;
+  --text-regular: #424242;
+  --text-secondary: #757575;
+  --text-placeholder: #bdbdbd;
+
+  // 边框颜色
+  --border-base: #e0e0e0;
+  --border-light: #eeeeee;
+  --border-lighter: #f5f5f5;
+  --border-extra-light: #fafafa;
+
+  // 背景颜色
+  --bg-color: #ffffff;
+  --bg-page: #fffaf5;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  // 侧边栏
+  --sidebar-bg: #e65100;
+  --sidebar-text: #ffccbc;
+  --sidebar-text-active: #ffffff;
+  --sidebar-item-hover: #bf360c;
+
+  // 头部
+  --header-bg: #ffffff;
+  --header-text: #212121;
+  --header-border: #f5f5f5;
+
+  // 阴影
+  --shadow-base: 0 2px 8px rgba(255, 152, 0, 0.15);
+  --shadow-light: 0 4px 12px rgba(255, 152, 0, 0.1);
+  --shadow-dark: 0 2px 8px rgba(255, 152, 0, 0.25);
+}
+
+// 浪漫粉主题
+[data-theme='pink'] {
+  // 主色调
+  --primary-color: #e91e63;
+  --primary-light: #fce4ec;
+  --primary-lighter: #f48fb1;
+
+  // 成功色
+  --success-color: #4caf50;
+  --success-light: #e8f5e9;
+
+  // 警告色
+  --warning-color: #ff9800;
+  --warning-light: #fff3e0;
+
+  // 危险色
+  --danger-color: #f44336;
+  --danger-light: #ffebee;
+
+  // 信息色
+  --info-color: #9e9e9e;
+  --info-light: #f5f5f5;
+
+  // 文字颜色
+  --text-primary: #1a1a1a;
+  --text-regular: #424242;
+  --text-secondary: #757575;
+  --text-placeholder: #bdbdbd;
+
+  // 边框颜色
+  --border-base: #e0e0e0;
+  --border-light: #eeeeee;
+  --border-lighter: #f5f5f5;
+  --border-extra-light: #fafafa;
+
+  // 背景颜色
+  --bg-color: #ffffff;
+  --bg-page: #fff5f8;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  // 侧边栏
+  --sidebar-bg: #880e4f;
+  --sidebar-text: #f8bbd0;
+  --sidebar-text-active: #ffffff;
+  --sidebar-item-hover: #560027;
+
+  // 头部
+  --header-bg: #ffffff;
+  --header-text: #1a1a1a;
+  --header-border: #f5f5f5;
+
+  // 阴影
+  --shadow-base: 0 2px 8px rgba(233, 30, 99, 0.15);
+  --shadow-light: 0 4px 12px rgba(233, 30, 99, 0.1);
+  --shadow-dark: 0 2px 8px rgba(233, 30, 99, 0.25);
+}
+
+// 热情红主题
+[data-theme='red'] {
+  // 主色调
+  --primary-color: #f44336;
+  --primary-light: #ffebee;
+  --primary-lighter: #ef9a9a;
+
+  // 成功色
+  --success-color: #4caf50;
+  --success-light: #e8f5e9;
+
+  // 警告色
+  --warning-color: #ff9800;
+  --warning-light: #fff3e0;
+
+  // 危险色
+  --danger-color: #f44336;
+  --danger-light: #ffebee;
+
+  // 信息色
+  --info-color: #9e9e9e;
+  --info-light: #f5f5f5;
+
+  // 文字颜色
+  --text-primary: #1a1a1a;
+  --text-regular: #424242;
+  --text-secondary: #757575;
+  --text-placeholder: #bdbdbd;
+
+  // 边框颜色
+  --border-base: #e0e0e0;
+  --border-light: #eeeeee;
+  --border-lighter: #f5f5f5;
+  --border-extra-light: #fafafa;
+
+  // 背景颜色
+  --bg-color: #ffffff;
+  --bg-page: #fff5f5;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  // 侧边栏
+  --sidebar-bg: #b71c1c;
+  --sidebar-text: #ffcdd2;
+  --sidebar-text-active: #ffffff;
+  --sidebar-item-hover: #7f0000;
+
+  // 头部
+  --header-bg: #ffffff;
+  --header-text: #1a1a1a;
+  --header-border: #f5f5f5;
+
+  // 阴影
+  --shadow-base: 0 2px 8px rgba(244, 67, 54, 0.15);
+  --shadow-light: 0 4px 12px rgba(244, 67, 54, 0.1);
+  --shadow-dark: 0 2px 8px rgba(244, 67, 54, 0.25);
+}
+
+// 应用主题变量到全局样式
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// 滚动条主题适配
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-base);
+
+  &:hover {
+    background: var(--text-secondary);
+  }
+}
+
+// Element Plus 组件主题适配
+.el-card {
+  background-color: var(--bg-color) !important;
+  border-color: var(--border-base) !important;
+  color: var(--text-primary) !important;
+  transition: all 0.3s ease;
+
+  .el-card__header {
+    background-color: var(--bg-color) !important;
+    border-bottom-color: var(--border-lighter) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .el-card__body {
+    background-color: var(--bg-color) !important;
+    color: var(--text-primary) !important;
+  }
+}
+
+.el-button--primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+
+  &:hover, &:focus {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    opacity: 0.8;
+  }
+}
+
+.el-input__wrapper {
+  background-color: var(--bg-color) !important;
+  box-shadow: 0 0 0 1px var(--border-base) inset !important;
+
+  &:hover {
+    box-shadow: 0 0 0 1px var(--text-secondary) inset !important;
+  }
+
+  &.is-focus {
+    box-shadow: 0 0 0 1px var(--primary-color) inset !important;
+  }
+}
+
+.el-input__inner {
+  color: var(--text-primary) !important;
+  background-color: transparent !important;
+
+  &::placeholder {
+    color: var(--text-placeholder) !important;
+  }
+}
+
+.el-button {
+  background-color: var(--bg-color);
+  border-color: var(--border-base);
+  color: var(--text-regular);
+
+  &:hover, &:focus {
+    background-color: var(--primary-light);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+}
+
+.el-select-dropdown {
+  background-color: var(--bg-color) !important;
+  border-color: var(--border-light) !important;
+}
+
+.el-select-dropdown__item {
+  color: var(--text-regular) !important;
+
+  &:hover {
+    background-color: var(--primary-light) !important;
+  }
+
+  &.selected {
+    color: var(--primary-color) !important;
+    background-color: var(--primary-light) !important;
+  }
+}
+
+.el-select__popper {
+  background-color: var(--bg-color) !important;
+}
+
+.el-table {
+  background-color: var(--bg-color) !important;
+  color: var(--text-primary) !important;
+
+  th.el-table__cell {
+    background-color: var(--bg-page) !important;
+    color: var(--text-primary) !important;
+    border-bottom-color: var(--border-base) !important;
+  }
+
+  td.el-table__cell {
+    border-bottom-color: var(--border-lighter) !important;
+    background-color: var(--bg-color) !important;
+    color: var(--text-regular) !important;
+  }
+
+  tr {
+    background-color: var(--bg-color) !important;
+
+    &:hover > td {
+      background-color: var(--primary-light) !important;
+    }
+  }
+
+  .el-table__empty-block {
+    background-color: var(--bg-color) !important;
+  }
+
+  .el-table__body-wrapper {
+    background-color: var(--bg-color) !important;
+  }
+}
+
+.el-pagination {
+  .el-pagination__total,
+  .el-pagination__jump {
+    color: var(--text-regular);
+  }
+
+  button {
+    background-color: var(--bg-color);
+    color: var(--text-regular);
+
+    &:hover:not(:disabled) {
+      color: var(--primary-color);
+    }
+
+    &:disabled {
+      background-color: var(--bg-color);
+      color: var(--text-placeholder);
+    }
+  }
+
+  .el-pager li {
+    background-color: var(--bg-color);
+    color: var(--text-regular);
+
+    &:hover {
+      color: var(--primary-color);
+    }
+
+    &.is-active {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+  }
+}
+
+.el-dialog {
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-base);
+
+  .el-dialog__header {
+    border-bottom: 1px solid var(--border-lighter);
+
+    .el-dialog__title {
+      color: var(--text-primary);
+    }
+  }
+
+  .el-dialog__body {
+    color: var(--text-regular);
+  }
+
+  .el-dialog__footer {
+    border-top: 1px solid var(--border-lighter);
+  }
+}
+
+.el-message-box {
+  background-color: var(--bg-color);
+  border-color: var(--border-base);
+
+  .el-message-box__title {
+    color: var(--text-primary);
+  }
+
+  .el-message-box__content {
+    color: var(--text-regular);
+  }
+}
+
+.el-dropdown-menu {
+  background-color: var(--bg-color);
+  border-color: var(--border-light);
+
+  .el-dropdown-menu__item {
+    color: var(--text-regular);
+
+    &:hover {
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+    }
+  }
+}
+
+.el-tag {
+  border-color: var(--border-base) !important;
+  background-color: var(--bg-color) !important;
+  color: var(--text-regular) !important;
+
+  &.el-tag--primary {
+    background-color: var(--primary-light) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+  }
+
+  &.el-tag--success {
+    background-color: var(--success-light) !important;
+    color: var(--success-color) !important;
+    border-color: var(--success-color) !important;
+  }
+
+  &.el-tag--warning {
+    background-color: var(--warning-light) !important;
+    color: var(--warning-color) !important;
+    border-color: var(--warning-color) !important;
+  }
+
+  &.el-tag--danger {
+    background-color: var(--danger-light) !important;
+    color: var(--danger-color) !important;
+    border-color: var(--danger-color) !important;
+  }
+
+  &.el-tag--info {
+    background-color: var(--info-light) !important;
+    color: var(--info-color) !important;
+    border-color: var(--info-color) !important;
+  }
+}
+
+.el-form-item__label {
+  color: var(--text-regular);
+}
+
+// 侧边栏菜单特殊样式
+.el-menu {
+  &.sidebar-menu {
+    .el-sub-menu {
+      .el-menu {
+        background-color: var(--sidebar-bg) !important;
+      }
+
+      .el-menu-item {
+        background-color: var(--sidebar-bg) !important;
+
+        &:hover {
+          background-color: var(--sidebar-item-hover) !important;
+        }
+      }
+    }
+  }
+}
+
+// 确保弹出的子菜单也使用主题颜色
+.el-menu--popup {
+  background-color: var(--bg-color) !important;
+
+  .el-menu-item {
+    color: var(--text-regular);
+
+    &:hover {
+      background-color: var(--primary-light);
+    }
+  }
+}
+

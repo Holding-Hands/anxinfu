@@ -11,9 +11,7 @@
         :collapse="isCollapse"
         :unique-opened="true"
         :collapse-transition="false"
-        background-color="#ffffff"
-        text-color="#333333"
-        active-text-color="#409EFF"
+        class="sidebar-menu"
         router
       >
         <template v-for="item in menuList" :key="item.path">
@@ -136,6 +134,7 @@ const menuList = [
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: var(--sidebar-bg);
 }
 
 .logo-container {
@@ -143,26 +142,22 @@ const menuList = [
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
-  border-bottom: 1px solid #e8e8e8;
+  background: var(--sidebar-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
   .logo-title {
     font-size: 24px;
     font-weight: bold;
     letter-spacing: 2px;
     margin: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--sidebar-text-active);
   }
 
   .logo-title-mini {
     font-size: 24px;
     font-weight: bold;
     margin: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--sidebar-text-active);
   }
 
   &.is-collapse {
@@ -178,19 +173,68 @@ const menuList = [
   }
 }
 
-:deep(.el-menu) {
+:deep(.el-menu.sidebar-menu) {
   border-right: none;
+  background-color: var(--sidebar-bg);
 
   .el-menu-item,
   .el-sub-menu__title {
+    color: var(--sidebar-text);
+
     &:hover {
-      background-color: #f5f7fa !important;
+      background-color: var(--sidebar-item-hover) !important;
+      color: var(--sidebar-text-active);
+    }
+
+    .el-icon {
+      color: var(--sidebar-text);
     }
   }
 
   .el-menu-item.is-active {
-    background-color: #ecf5ff !important;
-    color: #409eff !important;
+    background-color: var(--sidebar-item-hover) !important;
+    color: var(--sidebar-text-active) !important;
+
+    .el-icon {
+      color: var(--sidebar-text-active);
+    }
+  }
+
+  .el-sub-menu.is-active > .el-sub-menu__title {
+    color: var(--sidebar-text-active);
+  }
+
+  // 子菜单容器
+  .el-sub-menu {
+    .el-sub-menu__title {
+      &:hover {
+        .el-icon {
+          color: var(--sidebar-text-active);
+        }
+      }
+    }
+
+    .el-menu {
+      background-color: var(--sidebar-bg) !important;
+    }
+
+    .el-menu-item {
+      min-width: 0;
+      background-color: var(--sidebar-bg) !important;
+      color: var(--sidebar-text);
+      padding-left: 50px !important;
+
+      &:hover {
+        background-color: var(--sidebar-item-hover) !important;
+        color: var(--sidebar-text-active) !important;
+      }
+
+      &.is-active {
+        background-color: var(--sidebar-item-hover) !important;
+        color: var(--sidebar-text-active) !important;
+        font-weight: 500;
+      }
+    }
   }
 }
 </style>

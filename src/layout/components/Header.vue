@@ -13,6 +13,9 @@
     </div>
 
     <div class="right-menu">
+      <!-- 主题切换 -->
+      <ThemeSwitcher />
+
       <el-tooltip content="全屏" placement="bottom">
         <el-icon class="action-icon" @click="toggleFullscreen">
           <FullScreen />
@@ -62,6 +65,7 @@ import {
 } from '@element-plus/icons-vue'
 import { useAppStore } from '@/stores/app'
 import { useUserStore } from '@/stores/user'
+import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -127,6 +131,8 @@ const handleLogout = () => {
   justify-content: space-between;
   width: 100%;
   height: 100%;
+  background-color: var(--header-bg);
+  color: var(--header-text);
 }
 
 .left-menu {
@@ -138,9 +144,10 @@ const handleLogout = () => {
     font-size: 20px;
     cursor: pointer;
     transition: all 0.3s;
+    color: var(--header-text);
 
     &:hover {
-      color: #1890ff;
+      color: var(--primary-color);
     }
   }
 }
@@ -154,9 +161,10 @@ const handleLogout = () => {
     font-size: 20px;
     cursor: pointer;
     transition: all 0.3s;
+    color: var(--header-text);
 
     &:hover {
-      color: #1890ff;
+      color: var(--primary-color);
     }
   }
 
@@ -170,18 +178,30 @@ const handleLogout = () => {
     transition: all 0.3s;
 
     &:hover {
-      background-color: #f5f5f5;
+      background-color: var(--bg-page);
     }
 
     .username {
       font-size: 14px;
-      color: #333;
+      color: var(--header-text);
     }
   }
 }
 
 :deep(.el-breadcrumb) {
   font-size: 14px;
+
+  .el-breadcrumb__inner {
+    color: var(--text-regular);
+
+    &.is-link {
+      color: var(--text-secondary);
+
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+  }
 }
 </style>
 

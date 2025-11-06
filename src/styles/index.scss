@@ -1,3 +1,6 @@
+// 引入主题样式
+@import './themes.scss';
+
 * {
   margin: 0;
   padding: 0;
@@ -23,15 +26,15 @@ body,
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--bg-page);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--border-base);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--text-secondary);
 }
 
