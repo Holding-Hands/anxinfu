@@ -43,7 +43,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="12" :md="8" :lg="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="5">
             <el-form-item label="姓名">
               <el-input
                 v-model="queryParams.name"
@@ -54,7 +54,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="12" :md="8" :lg="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="5">
             <el-form-item label="手机号">
               <el-input
                 v-model="queryParams.mobile"
@@ -65,7 +65,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="12" :md="8" :lg="6">
+          <el-col :xs="24" :sm="24" :md="24" :lg="2">
             <el-form-item label=" " class="filter-actions">
               <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
             </el-form-item>
