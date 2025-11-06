@@ -301,3 +301,54 @@ export interface AllySummaryResponse {
 export const getAllySummaryApi = (params: AllySummaryParams) => {
   return request.get<AllySummaryResponse>('/index/trade_sum/getlistsum.html', { params })
 }
+
+// ==================== 交易汇总列表接口 ====================
+
+// 交易汇总列表查询参数
+export interface TradeSumListParams {
+  page: number
+  limit: number
+  sys_type?: number | string // 模式 1:1.0模式 2:2.0模式 或空字符串表示全部
+  product_id?: number // 产品 0:全部 1:国通微智能 2:陆POS 3:合利宝 4:拉卡拉电签 5:星驿付真商
+  card_type?: string // 交易类型 '':全部 '1':贷记卡 '2':扫码 '3':借记卡 '4':闪付
+  mobile?: string // 用户手机号
+  month?: string // 月份 格式: 202511
+}
+
+// 交易汇总列表数据项
+export interface TradeSumListItem {
+  id: number
+  user_id: number
+  user_name: string // 所属盟友
+  mobile: string // 手机号
+  m_id: number
+  sys_type: number // 模式
+  sys_type_name: string // 模式名称
+  product_id: number // 产品ID
+  product_name: string // 产品名称
+  platform_id: number
+  card_type: string // 交易类型
+  zy_money: string // 直营交易
+  td_money: string // 团队交易
+  month: number // 月份
+  create_time: number
+  update_time: number
+  read_time: number
+  is_read: number
+}
+
+// 交易汇总列表响应
+export interface TradeSumListResponse {
+  code: number
+  msg: string
+  count: number
+  data: TradeSumListItem[]
+  total: number
+  total_zy_money?: number // 总直营交易额
+  total_td_money?: number // 总团队交易额
+}
+
+// 获取交易汇总列表
+export const getTradeSumListApi = (params: TradeSumListParams) => {
+  return request.get<TradeSumListResponse>('/index/trade_sum/getlist.html', { params })
+}

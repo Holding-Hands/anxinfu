@@ -89,3 +89,41 @@ export const SYS_TYPE_MAP: Record<string | number, string> = {
   1: '1.0模式',
   2: '2.0模式'
 }
+
+// 交易类型选项
+export const CARD_TYPE_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '贷记卡', value: '1' },
+  { label: '扫码', value: '2' },
+  { label: '借记卡', value: '3' },
+  { label: '闪付', value: '4' }
+]
+
+// 交易类型映射
+export const CARD_TYPE_MAP: Record<string, string> = {
+  '': '全部',
+  '1': '贷记卡',
+  '2': '扫码',
+  '3': '借记卡',
+  '4': '闪付'
+}
+
+// 产品选项
+export const PRODUCT_OPTIONS = [
+  { label: '全部', value: 0 },
+  { label: '国通微智能', value: 1 },
+  { label: '陆POS', value: 2 },
+  { label: '合利宝', value: 3 },
+  { label: '拉卡拉电签', value: 4 },
+  { label: '星驿付真商', value: 5 }
+]
+
+// 产品映射
+export const PRODUCT_MAP: Record<number, string> = {
+  0: '全部',
+  1: '国通微智能',
+  2: '陆POS',
+  3: '合利宝',
+  4: '拉卡拉电签',
+  5: '星驿付真商'
+}
