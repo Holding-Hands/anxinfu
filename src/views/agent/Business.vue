@@ -4,7 +4,7 @@
       <!-- 筛选表单 -->
       <el-form :model="queryParams" label-width="100px" class="filter-form">
         <el-row :gutter="20">
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="模式">
               <el-select
                 v-model="queryParams.sys_type"
@@ -23,7 +23,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="产品">
               <el-select
                 v-model="queryParams.product_id"
@@ -42,7 +42,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="交易类型">
               <el-select
                 v-model="queryParams.card_type"
@@ -61,7 +61,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="用户手机号">
               <el-input
                 v-model="queryParams.mobile"
@@ -72,10 +72,8 @@
               />
             </el-form-item>
           </el-col>
-        </el-row>
 
-        <el-row :gutter="20">
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="月份">
               <el-date-picker
                 v-model="queryParams.month"
@@ -90,7 +88,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="18">
+          <el-col :xs="24" :sm="12" :md="8" :lg="18">
             <el-form-item label=" " class="filter-actions">
               <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
               <el-button :icon="Refresh" @click="handleReset">重置</el-button>

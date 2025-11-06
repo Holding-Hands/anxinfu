@@ -4,7 +4,7 @@
       <!-- 筛选表单 -->
       <el-form :model="queryParams" label-width="100px" class="filter-form">
         <el-row :gutter="20">
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="所属团队">
               <el-select
                 v-model="queryParams.m_id"
@@ -23,7 +23,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="手机号">
               <el-input
                 v-model="queryParams.mobile"
@@ -34,7 +34,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="用户类别">
               <el-select
                 v-model="queryParams.user_type"
@@ -53,7 +53,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="等级">
               <el-select
                 v-model="queryParams.level"
@@ -71,10 +71,8 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
 
-        <el-row :gutter="20">
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="姓名">
               <el-input
                 v-model="queryParams.name"
@@ -85,7 +83,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="实名状态">
               <el-select
                 v-model="queryParams.is_auth"
@@ -104,7 +102,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">
+          <el-col :xs="24" :sm="12" :md="8" :lg="12">
             <el-form-item label=" " class="filter-actions">
               <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
               <el-button :icon="Refresh" @click="handleReset">重置</el-button>

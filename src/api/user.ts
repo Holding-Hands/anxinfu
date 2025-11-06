@@ -352,3 +352,53 @@ export interface TradeSumListResponse {
 export const getTradeSumListApi = (params: TradeSumListParams) => {
   return request.get<TradeSumListResponse>('/index/trade_sum/getlist.html', { params })
 }
+
+// ==================== 每天业绩接口 ====================
+
+// 每天业绩查询参数
+export interface DayListParams {
+  page: number
+  limit: number
+  sys_type?: number | string // 模式 1:1.0模式 2:2.0模式 或空字符串表示全部
+  product_id?: number // 产品 0:全部 1:国通微智能 2:陆POS 3:合利宝 4:拉卡拉电签 5:星驿付真商
+  card_type?: string // 交易类型 '':全部 '1':贷记卡 '2':扫码 '3':借记卡 '4':闪付
+  mobile?: string // 用户手机号
+  day?: string // 日期 格式: YYYY-MM-DD (例如: 2025-11-06)
+}
+
+// 每天业绩数据项
+export interface DayListItem {
+  id: number
+  user_id: number
+  user_name: string // 所属盟友
+  mobile: string // 手机号
+  m_id: number
+  sys_type: number // 模式
+  sys_type_name: string // 模式名称
+  product_id: number // 产品ID
+  product_name: string // 产品名称
+  platform_id: number
+  card_type: string // 交易类型
+  zy_money: string // 直营交易
+  td_money: string // 团队交易
+  day: number // 日期
+  create_time: number
+  update_time: number
+  read_time: number
+  is_read: number
+}
+
+// 每天业绩响应
+export interface DayListResponse {
+  code: number
+  msg: string
+  count: number
+  data: DayListItem[]
+  total: number
+  zy_money?: string // 总直营交易额
+}
+
+// 获取每天业绩列表
+export const getDayListApi = (params: DayListParams) => {
+  return request.get<DayListResponse>('/index/trade_sum/daylist.html', { params })
+}
