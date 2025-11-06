@@ -118,16 +118,22 @@
         :summary-method="getSummaries"
       >
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column prop="id" label="ID" width="80" align="center" fixed="left" />
+        <el-table-column prop="id" label="ID" min-width="80" align="center" fixed="left" />
 
-        <el-table-column prop="user_name" label="所属盟友" width="200" align="center" fixed="left">
+        <el-table-column
+          prop="user_name"
+          label="所属盟友"
+          min-width="200"
+          align="center"
+          fixed="left"
+        >
           <template #default="{ row }">
             <div>{{ row.user_name }}</div>
             <div style="font-size: 12px; color: #999">{{ row.mobile }}</div>
           </template>
         </el-table-column>
 
-        <el-table-column prop="sys_type_name" label="模式" width="120" align="center">
+        <el-table-column prop="sys_type_name" label="模式" min-width="120" align="center">
           <template #default="{ row }">
             <el-tag :type="row.sys_type === 1 ? 'success' : 'warning'">
               {{ row.sys_type_name }}
@@ -135,27 +141,27 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="product_name" label="产品" width="150" align="center" />
+        <el-table-column prop="product_name" label="产品" min-width="150" align="center" />
 
-        <el-table-column prop="card_type" label="交易类型" width="120" align="center">
+        <el-table-column prop="card_type" label="交易类型" min-width="120" align="center">
           <template #default="{ row }">
             <el-tag>{{ row.card_type }}</el-tag>
           </template>
         </el-table-column>
 
-        <el-table-column prop="zy_money" label="直营交易" width="150" align="center">
+        <el-table-column prop="zy_money" label="直营交易" min-width="150" align="center">
           <template #default="{ row }">
             <span style="color: #67c23a; font-weight: bold">¥{{ formatMoney(row.zy_money) }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column prop="td_money" label="团队交易" width="150" align="center">
+        <el-table-column prop="td_money" label="团队交易" min-width="150" align="center">
           <template #default="{ row }">
             <span style="color: #409eff; font-weight: bold">¥{{ formatMoney(row.td_money) }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column prop="month" label="月份" width="120" align="center">
+        <el-table-column prop="month" label="月份" min-width="120" align="center">
           <template #default="{ row }">
             {{ formatMonth(row.month) }}
           </template>

@@ -77,10 +77,11 @@ const menuList = [
   {
     path: '/agent',
     icon: User,
-    meta: { title: '代理商管理' },
+    meta: { title: '盟友管理' },
     children: [
-      { path: '/agent/ally-list-10', meta: { title: '1.0盟友列表' } },
       { path: '/agent/ally-list', meta: { title: '2.0盟友列表' } },
+      { path: '/agent/ally-list-10', meta: { title: '1.0盟友列表' } },
+      { path: '/agent/list-v1', meta: { title: '1.0盟友结算价' } },
       { path: '/agent/ally-summary', meta: { title: '盟友业绩汇总' } },
       { path: '/agent/business', meta: { title: '盟友业绩' } },
       { path: '/agent/daily', meta: { title: '每天业绩' } }

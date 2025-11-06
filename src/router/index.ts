@@ -34,7 +34,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/layout/index.vue'),
     redirect: '/agent/ally-list',
     meta: {
-      title: '代理商管理',
+      title: '盟友管理',
       icon: 'User'
     },
     children: [
@@ -52,6 +52,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/agent/AllyList10.vue'),
         meta: {
           title: '1.0盟友列表'
+        }
+      },
+      {
+        path: 'list-v1',
+        name: 'ListV1',
+        component: () => import('@/views/agent/ListV1.vue'),
+        meta: {
+          title: '1.0盟友结算价'
         }
       },
       {

@@ -402,3 +402,123 @@ export interface DayListResponse {
 export const getDayListApi = (params: DayListParams) => {
   return request.get<DayListResponse>('/index/trade_sum/daylist.html', { params })
 }
+
+// ==================== 1.0盟友结算价接口 ====================
+
+// 1.0盟友结算价查询参数
+export interface UserSettleListParams {
+  page: number
+  limit: number
+  platform_id?: number | string // 产品 0:全部
+  product_id?: number | string // 产品名称
+  name?: string // 姓名
+  mobile?: string // 手机号
+  tdz_mobile?: string // 团队长手机号
+}
+
+// 1.0盟友结算价数据项
+export interface UserSettleListItem {
+  id: number
+  user_id: number // 用户ID
+  uName: string // 姓名
+  uMobile: string // 电话
+  pnums: number // 第N代
+  pName: string // 产品名称
+  product_id: number // 产品ID
+  platform_id: number
+  m_id: number
+  code_price: string // 扫码结算价
+  card_price: string // 刷卡结算价
+  rise_price: string // 上流结算价(万)
+  rise_price_show: string // 上流结算价显示（含HTML）
+  tjfc_percent: number // 调价分成%
+  first_money: string // 一次达标
+  second_money: string // 二次达标
+  third_money: string // 三次达标
+  active_money: string // 激活奖
+  liu_percent: string // 流量费分成
+  single_money: string // 单笔奖励
+  jjk_price: string // 借记卡价格
+  vip_price: string // VIP价格
+  create_time: string // 创建时间
+  update_time: string // 更新时间
+}
+
+// 1.0盟友结算价响应
+export interface UserSettleListResponse {
+  code: number
+  msg: string
+  count: number
+  data: UserSettleListItem[]
+  total: number
+}
+
+// 获取1.0盟友结算价列表
+export const getUserSettleListApi = (params: UserSettleListParams) => {
+  return request.get<UserSettleListResponse>('/index/usersettle/getlist.html', { params })
+}
+
+// 修改上流结算价参数
+export interface EditSettlePriceParams {
+  id: number // 记录ID
+  number: number // 上流结算价
+}
+
+// 修改上流结算价响应
+export interface EditSettlePriceResponse {
+  code: number
+  msg: string
+  data: string
+  url: string
+  wait: number
+}
+
+// 修改上流结算价
+export const editSettlePriceApi = (data: EditSettlePriceParams) => {
+  return request.post<EditSettlePriceResponse>('/index/usersettle/editnumber.html', data)
+}
+
+// 修改调价分成参数
+export interface EditTjfcPercentParams {
+  id: number // 记录ID
+  number: number // 调价分成%
+}
+
+// 修改调价分成响应
+export interface EditTjfcPercentResponse {
+  code: number
+  msg: string
+  data: string
+  url: string
+  wait: number
+}
+
+// 修改调价分成
+export const editTjfcPercentApi = (data: EditTjfcPercentParams) => {
+  return request.post<EditTjfcPercentResponse>('/index/usersettle/tjfc_percent.html', data)
+}
+
+// 编辑用户结算价参数
+export interface EditUserSettleParams {
+  id: number // 记录ID
+  code_price: string | number // 扫码结算价
+  card_price: string | number // 刷卡结算价
+  liu_percent: string | number // 流量费
+  first_money: string | number // 一次达标奖
+  second_money: string | number // 二次达标奖
+  third_money: string | number // 三次达标奖
+}
+
+// 编辑用户结算价响应
+export interface EditUserSettleResponse {
+  code: number
+  msg: string
+  data: string
+  url: string
+  wait: number
+}
+
+// 编辑用户结算价
+export const editUserSettleApi = (data: EditUserSettleParams) => {
+  return request.post<EditUserSettleResponse>('/index/usersettle/edit.html', data)
+}
