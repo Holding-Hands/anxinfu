@@ -89,7 +89,8 @@ const menuList = [
   {
     path: '/product',
     icon: Goods,
-    meta: { title: '产品管理' }
+    meta: { title: '产品管理' },
+    children: [{ path: '/product/platform', meta: { title: '平台管理' } }]
   },
   {
     path: '/mall',

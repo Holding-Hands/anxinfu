@@ -99,13 +99,18 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/product',
     component: () => import('@/layout/index.vue'),
+    redirect: '/product/platform',
+    meta: {
+      title: '产品管理',
+      icon: 'Goods'
+    },
     children: [
       {
-        path: '',
-        name: 'Product',
-        component: () => import('@/views/Product.vue'),
+        path: 'platform',
+        name: 'PlatformManage',
+        component: () => import('@/views/product/PlatformManage.vue'),
         meta: {
-          title: '产品管理'
+          title: '平台管理'
         }
       }
     ]

@@ -15,7 +15,8 @@
 
   // Loading 和遮罩层颜色（浅色主题用白色半透明）
   --el-overlay-color-lighter: rgba(255, 255, 255, 0.7);
-  --el-mask-color: rgba(0, 0, 0, 0.5);
+  //--el-mask-color: rgba(0, 0, 0, 0.5);
+  --el-mask-color: #409eff;
 
   --el-text-color-primary: #303133;
   --el-text-color-regular: #606266;

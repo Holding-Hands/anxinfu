@@ -625,3 +625,168 @@ export const editUserSimApi = (data: EditUserSimParams) => {
     }
   })
 }
+
+// ==================== 平台管理接口 ====================
+
+// 平台管理列表查询参数
+export interface PlatformListParams {
+  page: number
+  limit: number
+  title?: string // 平台名称
+}
+
+// 平台管理列表数据项
+export interface PlatformListItem {
+  id: number
+  m_id: number
+  title: string // 平台名称
+  card_price: string // 刷卡价格
+  code_price: string // 扫码价格
+  vip_price: string // VIP价格
+  sort: number // 排序
+  status: string // 状态（已启用/已禁用）
+  create_time: string // 创建时间
+  update_time: string // 更新时间
+  statusValue?: boolean // 用于el-switch的状态值
+}
+
+// 平台管理列表响应
+export interface PlatformListResponse {
+  code: number
+  msg: string
+  count: number
+  data: PlatformListItem[]
+  total: number
+}
+
+// 获取平台管理列表
+export const getPlatformListApi = (params: PlatformListParams) => {
+  return request.get<PlatformListResponse>('/index/platform/getlist.html', { params })
+}
+
+// 新增平台参数
+export interface AddPlatformParams {
+  title: string // 平台名称
+  sort: number // 排序
+}
+
+// 新增平台响应
+export interface AddPlatformResponse {
+  code: number
+  msg: string
+  data: string
+  url: string
+  wait: number
+}
+
+// 新增平台
+export const addPlatformApi = (data: AddPlatformParams) => {
+  // 转换为表单格式
+  const formData = new URLSearchParams()
+  formData.append('title', data.title)
+  formData.append('sort', String(data.sort))
+
+  return request.post<AddPlatformResponse>('/index/platform/add.html', formData, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+// 编辑平台参数
+export interface EditPlatformParams {
+  id: number // 平台ID
+  title: string // 平台名称
+  sort: number // 排序
+}
+
+// 编辑平台响应
+export interface EditPlatformResponse {
+  code: number
+  msg: string
+  data: string
+  url: string
+  wait: number
+}
+
+// 编辑平台
+export const editPlatformApi = (data: EditPlatformParams) => {
+  // 转换为表单格式
+  const formData = new URLSearchParams()
+  formData.append('id', String(data.id))
+  formData.append('title', data.title)
+  formData.append('sort', String(data.sort))
+
+  return request.post<EditPlatformResponse>('/index/platform/edit.html', formData, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+// 删除平台参数
+export interface DeletePlatformParams {
+  ids: number | string // 平台ID，多个用逗号分隔
+}
+
+// 删除平台响应
+export interface DeletePlatformResponse {
+  code: number
+  msg: string
+  data: string
+  url: string
+  wait: number
+}
+
+// 删除平台
+export const deletePlatformApi = (data: DeletePlatformParams) => {
+  // 转换为表单格式
+  const formData = new URLSearchParams()
+  formData.append('ids', String(data.ids))
+
+  return request.post<DeletePlatformResponse>('/index/platform/del.html', formData, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+// 设置平台启用/禁用参数
+export interface SetPlatformEnableParams {
+  jsonData: string // JSON数组字符串
+}
+
+// 设置平台启用/禁用响应
+export interface SetPlatformEnableResponse {
+  code: number
+  msg: string
+  data: string
+  url: string
+  wait: number
+}
+
+// 设置平台启用
+export const setPlatformEnableApi = (data: SetPlatformEnableParams) => {
+  // 转换为表单格式
+  const formData = new URLSearchParams()
+  formData.append('jsonData', data.jsonData)
+
+  return request.post<SetPlatformEnableResponse>('/index/platform/setenable.html', formData, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+// 设置平台禁用
+export const setPlatformDisableApi = (data: SetPlatformEnableParams) => {
+  // 转换为表单格式
+  const formData = new URLSearchParams()
+  formData.append('jsonData', data.jsonData)
+
+  return request.post<SetPlatformEnableResponse>('/index/platform/setdisable.html', formData, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
