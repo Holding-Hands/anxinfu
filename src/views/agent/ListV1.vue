@@ -11,7 +11,7 @@
                 placeholder="请选择平台"
                 clearable
                 filterable
-                @change="handleQuery"
+                @change="handlePlatformChange"
               >
                 <el-option
                   v-for="item in PRODUCT_OPTIONS"
@@ -24,16 +24,17 @@
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8" :lg="6">
-            <el-form-item label="选择样">
+            <el-form-item label="子产品">
               <el-select
                 v-model="queryParams.product_id"
-                placeholder="请选择样"
+                placeholder="请选择子产品"
                 clearable
                 filterable
+                :disabled="!queryParams.platform_id || childProductOptions.length === 0"
                 @change="handleQuery"
               >
                 <el-option
-                  v-for="item in PRODUCT_OPTIONS"
+                  v-for="item in childProductOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -303,6 +304,7 @@ import {
   editSettlePriceApi,
   editTjfcPercentApi,
   editUserSettleApi,
+  getChildProductApi,
   type UserSettleListParams,
   type UserSettleListItem
 } from '@/api/user'
@@ -324,6 +326,10 @@ const queryParams = reactive<UserSettleListParams>({
 const tableData = ref<UserSettleListItem[]>([])
 const total = ref(0)
 const loading = ref(false)
+
+// 子产品选项
+const childProductOptions = ref<Array<{ label: string; value: number }>>([])
+const loadingChildProducts = ref(false)
 
 // 编辑上流结算价弹窗
 const dialogVisible = ref(false)
@@ -353,6 +359,52 @@ const editUserForm = reactive({
   second_money: '',
   third_money: ''
 })
+
+// 获取子产品列表
+const getChildProducts = async (platformId: number | string) => {
+  if (!platformId) {
+    childProductOptions.value = []
+    return
+  }
+
+  loadingChildProducts.value = true
+  try {
+    const res = await getChildProductApi({ pid: Number(platformId) })
+    console.log('子产品响应:', res)
+
+    // 将返回的数据对象转换为选项数组
+    const options: Array<{ label: string; value: number }> = []
+    if (res.data) {
+      Object.entries(res.data).forEach(([key, value]) => {
+        options.push({
+          value: Number(key),
+          label: value
+        })
+      })
+    }
+    childProductOptions.value = options
+  } catch (error) {
+    console.error('获取子产品失败:', error)
+    childProductOptions.value = []
+  } finally {
+    loadingChildProducts.value = false
+  }
+}
+
+// 处理产品（平台）变化
+const handlePlatformChange = async (value: number | string) => {
+  // 清空子产品选择
+  queryParams.product_id = ''
+  childProductOptions.value = []
+
+  // 如果选择了产品，获取子产品列表
+  if (value) {
+    await getChildProducts(value)
+  }
+
+  // 查询列表
+  handleQuery()
+}
 
 // 获取列表数据
 const getList = async () => {

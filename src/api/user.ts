@@ -522,3 +522,23 @@ export interface EditUserSettleResponse {
 export const editUserSettleApi = (data: EditUserSettleParams) => {
   return request.post<EditUserSettleResponse>('/index/usersettle/edit.html', data)
 }
+
+// ==================== 获取子产品接口 ====================
+
+// 获取子产品参数
+export interface GetChildProductParams {
+  pid: number // 父产品ID
+}
+
+// 获取子产品响应
+export interface GetChildProductResponse {
+  code: number
+  msg: string
+  count: string
+  data: Record<string, string> // 键是ID，值是产品名称，例如: {4: "拉卡拉电签"}
+}
+
+// 获取子产品
+export const getChildProductApi = (params: GetChildProductParams) => {
+  return request.get<GetChildProductResponse>('/index/platform/getcp.html', { params })
+}
