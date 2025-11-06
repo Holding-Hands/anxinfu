@@ -542,3 +542,86 @@ export interface GetChildProductResponse {
 export const getChildProductApi = (params: GetChildProductParams) => {
   return request.get<GetChildProductResponse>('/index/platform/getcp.html', { params })
 }
+
+// ==================== 代理流量费政策接口 ====================
+
+// 代理流量费政策查询参数
+export interface UserSimListParams {
+  page: number
+  limit: number
+  platform_id?: number | string // 产品 0:全部
+  product_id?: number | string // 产品名称
+  name?: string // 姓名
+  mobile?: string // 手机号
+}
+
+// 代理流量费政策数据项
+export interface UserSimListItem {
+  id: number
+  user_id: number // 用户ID
+  uName: string // 姓名
+  uMobile: string // 电话
+  pName: string // 产品名称
+  product_id: number // 产品ID
+  platform_id: number
+  m_id: number
+  sim_id: number
+  sim_money: string | number // 流量费（档位）
+  u_sim_money: string // 首年流量费
+  u_sim_money2: string // 次年流量费
+  create_time: string // 创建时间
+  update_time: string // 更新时间
+}
+
+// 代理流量费政策响应
+export interface UserSimListResponse {
+  code: number
+  msg: string
+  count: number
+  data: UserSimListItem[]
+  total: number
+}
+
+// 获取代理流量费政策列表
+export const getUserSimListApi = (params: UserSimListParams) => {
+  return request.get<UserSimListResponse>('/index/user_sim/getlist.html', { params })
+}
+
+// 编辑代理流量费政策参数
+export interface EditUserSimParams {
+  id: number // 记录ID
+  uName: string // 姓名
+  uMobile: string // 手机号
+  pName: string // 产品名称
+  p_sim_money: string | number // 流量费档位（对应sim_money）
+  sim_money: string | number // 首年流量费（对应u_sim_money）
+  sim_money2: string | number // 次年流量费（对应u_sim_money2）
+}
+
+// 编辑代理流量费政策响应
+export interface EditUserSimResponse {
+  code: number
+  msg: string
+  data: string
+  url: string
+  wait: number
+}
+
+// 编辑代理流量费政策
+export const editUserSimApi = (data: EditUserSimParams) => {
+  // 转换为表单格式
+  const formData = new URLSearchParams()
+  formData.append('id', String(data.id))
+  formData.append('uName', data.uName)
+  formData.append('uMobile', data.uMobile)
+  formData.append('pName', data.pName)
+  formData.append('p_sim_money', String(data.p_sim_money))
+  formData.append('sim_money', String(data.sim_money))
+  formData.append('sim_money2', String(data.sim_money2))
+
+  return request.post<EditUserSimResponse>('/index/user_sim/edit.html', formData, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}

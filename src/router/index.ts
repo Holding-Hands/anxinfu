@@ -63,6 +63,14 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
+        path: 'agent-flow-policy',
+        name: 'AgentFlowPolicy',
+        component: () => import('@/views/agent/AgentFlowPolicy.vue'),
+        meta: {
+          title: '代理流量费政策'
+        }
+      },
+      {
         path: 'ally-summary',
         name: 'AllySummary',
         component: () => import('@/views/agent/AllySummary.vue'),
