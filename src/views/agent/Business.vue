@@ -217,8 +217,10 @@ const getList = async () => {
     console.log('盟友业绩列表响应:', res)
     console.log('数据示例:', res.data?.[0])
 
-    // 根据实际返回的数据结构处理
-    tableData.value = res.data || []
+    // 根据实际返回的数据结构处理，过滤掉无效数据
+    const rawData = res.data || []
+    // 过滤掉 id 为空或 undefined 的无效数据
+    tableData.value = rawData.filter((item: TradeSumListItem) => item && item.id)
     total.value = res.count || res.total || 0
 
     // 计算总额
@@ -295,9 +297,9 @@ const formatMonth = (month: number | string): string => {
 }
 
 // 合计行
-const getSummaries = (param: { columns: any[]; data: TradeSumListItem[] }) => {
+const getSummaries = (param: { columns: { property?: string }[]; data: TradeSumListItem[] }) => {
   const { columns } = param
-  const sums: (string | number)[] = []
+  const sums: string[] = []
 
   columns.forEach((column, index) => {
     if (index === 0) {
