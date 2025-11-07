@@ -128,6 +128,22 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '押金政策'
         }
+      },
+      {
+        path: 'traffic-policy',
+        name: 'TrafficPolicy',
+        component: () => import('@/views/product/TrafficPolicy.vue'),
+        meta: {
+          title: '流量费政策'
+        }
+      },
+      {
+        path: 'settle-rise-price',
+        name: 'SettleRisePrice',
+        component: () => import('@/views/product/SettleRisePrice.vue'),
+        meta: {
+          title: '上涨结算价'
+        }
       }
     ]
   },

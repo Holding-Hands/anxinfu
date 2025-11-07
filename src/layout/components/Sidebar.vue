@@ -93,7 +93,9 @@ const menuList = [
     children: [
       { path: '/product/platform', meta: { title: '平台管理' } },
       { path: '/product/list', meta: { title: '产品列表' } },
-      { path: '/product/deposit-policy', meta: { title: '押金政策' } }
+      { path: '/product/deposit-policy', meta: { title: '押金政策' } },
+      { path: '/product/traffic-policy', meta: { title: '流量费政策' } },
+      { path: '/product/settle-rise-price', meta: { title: '上涨结算价' } }
     ]
   },
   {
