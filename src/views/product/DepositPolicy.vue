@@ -201,6 +201,12 @@ interface ApiResponse {
   data: DepositPolicyItem[]
 }
 
+// 定义操作响应接口（用于删除、启用、禁用等操作）
+interface OperationResponse {
+  code: number
+  msg: string
+}
+
 // 查询参数
 const queryParams = reactive<QueryParams>({
   page: 1,
@@ -314,7 +320,7 @@ const handleDelete = async (row: DepositPolicyItem) => {
     const formData = new URLSearchParams()
     formData.append('ids', String(row.id))
 
-    const res = await request.post('/index/product_active/del.html', formData, {
+    const res = await request.post<OperationResponse>('/index/product_active/del.html', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -358,7 +364,7 @@ const handleBatchDelete = async () => {
     const formData = new URLSearchParams()
     formData.append('ids', selectedIds.value.join(','))
 
-    const res = await request.post('/index/product_active/del.html', formData, {
+    const res = await request.post<OperationResponse>('/index/product_active/del.html', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -392,7 +398,7 @@ const handleStatusChange = async (row: DepositPolicyItem) => {
     const formData = new URLSearchParams()
     formData.append('ids', String(row.id))
 
-    const res = await request.post(url, formData, {
+    const res = await request.post<OperationResponse>(url, formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }

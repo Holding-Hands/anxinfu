@@ -144,6 +144,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '上涨结算价'
         }
+      },
+      {
+        path: 'product-rise-price',
+        name: 'ProductRisePrice',
+        component: () => import('@/views/product/ProductRisePrice.vue'),
+        meta: {
+          title: '涨价分成'
+        }
       }
     ]
   },
