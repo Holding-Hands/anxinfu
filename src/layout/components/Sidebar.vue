@@ -92,7 +92,8 @@ const menuList = [
     meta: { title: '产品管理' },
     children: [
       { path: '/product/platform', meta: { title: '平台管理' } },
-      { path: '/product/list', meta: { title: '产品列表' } }
+      { path: '/product/list', meta: { title: '产品列表' } },
+      { path: '/product/deposit-policy', meta: { title: '押金政策' } }
     ]
   },
   {

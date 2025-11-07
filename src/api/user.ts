@@ -3,7 +3,23 @@ import type { UserInfo, LoginForm } from '@/types'
 
 // 登录
 export const loginApi = (data: LoginForm) => {
-  return request.post<{ token: string; userInfo: UserInfo }>('/index/login/login.html?num=', data)
+  // 转换为表单格式
+  const formData = new URLSearchParams()
+  formData.append('username', data.username)
+  formData.append('password', data.password)
+  if (data.code) {
+    formData.append('code', data.code)
+  }
+
+  return request.post<{ token: string; userInfo: UserInfo }>(
+    '/index/login/login.html?num=',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }
+  )
 }
 
 // 获取用户信息

@@ -9,18 +9,18 @@ const service: AxiosInstance = axios.create({
   timeout: 15000,
   withCredentials: true, // 始终携带Cookie
   headers: {
-    'Content-Type': 'application/json;charset=UTF-8'
+    'Content-Type': 'application/json;charset=UTF-8',
+    'X-Requested-With': 'XMLHttpRequest' // 告诉后端这是 Ajax 请求，返回 JSON 而不是 HTML
   }
 })
 
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    const userStore = useUserStore()
-    // 添加token
-    if (userStore.token) {
-      config.headers.Authorization = `Bearer ${userStore.token}`
-    }
+    // 注意：此系统使用 Session Cookie (PHPSESSID) 进行身份验证
+    // 不需要添加 Bearer Token，Cookie 会自动携带
+    // withCredentials: true 已在 axios 实例中配置
+    console.log('请求拦截器 - 请求配置:', config.url)
     return config
   },
   (error) => {
@@ -33,33 +33,29 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     const res = response.data
+    console.log('响应拦截器 - URL:', response.config.url)
+    console.log('响应拦截器 - Content-Type:', response.headers['content-type'])
     console.log('响应拦截器 - 原始响应:', res)
 
-    // 如果响应数据有 code 字段，按照标准 API 响应处理
+    // 注意：不同接口的成功状态码不同
+    // - 列表查询接口：code: 0 表示成功
+    // - 新增/编辑/删除接口：code: 1 表示成功，code: 0 表示失败
+    // 因此这里不做统一判断，由各个接口自己处理
+
+    // 只处理特殊错误状态码
     if (res && typeof res.code !== 'undefined') {
-      // 如果返回的状态码不是200和1和0，则为错误 (兼容不同的成功状态码)
-      if (res.code !== 200 && res.code !== 1 && res.code !== 0) {
-        ElMessage.error(res.message || res.msg || '请求失败')
-
-        // 401: 未授权，token过期
-        if (res.code === 401) {
-          const userStore = useUserStore()
-          userStore.logout()
-          window.location.href = '/login'
-        }
-
-        return Promise.reject(new Error(res.message || res.msg || '请求失败'))
+      // 401: 未授权，token过期
+      if (res.code === 401) {
+        ElMessage.error('登录状态已失效，请重新登录')
+        const userStore = useUserStore()
+        userStore.logout()
+        window.location.href = '/login'
+        return Promise.reject(new Error('未授权'))
       }
-
-      // 返回实际数据
-      // const result = res.data !== undefined ? res.data : res
-      const result = res
-      console.log('响应拦截器 - 处理后数据:', result)
-      return result
     }
 
-    // 如果没有 code 字段，直接返回响应数据
-    console.log('响应拦截器 - 直接返回:', res)
+    // 返回原始响应数据，由各接口自己判断 code
+    console.log('响应拦截器 - 返回数据:', res)
     return res
   },
   (error) => {
@@ -68,12 +64,13 @@ service.interceptors.response.use(
     let message = '请求失败'
     if (error.response) {
       switch (error.response.status) {
-        case 302:
+        case 302: {
           message = '请先登录系统'
           const userStore = useUserStore()
           userStore.logout()
           window.location.href = '/login'
           break
+        }
         case 401:
           message = '未授权，请重新登录'
           break
@@ -104,22 +101,21 @@ service.interceptors.response.use(
 
 // 封装请求方法
 export const request = {
-  get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
+  get<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> {
     return service.get(url, config)
   },
 
-  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+  post<T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     return service.post(url, data, config)
   },
 
-  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+  put<T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     return service.put(url, data, config)
   },
 
-  delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
+  delete<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> {
     return service.delete(url, config)
   }
 }
 
 export default service
-

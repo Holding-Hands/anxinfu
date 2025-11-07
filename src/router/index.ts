@@ -120,6 +120,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '产品列表'
         }
+      },
+      {
+        path: 'deposit-policy',
+        name: 'DepositPolicy',
+        component: () => import('@/views/product/DepositPolicy.vue'),
+        meta: {
+          title: '押金政策'
+        }
       }
     ]
   },

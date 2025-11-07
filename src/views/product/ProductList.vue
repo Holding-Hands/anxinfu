@@ -333,6 +333,7 @@ const getList = async () => {
 
     console.log('产品列表响应:', res)
 
+    // 列表查询接口：code: 0 表示成功
     if (res.code === 0) {
       tableData.value = res.data || []
       total.value = res.count || 0
@@ -414,14 +415,19 @@ const handleBatchDelete = async () => {
     const formData = new URLSearchParams()
     formData.append('ids', selectedIds.value.join(','))
 
-    await request.post('/index/product/del.html', formData, {
+    const res = await request.post('/index/product/del.html', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
 
-    ElMessage.success('删除成功')
-    await getList()
+    // 操作接口：code: 1 表示成功
+    if (res.code === 1) {
+      ElMessage.success(res.msg || '删除成功')
+      await getList()
+    } else {
+      ElMessage.error(res.msg || '删除失败')
+    }
   } catch (error: unknown) {
     if (error !== 'cancel') {
       console.error('删除失败:', error)
@@ -453,9 +459,14 @@ const handleCoinPriceSubmit = async () => {
       }
     })
 
-    ElMessage.success(res.msg || '设置成功')
-    coinPriceVisible.value = false
-    getList()
+    // 操作接口：code: 1 表示成功
+    if (res.code === 1) {
+      ElMessage.success(res.msg || '设置成功')
+      coinPriceVisible.value = false
+      getList()
+    } else {
+      ElMessage.error(res.msg || '设置失败')
+    }
   } catch (error) {
     ElMessage.error('设置失败，请稍后重试')
   } finally {
@@ -480,8 +491,15 @@ const handleLevelChange = async (row: ProductListItem) => {
     })
 
     console.log('采购升级响应:', res)
-    ElMessage.success(res.msg || `${action}成功`)
-    getList()
+    // 操作接口：code: 1 表示成功
+    if (res.code === 1) {
+      ElMessage.success(res.msg || `${action}成功`)
+      getList()
+    } else {
+      ElMessage.error(res.msg || `${action}失败`)
+      // 失败时恢复原状态
+      row.is_level = isEnable ? 0 : 1
+    }
   } catch (error) {
     console.error(`${action}失败:`, error)
     ElMessage.error(`${action}失败，请稍后重试`)
@@ -506,9 +524,15 @@ const handleStatusChange = async (row: ProductListItem) => {
       }
     })
 
-    // 判断成功：code为0或1，或者msg包含成功
-    ElMessage.success(res.msg || `${action}成功`)
-    await getList()
+    // 操作接口：code: 1 表示成功
+    if (res.code === 1) {
+      ElMessage.success(res.msg || `${action}成功`)
+      await getList()
+    } else {
+      ElMessage.error(res.msg || `${action}失败`)
+      // 失败时恢复原状态
+      row.status = isEnable ? 0 : 1
+    }
   } catch (error) {
     console.error(`${action}失败:`, error)
     ElMessage.error(`${action}失败，请稍后重试`)
