@@ -112,6 +112,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '平台管理'
         }
+      },
+      {
+        path: 'list',
+        name: 'ProductList',
+        component: () => import('@/views/product/ProductList.vue'),
+        meta: {
+          title: '产品列表'
+        }
       }
     ]
   },

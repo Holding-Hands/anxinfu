@@ -90,7 +90,10 @@ const menuList = [
     path: '/product',
     icon: Goods,
     meta: { title: '产品管理' },
-    children: [{ path: '/product/platform', meta: { title: '平台管理' } }]
+    children: [
+      { path: '/product/platform', meta: { title: '平台管理' } },
+      { path: '/product/list', meta: { title: '产品列表' } }
+    ]
   },
   {
     path: '/mall',
