@@ -477,11 +477,6 @@ const handleAdd = async () => {
 const handleEdit = async (row: ProductRisePriceItem) => {
   editData.value = { ...row }
 
-  // 先加载产品列表（确保下拉选项已加载）
-  if (row.pid) {
-    await getProductList(row.pid, true)
-  }
-
   // 设置表单数据
   formData.id = row.id
   formData.pid = row.product_id // 平台ID
@@ -493,6 +488,10 @@ const handleEdit = async (row: ProductRisePriceItem) => {
   formData.rise_price = row.rise_price
   // status: "禁止" 表示禁用(1), 其他表示启用(0)
   formData.status = row.status === '禁止' ? 1 : 0
+  // 先加载产品列表（确保下拉选项已加载）
+  if (formData.pid) {
+    await getProductList(formData.pid, true)
+  }
 
   // 重置表单验证
   await formRef.value?.clearValidate()
