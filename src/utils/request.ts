@@ -1,6 +1,7 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
+import router from '@/router'
 
 // 创建axios实例
 const service: AxiosInstance = axios.create({
@@ -49,7 +50,7 @@ service.interceptors.response.use(
         ElMessage.error('登录状态已失效，请重新登录')
         const userStore = useUserStore()
         userStore.logout()
-        window.location.href = '/login'
+        router.push('/login')
         return Promise.reject(new Error('未授权'))
       }
     }
@@ -60,7 +61,7 @@ service.interceptors.response.use(
       const userStore = useUserStore()
       userStore.logout()
       setTimeout(() => {
-        window.location.href = '/login'
+        router.push('/login')
       }, 1500) // 延迟1.5秒，让用户看到提示消息
     }
 
@@ -78,7 +79,7 @@ service.interceptors.response.use(
           message = '请先登录系统'
           const userStore = useUserStore()
           userStore.logout()
-          window.location.href = '/login'
+          router.push('/login')
           break
         }
         case 401:
