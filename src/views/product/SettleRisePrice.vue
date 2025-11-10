@@ -250,6 +250,13 @@ interface ApiResponse {
   data: SettleRisePriceItem[]
 }
 
+// 定义操作响应接口
+interface OperationResponse {
+  code: number
+  msg: string
+  data?: any
+}
+
 // 定义产品列表响应接口
 interface ProductListResponse {
   code: number
@@ -494,7 +501,7 @@ const handleSubmit = async () => {
     formDataToSend.append('status', String(formData.status))
 
     const url = formData.id ? '/index/settle_rise/edit.html' : '/index/settle_rise/add.html'
-    const res = await request.post(url, formDataToSend, {
+    const res = await request.post<OperationResponse>(url, formDataToSend, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -529,7 +536,7 @@ const handleDelete = async (row: SettleRisePriceItem) => {
     const formData = new URLSearchParams()
     formData.append('ids', String(row.id))
 
-    const res = await request.post('/index/settle_rise/del.html', formData, {
+    const res = await request.post<OperationResponse>('/index/settle_rise/del.html', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -573,7 +580,7 @@ const handleBatchDelete = async () => {
     const formData = new URLSearchParams()
     formData.append('ids', selectedIds.value.join(','))
 
-    const res = await request.post('/index/settle_rise/del.html', formData, {
+    const res = await request.post<OperationResponse>('/index/settle_rise/del.html', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -605,7 +612,7 @@ const handleStatusChange = async (row: SettleRisePriceItem) => {
     const formData = new URLSearchParams()
     formData.append('ids', String(row.id))
 
-    const res = await request.post(url, formData, {
+    const res = await request.post<OperationResponse>(url, formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }

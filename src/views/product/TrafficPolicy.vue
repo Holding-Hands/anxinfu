@@ -275,6 +275,13 @@ interface ApiResponse {
   data: TrafficPolicyItem[]
 }
 
+// 定义操作响应接口
+interface OperationResponse {
+  code: number
+  msg: string
+  data?: any
+}
+
 // 定义产品列表响应接口
 interface ProductListResponse {
   code: number
@@ -523,7 +530,7 @@ const handleSubmit = async () => {
     formDataToSend.append('status', String(formData.status))
 
     const url = formData.id ? '/index/product_sim/edit.html' : '/index/product_sim/add.html'
-    const res = await request.post(url, formDataToSend, {
+    const res = await request.post<OperationResponse>(url, formDataToSend, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -558,7 +565,7 @@ const handleDelete = async (row: TrafficPolicyItem) => {
     const formData = new URLSearchParams()
     formData.append('ids', String(row.id))
 
-    const res = await request.post('/index/product_sim/del.html', formData, {
+    const res = await request.post<OperationResponse>('/index/product_sim/del.html', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -602,7 +609,7 @@ const handleBatchDelete = async () => {
     const formData = new URLSearchParams()
     formData.append('ids', selectedIds.value.join(','))
 
-    const res = await request.post('/index/product_sim/del.html', formData, {
+    const res = await request.post<OperationResponse>('/index/product_sim/del.html', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -634,7 +641,7 @@ const handleStatusChange = async (row: TrafficPolicyItem) => {
     const formData = new URLSearchParams()
     formData.append('ids', String(row.id))
 
-    const res = await request.post(url, formData, {
+    const res = await request.post<OperationResponse>(url, formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
