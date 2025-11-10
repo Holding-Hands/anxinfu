@@ -57,6 +57,11 @@ service.interceptors.response.use(
     // 检查 data 是否为空字符串，如果是则提示 msg
     if (res && res.data === '' && res.msg) {
       ElMessage.warning(`${res.msg}，请重新登录！`)
+      const userStore = useUserStore()
+      userStore.logout()
+      setTimeout(() => {
+        window.location.href = '/login'
+      }, 1500) // 延迟1.5秒，让用户看到提示消息
     }
 
     // 返回原始响应数据，由各接口自己判断 code
