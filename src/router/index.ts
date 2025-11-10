@@ -158,13 +158,18 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/mall',
     component: () => import('@/layout/index.vue'),
+    redirect: '/mall/goods-category',
+    meta: {
+      title: '商城系统',
+      icon: 'ShoppingCart'
+    },
     children: [
       {
-        path: '',
-        name: 'Mall',
-        component: () => import('@/views/Mall.vue'),
+        path: 'goods-category',
+        name: 'GoodsCategory',
+        component: () => import('@/views/mall/GoodsCategory.vue'),
         meta: {
-          title: '商城系统'
+          title: '商品分类'
         }
       }
     ]

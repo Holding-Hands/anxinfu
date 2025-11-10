@@ -203,6 +203,13 @@ interface ProductItem {
   yajin_yeji?: string
 }
 
+// API响应接口
+interface ApiResponse<T = any> {
+  code: number
+  msg: string
+  data?: T
+}
+
 const props = withDefaults(defineProps<Props>(), {
   visible: false,
   editData: undefined
@@ -283,11 +290,15 @@ const getProductList = async (pid?: number) => {
     const formData = new URLSearchParams()
     formData.append('pid', String(pid))
 
-    const res = await request.post('/index/product/getproductlist.html', formData, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+    const res = await request.post<ApiResponse<ProductItem[]>>(
+      '/index/product/getproductlist.html',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
       }
-    })
+    )
 
     console.log('产品列表响应:', res)
 
@@ -408,7 +419,7 @@ const handleSubmit = async () => {
       // 根据是否有id判断是新增还是编辑
       const url = formData.id ? '/index/product_active/edit.html' : '/index/product_active/add.html'
 
-      const res = await request.post(url, formDataToSubmit, {
+      const res = await request.post<ApiResponse>(url, formDataToSubmit, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }

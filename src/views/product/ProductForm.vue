@@ -509,6 +509,13 @@ interface UploadResponse {
   }
 }
 
+// API响应接口
+interface ApiResponse<T = any> {
+  code: number
+  msg: string
+  data?: T
+}
+
 // 图片上传成功
 const handleCoverSuccess = (response: UploadResponse) => {
   console.log('图片上传响应:', response)
@@ -567,7 +574,7 @@ const handleSubmit = async () => {
 
       const url = props.editData ? '/index/product/edit.html' : '/index/product/add.html'
 
-      const res = await request.post(url, formDataToSubmit, {
+      const res = await request.post<ApiResponse>(url, formDataToSubmit, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }

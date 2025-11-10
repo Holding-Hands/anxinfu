@@ -281,6 +281,13 @@ interface ProductListResponse {
   data: ProductListItem[]
 }
 
+// API响应接口
+interface ApiResponse<T = any> {
+  code: number
+  msg: string
+  data?: T
+}
+
 // 查询参数
 const queryParams = reactive<ProductQueryParams>({
   page: 1,
@@ -415,7 +422,7 @@ const handleBatchDelete = async () => {
     const formData = new URLSearchParams()
     formData.append('ids', selectedIds.value.join(','))
 
-    const res = await request.post('/index/product/del.html', formData, {
+    const res = await request.post<ApiResponse>('/index/product/del.html', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -453,7 +460,7 @@ const handleCoinPriceSubmit = async () => {
     formData.append('coin_price', coinPriceForm.coin_price)
     formData.append('limit_dui', coinPriceForm.limit_dui)
 
-    const res = await request.post('/index/product/coin_price_set.html', formData, {
+    const res = await request.post<ApiResponse>('/index/product/coin_price_set.html', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -484,7 +491,7 @@ const handleLevelChange = async (row: ProductListItem) => {
     const formData = new URLSearchParams()
     formData.append('ids', String(row.id))
 
-    const res = await request.post(url, formData, {
+    const res = await request.post<ApiResponse>(url, formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -518,7 +525,7 @@ const handleStatusChange = async (row: ProductListItem) => {
     const formData = new URLSearchParams()
     formData.append('ids', String(row.id))
 
-    const res = await request.post(url, formData, {
+    const res = await request.post<ApiResponse>(url, formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
