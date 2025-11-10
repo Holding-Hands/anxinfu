@@ -54,6 +54,11 @@ service.interceptors.response.use(
       }
     }
 
+    // 检查 data 是否为空字符串，如果是则提示 msg
+    if (res && res.data === '' && res.msg) {
+      ElMessage.warning(`${res.msg}，请重新登录！`)
+    }
+
     // 返回原始响应数据，由各接口自己判断 code
     console.log('响应拦截器 - 返回数据:', res)
     return res
