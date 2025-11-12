@@ -676,6 +676,184 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=10r/s;
 
 ---
 
+## 🎨 主题换肤功能
+
+### 8 种精美主题
+
+系统现已支持一键切换 8 种主题风格：
+
+| 主题      | 说明           | 特点                     |
+| --------- | -------------- | ------------------------ |
+| 🔵 默认蓝 | 经典的蓝白配色 | 清新、专业、适合日常使用 |
+| 🌙 暗黑夜 | 深色护眼模式   | 适合夜间使用，保护视力   |
+| 💜 优雅紫 | 高贵紫色主题   | 优雅大气，彰显品味       |
+| 🌿 清新绿 | 自然绿色主题   | 活力清新，舒适自然       |
+| 🟠 活力橙 | 充满活力的橙色 | 积极向上，充满能量       |
+| 💗 浪漫粉 | 温柔粉色主题   | 温馨浪漫，柔和舒适       |
+| 🔷 商务蓝 | 专业深蓝风格   | 正式商务，稳重大气       |
+| ❤️ 热情红 | 充满激情的红色 | 热烈奔放，激情四射       |
+
+**使用方式：**
+
+1. **位置**：页面右上角导航栏
+2. **按钮**：彩色渐变圆形按钮（会随主题变色）
+3. **操作**：点击按钮 → 选择主题 → 立即生效
+4. **持久化**：自动保存，下次打开自动应用
+
+**功能特点：**
+
+- ✅ **全局覆盖**：所有页面和组件统一换肤
+- ✅ **平滑过渡**：颜色变化带有流畅动画效果
+- ✅ **Element Plus 适配**：所有组件完美适配
+- ✅ **自动保存**：选择后自动保存到本地
+- ✅ **即时生效**：无需刷新页面
+
+---
+
+## 📦 全局常量使用
+
+项目内置了全局常量，避免在各个页面重复定义相同选项。
+
+### 可用常量
+
+- **USER_LEVEL_OPTIONS** - 用户等级选项 (V1-V7)
+- **USER_TYPE_OPTIONS** - 用户类别选项 (全部/代理/商户)
+- **AUTH_STATUS_OPTIONS** - 实名状态选项 (全部/未认证/已实名)
+- **TEAM_OPTIONS** - 所属团队选项
+- **LEVEL_TAG_TYPE_MAP** - 等级标签类型映射
+
+### 使用示例
+
+```vue
+<template>
+  <!-- 下拉选择 -->
+  <el-select v-model="level" clearable>
+    <el-option
+      v-for="item in USER_LEVEL_OPTIONS"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value"
+    />
+  </el-select>
+
+  <!-- 显示文本 -->
+  <span>{{ USER_LEVEL_MAP[level] }}</span>
+
+  <!-- 标签显示 -->
+  <el-tag :type="LEVEL_TAG_TYPE_MAP[level]">{{ level }}</el-tag>
+</template>
+
+<script setup lang="ts">
+import { USER_LEVEL_OPTIONS, USER_LEVEL_MAP, LEVEL_TAG_TYPE_MAP } from '@/constants'
+
+const level = ref('V1')
+</script>
+```
+
+---
+
+## 🚀 部署到 Vercel (推荐)
+
+### 为什么选择 Vercel？
+
+- ✅ **完美解决跨域问题** - 通过反向代理，前后端在同一域名下
+- ✅ **Cookie 正常工作** - 支持携带凭据，登录状态正常维护
+- ✅ **完全免费** - 个人项目免费使用
+- ✅ **自动部署** - 推送到 GitHub 自动重新部署
+- ✅ **全球 CDN** - 访问速度更快
+
+### 快速部署（5分钟）
+
+1. **访问 Vercel 网站**
+   - 打开 https://vercel.com
+   - 使用 GitHub 账号登录
+
+2. **导入项目**
+   - 点击 "Add New..." → "Project"
+   - 选择 `anxinfu` 仓库
+   - 点击 "Import"
+
+3. **配置项目（保持默认）**
+   - Framework Preset: Vite（自动检测）
+   - Build Command: `pnpm build`
+   - Output Directory: `dist`
+   - 点击 "Deploy"
+
+4. **等待部署完成**
+   - 约 1-2 分钟
+   - 获得免费域名：`https://your-project.vercel.app`
+
+### 工作原理
+
+通过 `vercel.json` 配置反向代理：
+
+```json
+{
+  "rewrites": [
+    {
+      "source": "/api/admin/:path*",
+      "destination": "https://axf.anxinfupp.com/admin/:path*"
+    },
+    {
+      "source": "/api/index/:path*",
+      "destination": "https://axf.anxinfupp.com/index/:path*"
+    }
+  ]
+}
+```
+
+前端请求 `/api/index/login` → Vercel 转发到后端 → Cookie 在同域下正常工作
+
+### 自动部署
+
+每次推送代码到 GitHub，Vercel 会自动构建和部署：
+
+```bash
+git add .
+git commit -m "更新功能"
+git push
+```
+
+---
+
+## 🔧 GitHub Pages 部署问题排查
+
+如果使用 GitHub Pages 部署遇到问题（白屏、404等）：
+
+### 问题原因
+
+GitHub Pages 默认部署源代码而非打包文件，且不支持反向代理。
+
+### 解决步骤
+
+1. **配置 GitHub Pages 使用 Actions**
+   - 访问：`https://github.com/[你的用户名]/anxinfu/settings/pages`
+   - Source 选择：**GitHub Actions**
+
+2. **设置 Actions 权限**
+   - 访问：`https://github.com/[你的用户名]/anxinfu/settings/actions`
+   - 选择：**Read and write permissions**
+   - 勾选：**Allow GitHub Actions to create and approve pull requests**
+
+3. **触发部署**
+
+   ```bash
+   git commit --allow-empty -m "chore: 触发 GitHub Pages 部署"
+   git push origin main
+   ```
+
+4. **查看部署状态**
+   - 访问仓库的 Actions 标签
+   - 查看部署进度
+
+### 注意事项
+
+- ⚠️ GitHub Pages 使用 Hash 路由模式（URL 会包含 `#`）
+- ⚠️ 需要在 `.env.production` 配置后端 API 地址
+- ⚠️ 可能仍存在跨域问题，**推荐使用 Vercel 部署**
+
+---
+
 ## 📄 License
 
 [MIT](LICENSE)
