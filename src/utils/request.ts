@@ -54,9 +54,11 @@ service.interceptors.response.use(
       }
     }
 
-    // 检查 data 是否为空字符串，如果是则提示 msg（排除登录接口）
+    // 检查 data 是否为空字符串，如果是则提示 msg（排除登录接口和操作接口）
     const isLoginApi = response.config.url?.includes('/index/login/login')
-    if (res && res.data === '' && res.msg && !isLoginApi) {
+    // 操作接口（新增/编辑/删除/启用/禁用等）返回 code: 1 且 data: "" 是正常的，不应该跳转登录
+    const isOperationApi = res && res.code === 1 && res.data === ''
+    if (res && res.data === '' && res.msg && !isLoginApi && !isOperationApi) {
       ElMessage.warning(`${res.msg}，请重新登录！`)
       const userStore = useUserStore()
       userStore.logout()

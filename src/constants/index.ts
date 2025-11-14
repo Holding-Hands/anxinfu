@@ -127,3 +127,24 @@ export const PRODUCT_MAP: Record<number, string> = {
   4: '拉卡拉电签',
   5: '星驿付真商'
 }
+
+// 商品上架状态选项
+export const GOODS_STATUS_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '已上架', value: 1 },
+  { label: '已下架', value: 0 }
+]
+
+// 商品上架状态映射
+export const GOODS_STATUS_MAP: Record<string | number, string> = {
+  '': '全部',
+  0: '已下架',
+  1: '已上架'
+}
+
+// 热门商品选项
+export const GOODS_HOT_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '是', value: 1 },
+  { label: '否', value: 0 }
+]

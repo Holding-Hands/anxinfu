@@ -103,7 +103,10 @@ const menuList = [
     path: '/mall',
     icon: ShoppingCart,
     meta: { title: '商城系统' },
-    children: [{ path: '/mall/goods-category', meta: { title: '商品分类' } }]
+    children: [
+      { path: '/mall/goods-category', meta: { title: '商品分类' } },
+      { path: '/mall/goods-list', meta: { title: '商品列表' } }
+    ]
   },
   {
     path: '/machine',

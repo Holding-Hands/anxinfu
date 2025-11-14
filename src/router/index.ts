@@ -171,6 +171,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '商品分类'
         }
+      },
+      {
+        path: 'goods-list',
+        name: 'GoodsList',
+        component: () => import('@/views/mall/GoodsList.vue'),
+        meta: {
+          title: '商品列表'
+        }
       }
     ]
   },
