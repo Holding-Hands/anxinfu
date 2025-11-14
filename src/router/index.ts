@@ -187,6 +187,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '订单列表'
         }
+      },
+      {
+        path: 'proxy-order',
+        name: 'ProxyOrder',
+        component: () => import('@/views/mall/ProxyOrder.vue'),
+        meta: {
+          title: '代下订单'
+        }
       }
     ]
   },
@@ -247,20 +255,6 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/team',
-    component: () => import('@/layout/index.vue'),
-    children: [
-      {
-        path: '',
-        name: 'Team',
-        component: () => import('@/views/Team.vue'),
-        meta: {
-          title: '团队管理'
-        }
-      }
-    ]
-  },
-  {
     path: '/system',
     component: () => import('@/layout/index.vue'),
     children: [
@@ -270,6 +264,36 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/System.vue'),
         meta: {
           title: '系统设置'
+        }
+      }
+    ]
+  },
+  {
+    path: '/download',
+    component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Download',
+        component: () => import('@/views/Download.vue'),
+        meta: {
+          title: '下载中心',
+          icon: 'Download'
+        }
+      }
+    ]
+  },
+  {
+    path: '/customer',
+    component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Customer',
+        component: () => import('@/views/Customer.vue'),
+        meta: {
+          title: '客户管理',
+          icon: 'UserFilled'
         }
       }
     ]

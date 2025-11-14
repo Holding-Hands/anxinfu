@@ -56,7 +56,8 @@ import {
   Management,
   TrendCharts,
   UserFilled,
-  Setting
+  Setting,
+  Download
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -106,7 +107,8 @@ const menuList = [
     children: [
       { path: '/mall/goods-category', meta: { title: '商品分类' } },
       { path: '/mall/goods-list', meta: { title: '商品列表' } },
-      { path: '/mall/order-list', meta: { title: '订单列表' } }
+      { path: '/mall/order-list', meta: { title: '订单列表' } },
+      { path: '/mall/proxy-order', meta: { title: '代下订单' } }
     ]
   },
   {
@@ -130,14 +132,19 @@ const menuList = [
     meta: { title: '运营管理' }
   },
   {
-    path: '/team',
-    icon: UserFilled,
-    meta: { title: '团队管理' }
-  },
-  {
     path: '/system',
     icon: Setting,
     meta: { title: '系统设置' }
+  },
+  {
+    path: '/download',
+    icon: Download,
+    meta: { title: '下载中心' }
+  },
+  {
+    path: '/customer',
+    icon: UserFilled,
+    meta: { title: '客户管理' }
   }
 ]
 </script>
