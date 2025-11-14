@@ -58,7 +58,16 @@ service.interceptors.response.use(
     const isLoginApi = response.config.url?.includes('/index/login/login')
     // 操作接口（新增/编辑/删除/启用/禁用等）返回 code: 1 且 data: "" 是正常的，不应该跳转登录
     const isOperationApi = res && res.code === 1 && res.data === ''
-    if (res && res.data === '' && res.msg && !isLoginApi && !isOperationApi) {
+    // 失败的操作接口（code: 0 且 data: ""）也不应该跳转登录，只是操作失败
+    const isFailedOperationApi = res && res.code === 0 && res.data === '' && res.msg
+    if (
+      res &&
+      res.data === '' &&
+      res.msg &&
+      !isLoginApi &&
+      !isOperationApi &&
+      !isFailedOperationApi
+    ) {
       ElMessage.warning(`${res.msg}，请重新登录！`)
       const userStore = useUserStore()
       userStore.logout()

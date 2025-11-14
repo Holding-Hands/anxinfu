@@ -148,3 +148,48 @@ export const GOODS_HOT_OPTIONS = [
   { label: '是', value: 1 },
   { label: '否', value: 0 }
 ]
+
+// 订单状态选项
+export const ORDER_STATUS_OPTIONS = [
+  { label: '全部', value: 0 },
+  { label: '待支付', value: 1 },
+  { label: '待发货', value: 2 },
+  { label: '待收货', value: 3 },
+  { label: '已完成', value: 4 }
+]
+
+// 订单支付方式选项
+export const ORDER_PAY_TYPE_OPTIONS = [
+  { label: '全部', value: 0 },
+  { label: '支付宝', value: 1 },
+  { label: '微信', value: 3 },
+  { label: '现金', value: 5 }
+]
+
+// 快递公司选项
+export const EXPRESS_COMPANY_OPTIONS = [
+  { label: '上门自提', value: '1_上门自提' },
+  { label: '圆通速递', value: 'yuantong_圆通速递' },
+  { label: '韵达快递', value: 'yunda_韵达快递' },
+  { label: '中通快递', value: 'zhongtong_中通快递' },
+  { label: '邮政快递包裹', value: 'youzhengguonei_邮政快递包裹' },
+  { label: '顺丰速运', value: 'shunfeng_顺丰速运' },
+  { label: '百世快递', value: 'huitongkuaidi_百世快递' },
+  { label: '申通快递', value: 'shentong_申通快递' },
+  { label: '京东物流', value: 'jd_京东物流' },
+  { label: 'EMS', value: 'ems_EMS' },
+  { label: '极兔速递', value: 'jtexpress_极兔速递' },
+  { label: '天天快递', value: 'tiantian_天天快递' },
+  { label: '邮政标准快递', value: 'youzhengbk_邮政标准快递' },
+  { label: '德邦', value: 'debangwuliu_德邦' },
+  { label: '德邦快递', value: 'debangkuaidi_德邦快递' },
+  { label: '宅急送', value: 'zhaijisong_宅急送' },
+  { label: '众邮快递', value: 'zhongyoukuaidi_众邮快递' },
+  { label: '优速快递', value: 'youshuwuliu_优速快递' },
+  { label: '百世快运', value: 'baishiwuliu_百世快运' },
+  { label: '圆通快运', value: 'yuantongkuaiyun_圆通快运' },
+  { label: '韵达快运', value: 'yundakuaiyun_韵达快运' },
+  { label: '中通快运', value: 'zhongtongkuaiyun_中通快运' },
+  { label: '安能快运', value: 'annengwuliu_安能快运' },
+  { label: 'wedepot物流', value: 'wedepot_wedepot物流' }
+]
