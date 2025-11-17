@@ -23,4 +23,19 @@ app.use(ElementPlus, {
   locale: zhCn
 })
 
+// 全局配置 loading 颜色
+const style = document.createElement('style')
+style.textContent = `
+  .el-loading-spinner svg {
+    color: var(--el-color-primary) !important;
+  }
+  .el-loading-spinner svg circle {
+    stroke: var(--el-color-primary) !important;
+  }
+  .el-loading-spinner .path {
+    stroke: var(--el-color-primary) !important;
+  }
+`
+document.head.appendChild(style)
+
 app.mount('#app')

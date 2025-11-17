@@ -120,7 +120,9 @@
 
         <el-table-column label="操作" min-width="100" align="center" fixed="right">
           <template #default="{ row }">
-            <el-button type="primary" size="small" link @click="handleEdit(row)">编辑</el-button>
+            <div class="table-actions">
+              <el-link type="primary" :underline="true" @click="handleEdit(row)">编辑</el-link>
+            </div>
           </template>
         </el-table-column>
       </el-table>

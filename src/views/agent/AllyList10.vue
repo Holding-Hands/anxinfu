@@ -275,8 +275,14 @@
 
         <el-table-column label="操作" width="180" align="center" fixed="right">
           <template #default="{ row }">
-            <el-button type="warning" link @click="handleSetLevel(row)">设定等级</el-button>
-            <el-button type="success" link @click="handleRecommendCode(row)">推荐码</el-button>
+            <div class="table-actions">
+              <el-link type="warning" :underline="true" @click="handleSetLevel(row)">
+                设定等级
+              </el-link>
+              <el-link type="success" :underline="true" @click="handleRecommendCode(row)">
+                推荐码
+              </el-link>
+            </div>
           </template>
         </el-table-column>
       </el-table>

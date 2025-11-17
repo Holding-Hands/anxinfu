@@ -75,15 +75,17 @@
 
         <el-table-column label="操作" width="150" align="center" fixed="right">
           <template #default="{ row }">
-            <el-button
-              v-if="row.down_url && row.size !== '已清理'"
-              type="primary"
-              link
-              @click="handleDownload(row)"
-            >
-              下载
-            </el-button>
-            <el-button type="danger" link @click="handleDelete(row)">删除</el-button>
+            <div class="table-actions">
+              <el-link
+                v-if="row.down_url && row.size !== '已清理'"
+                type="primary"
+                :underline="true"
+                @click="handleDownload(row)"
+              >
+                下载
+              </el-link>
+              <el-link type="danger" :underline="true" @click="handleDelete(row)">删除</el-link>
+            </div>
           </template>
         </el-table-column>
       </el-table>

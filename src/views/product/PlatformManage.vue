@@ -59,8 +59,10 @@
         </el-table-column>
         <el-table-column label="操作" min-width="150" align="center" fixed="right">
           <template #default="{ row }">
-            <el-button type="primary" size="small" link @click="handleEdit(row)">编辑</el-button>
-            <el-button type="danger" size="small" link @click="handleDelete(row)">删除</el-button>
+            <div class="table-actions">
+              <el-link type="primary" :underline="true" @click="handleEdit(row)">编辑</el-link>
+              <el-link type="danger" :underline="true" @click="handleDelete(row)">删除</el-link>
+            </div>
           </template>
         </el-table-column>
       </el-table>

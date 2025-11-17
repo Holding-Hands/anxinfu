@@ -114,10 +114,12 @@
         </el-table-column>
         <el-table-column label="操作" width="200" align="center" fixed="right">
           <template #default="{ row }">
-            <el-button type="primary" size="small" link @click="handleTransfer(row)">
-              划拨机具
-            </el-button>
-            <el-button type="success" size="small" link @click="handleShip(row)">发货</el-button>
+            <div class="table-actions">
+              <el-link type="primary" :underline="true" @click="handleTransfer(row)">
+                划拨机具
+              </el-link>
+              <el-link type="success" :underline="true" @click="handleShip(row)">发货</el-link>
+            </div>
           </template>
         </el-table-column>
       </el-table>

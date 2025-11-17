@@ -13,8 +13,18 @@ body,
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family:
+    'Microsoft YaHei',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -38,3 +48,145 @@ body,
   background: var(--text-secondary);
 }
 
+// 全局 Loading 颜色覆盖 - 最高优先级
+.el-loading-spinner {
+  color: var(--el-color-primary) !important;
+
+  svg {
+    color: var(--el-color-primary) !important;
+    fill: var(--el-color-primary) !important;
+  }
+
+  svg circle {
+    stroke: var(--el-color-primary) !important;
+    color: var(--el-color-primary) !important;
+  }
+
+  svg path {
+    stroke: var(--el-color-primary) !important;
+    fill: var(--el-color-primary) !important;
+  }
+
+  .circular {
+    color: var(--el-color-primary) !important;
+    stroke: var(--el-color-primary) !important;
+  }
+
+  .path {
+    stroke: var(--el-color-primary) !important;
+    stroke-width: 3 !important;
+    stroke-linecap: round !important;
+  }
+}
+
+// 表格 loading 特殊处理
+.el-table .el-loading-spinner,
+.el-table .el-loading-spinner svg,
+.el-table .el-loading-spinner svg circle,
+.el-table .el-loading-spinner svg path {
+  color: var(--el-color-primary) !important;
+  stroke: var(--el-color-primary) !important;
+  fill: var(--el-color-primary) !important;
+}
+
+// 直接覆盖 Element Plus 的 loading 颜色
+.el-loading-mask .el-loading-spinner svg circle {
+  stroke: var(--el-color-primary) !important;
+}
+
+.el-loading-mask .el-loading-spinner .path {
+  stroke: var(--el-color-primary) !important;
+  stroke-width: 3 !important;
+  stroke-linecap: round !important;
+}
+
+// 自定义点状 Loading 动画 - 替换默认圆圈
+.el-loading-spinner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  // 隐藏默认的 SVG 图标
+  svg {
+    display: none !important;
+  }
+
+  // 创建点状加载动画
+  &::before {
+    content: '' !important;
+    display: block !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50% !important;
+    border: 4px solid transparent !important;
+    border-top-color: var(--el-color-primary) !important;
+    border-right-color: var(--el-color-primary) !important;
+    animation: spinner-rotate 0.8s linear infinite !important;
+  }
+}
+
+// 旋转动画
+@keyframes spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Loading 文本颜色
+.el-loading-spinner .el-loading-text {
+  color: var(--el-text-color-primary) !important;
+  margin-top: 12px !important;
+  font-size: 14px !important;
+}
+
+// 全局表格操作列样式
+.table-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+
+  .el-link {
+    font-size: 14px;
+
+    &:hover {
+      font-weight: 500;
+    }
+  }
+}
+
+// el-link 全局样式优化
+.el-link {
+  &.el-link--primary {
+    &:hover {
+      color: var(--el-color-primary) !important;
+    }
+  }
+
+  &.el-link--success {
+    &:hover {
+      color: var(--el-color-success) !important;
+    }
+  }
+
+  &.el-link--warning {
+    &:hover {
+      color: var(--el-color-warning) !important;
+    }
+  }
+
+  &.el-link--danger {
+    &:hover {
+      color: var(--el-color-danger) !important;
+    }
+  }
+
+  &.el-link--info {
+    &:hover {
+      color: var(--el-color-info) !important;
+    }
+  }
+}

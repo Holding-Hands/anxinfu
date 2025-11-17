@@ -115,9 +115,9 @@
 
         <el-table-column label="积分价格" width="120" align="center">
           <template #default="{ row }">
-            <el-button type="primary" link @click="handleEditCoinPrice(row)">
+            <el-link type="primary" :underline="true" @click="handleEditCoinPrice(row)">
               <span v-html="row.show_coin_price || row.coin_price"></span>
-            </el-button>
+            </el-link>
           </template>
         </el-table-column>
 
@@ -164,9 +164,9 @@
 
         <el-table-column label="操作" width="150" align="center" fixed="right">
           <template #default="{ row }">
-            <el-button type="primary" size="small" link :icon="Edit" @click="handleEdit(row)">
-              编辑
-            </el-button>
+            <div class="table-actions">
+              <el-link type="primary" :underline="true" @click="handleEdit(row)">编辑</el-link>
+            </div>
           </template>
         </el-table-column>
       </el-table>

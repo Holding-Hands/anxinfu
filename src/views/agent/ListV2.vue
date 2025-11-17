@@ -212,11 +212,13 @@
           align="center"
           fixed="right"
         />
-        <el-table-column label="操作" width="180" align="center" fixed="right">
+        <el-table-column label="操作" width="220" align="center" fixed="right">
           <template #default="{ row }">
-            <el-button type="primary" link :icon="View" @click="handleView(row)">详情</el-button>
-            <el-button type="primary" link :icon="Edit" @click="handleEdit(row)">编辑</el-button>
-            <el-button type="danger" link :icon="Delete" @click="handleDelete(row)">删除</el-button>
+            <div class="table-actions">
+              <el-link type="info" :underline="true" @click="handleView(row)">详情</el-link>
+              <el-link type="primary" :underline="true" @click="handleEdit(row)">编辑</el-link>
+              <el-link type="danger" :underline="true" @click="handleDelete(row)">删除</el-link>
+            </div>
           </template>
         </el-table-column>
       </el-table>
