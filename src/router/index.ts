@@ -271,14 +271,18 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/download',
     component: () => import('@/layout/index.vue'),
+    redirect: '/download/record',
+    meta: {
+      title: '下载中心',
+      icon: 'Download'
+    },
     children: [
       {
-        path: '',
-        name: 'Download',
-        component: () => import('@/views/Download.vue'),
+        path: 'record',
+        name: 'DownloadRecord',
+        component: () => import('@/views/DownloadRecord.vue'),
         meta: {
-          title: '下载中心',
-          icon: 'Download'
+          title: '下载记录'
         }
       }
     ]

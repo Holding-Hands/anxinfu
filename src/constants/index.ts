@@ -193,3 +193,35 @@ export const EXPRESS_COMPANY_OPTIONS = [
   { label: '安能快运', value: 'annengwuliu_安能快运' },
   { label: 'wedepot物流', value: 'wedepot_wedepot物流' }
 ]
+
+// 下载记录类型选项
+export const DOWNLOAD_TYPE_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '交易数据', value: 1 },
+  { label: '收益明细', value: 2 },
+  { label: '提现记录', value: 3 },
+  { label: '商户记录', value: 4 },
+  { label: '机具记录', value: 5 },
+  { label: '积分兑换订单', value: 6 },
+  { label: '划拨记录', value: 7 },
+  { label: '盟友列表', value: 8 },
+  { label: '积分明细', value: 9 },
+  { label: '分红明细', value: 10 },
+  { label: '结算价', value: 11 }
+]
+
+// 下载记录类型映射
+export const DOWNLOAD_TYPE_MAP: Record<number | string, string> = {
+  0: '全部',
+  1: '交易数据',
+  2: '收益明细',
+  3: '提现记录',
+  4: '商户记录',
+  5: '机具记录',
+  6: '积分兑换订单',
+  7: '划拨记录',
+  8: '盟友列表',
+  9: '积分明细',
+  10: '分红明细',
+  11: '结算价'
+}

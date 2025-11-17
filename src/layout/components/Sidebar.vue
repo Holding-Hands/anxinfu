@@ -139,7 +139,8 @@ const menuList = [
   {
     path: '/download',
     icon: Download,
-    meta: { title: '下载中心' }
+    meta: { title: '下载中心' },
+    children: [{ path: '/download/record', meta: { title: '下载记录' } }]
   },
   {
     path: '/customer',
