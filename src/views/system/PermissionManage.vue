@@ -1,18 +1,35 @@
 <template>
   <div class="permission-manage-container">
-    <el-card shadow="never">
+    <!-- 查询筛选区域 -->
+    <el-card class="filter-card" shadow="never">
+      <el-form :model="queryParams" label-width="100px" class="filter-form">
+        <el-row :gutter="20" justify="space-between" align="middle">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6">
+            <el-form-item label="角色名称">
+              <el-input
+                v-model="queryParams.title"
+                placeholder="请输入角色名称"
+                clearable
+                @keyup.enter="handleQuery"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col :xs="24" :sm="12" :md="16" :lg="18" style="text-align: right">
+            <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
+            <el-button :icon="Refresh" @click="handleReset">重置</el-button>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-card>
+
+    <el-card shadow="never" style="margin-top: 10px">
       <!-- 操作按钮 -->
       <div class="toolbar">
-        <el-button type="primary" @click="handleAdd">新增</el-button>
-        <el-button type="success" :disabled="selectedIds.length === 0" @click="handleBatchEnable">
-          批量启用
-        </el-button>
-        <el-button type="warning" :disabled="selectedIds.length === 0" @click="handleBatchDisable">
-          批量禁用
-        </el-button>
-        <el-button type="danger" :disabled="selectedIds.length === 0" @click="handleBatchDelete">
-          批量删除
-        </el-button>
+        <el-button type="primary" :icon="Plus" @click="handleAdd">新增</el-button>
+        <el-button type="success" :icon="Select" @click="handleBatchEnable">启用</el-button>
+        <el-button type="warning" :icon="RemoveFilled" @click="handleBatchDisable">禁用</el-button>
+        <el-button type="danger" :icon="Delete" @click="handleBatchDelete">删除</el-button>
       </div>
 
       <!-- 表格 -->
@@ -33,12 +50,9 @@
 
         <el-table-column label="状态" min-width="100" align="center">
           <template #default="{ row }">
-            <el-icon v-if="row.status === 1" color="#67c23a" :size="20">
-              <CircleCheckFilled />
-            </el-icon>
-            <el-icon v-else color="#f56c6c" :size="20">
-              <CircleCloseFilled />
-            </el-icon>
+            <el-tag :type="row.status === 1 ? 'success' : 'danger'">
+              {{ row.status === 1 ? '启用' : '禁用' }}
+            </el-tag>
           </template>
         </el-table-column>
 
@@ -118,7 +132,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
-import { CircleCheckFilled, CircleCloseFilled } from '@element-plus/icons-vue'
+import { Search, Refresh, Plus, Select, RemoveFilled, Delete } from '@element-plus/icons-vue'
 import {
   getPermissionListApi,
   editRoleApi,
@@ -133,9 +147,10 @@ import {
 } from '@/api/permission'
 
 // 查询参数
-const queryParams = reactive<PermissionParams>({
+const queryParams = reactive<PermissionParams & { title?: string }>({
   page: 1,
-  limit: 15
+  limit: 15,
+  title: ''
 })
 
 // 表格数据
@@ -166,6 +181,20 @@ const formRules: FormRules = {
   title: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
   is_all: [{ required: true, message: '请选择权限类型', trigger: 'change' }],
   sort: [{ required: true, message: '请输入排序', trigger: 'blur' }]
+}
+
+// 查询
+const handleQuery = () => {
+  queryParams.page = 1
+  getList()
+}
+
+// 重置
+const handleReset = () => {
+  queryParams.page = 1
+  queryParams.limit = 15
+  queryParams.title = ''
+  getList()
 }
 
 // 获取列表数据
@@ -319,6 +348,11 @@ const handleSelectionChange = (selection: PermissionItem[]) => {
 
 // 批量启用
 const handleBatchEnable = async () => {
+  if (selectedIds.value.length === 0) {
+    ElMessage.warning('请先选择要启用的角色')
+    return
+  }
+
   try {
     await ElMessageBox.confirm(`确定要启用选中的 ${selectedIds.value.length} 个角色吗？`, '提示', {
       confirmButtonText: '确定',
@@ -329,22 +363,27 @@ const handleBatchEnable = async () => {
     const res = await setEnableRoleApi(selectedIds.value.join(','))
 
     if (res.code === 1 || res.msg === '启用成功') {
-      ElMessage.success(res.msg || '批量启用成功')
+      ElMessage.success(res.msg || '启用成功')
       selectedIds.value = []
       getList()
     } else {
-      ElMessage.error(res.msg || '批量启用失败')
+      ElMessage.error(res.msg || '启用失败')
     }
   } catch (error) {
     if (error !== 'cancel') {
-      console.error('批量启用失败:', error)
-      ElMessage.error('批量启用失败，请稍后重试')
+      console.error('启用失败:', error)
+      ElMessage.error('启用失败，请稍后重试')
     }
   }
 }
 
 // 批量禁用
 const handleBatchDisable = async () => {
+  if (selectedIds.value.length === 0) {
+    ElMessage.warning('请先选择要禁用的角色')
+    return
+  }
+
   try {
     await ElMessageBox.confirm(`确定要禁用选中的 ${selectedIds.value.length} 个角色吗？`, '提示', {
       confirmButtonText: '确定',
@@ -355,22 +394,27 @@ const handleBatchDisable = async () => {
     const res = await setDisableRoleApi(selectedIds.value.join(','))
 
     if (res.code === 1 || res.msg === '禁用成功') {
-      ElMessage.success(res.msg || '批量禁用成功')
+      ElMessage.success(res.msg || '禁用成功')
       selectedIds.value = []
       getList()
     } else {
-      ElMessage.error(res.msg || '批量禁用失败')
+      ElMessage.error(res.msg || '禁用失败')
     }
   } catch (error) {
     if (error !== 'cancel') {
-      console.error('批量禁用失败:', error)
-      ElMessage.error('批量禁用失败，请稍后重试')
+      console.error('禁用失败:', error)
+      ElMessage.error('禁用失败，请稍后重试')
     }
   }
 }
 
 // 批量删除
 const handleBatchDelete = async () => {
+  if (selectedIds.value.length === 0) {
+    ElMessage.warning('请选择要删除的角色')
+    return
+  }
+
   try {
     await ElMessageBox.confirm(
       `确定要删除选中的 ${selectedIds.value.length} 个角色吗？此操作不可恢复！`,
@@ -385,16 +429,16 @@ const handleBatchDelete = async () => {
     const res = await deleteRoleApi(selectedIds.value.join(','))
 
     if (res.code === 1 || res.msg === '删除成功') {
-      ElMessage.success(res.msg || '批量删除成功')
+      ElMessage.success(res.msg || '删除成功')
       selectedIds.value = []
       getList()
     } else {
-      ElMessage.error(res.msg || '批量删除失败')
+      ElMessage.error(res.msg || '删除失败')
     }
   } catch (error) {
     if (error !== 'cancel') {
-      console.error('批量删除失败:', error)
-      ElMessage.error('批量删除失败，请稍后重试')
+      console.error('删除失败:', error)
+      ElMessage.error('删除失败，请稍后重试')
     }
   }
 }

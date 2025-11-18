@@ -3,7 +3,7 @@
     <!-- 搜索筛选区域 -->
     <el-card class="filter-card" shadow="never">
       <el-form :model="queryParams" label-width="100px" class="filter-form">
-        <el-row :gutter="20">
+        <el-row :gutter="20" justify="space-between" align="middle">
           <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="所属平台">
               <el-select
@@ -44,11 +44,9 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="12" :md="8" :lg="6">
-            <el-form-item label=" " class="filter-actions">
-              <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
-              <el-button :icon="Refresh" @click="handleReset">重置</el-button>
-            </el-form-item>
+          <el-col :xs="24" :sm="12" :md="8" :lg="12" style="text-align: right">
+            <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
+            <el-button :icon="Refresh" @click="handleReset">重置</el-button>
           </el-col>
         </el-row>
       </el-form>
@@ -56,12 +54,23 @@
 
     <!-- 操作按钮区域 -->
     <el-card shadow="never" style="margin-top: 10px">
-      <el-row :gutter="10" style="margin-bottom: 10px">
-        <el-col :span="24">
-          <el-button type="primary" :icon="Plus" @click="handleAdd">新增</el-button>
-          <el-button type="danger" :icon="Delete" @click="handleBatchDelete">删除</el-button>
-        </el-col>
-      </el-row>
+      <div class="toolbar">
+        <el-button type="primary" :icon="Plus" @click="handleAdd">新增</el-button>
+        <el-button type="success" :disabled="selectedIds.length === 0" @click="handleBatchEnable">
+          批量启用
+        </el-button>
+        <el-button type="warning" :disabled="selectedIds.length === 0" @click="handleBatchDisable">
+          批量禁用
+        </el-button>
+        <el-button
+          type="danger"
+          :icon="Delete"
+          :disabled="selectedIds.length === 0"
+          @click="handleBatchDelete"
+        >
+          批量删除
+        </el-button>
+      </div>
 
       <!-- 数据表格 -->
       <el-table
@@ -91,23 +100,25 @@
         <el-table-column prop="rise_price" label="分成(万)" width="100" align="center" />
         <el-table-column prop="create_time" label="创建时间" width="180" align="center" />
 
-        <el-table-column label="状态" min-width="160" align="center">
+        <el-table-column label="状态" width="100" align="center">
           <template #default="{ row }">
-            <el-switch
-              v-model="row.statusValue"
-              :active-value="0"
-              :inactive-value="1"
-              active-text="启用"
-              inactive-text="禁用"
-              @change="handleStatusChange(row)"
-            />
+            <el-tag :type="row.status === '启用' ? 'success' : 'danger'">
+              {{ row.status === '启用' ? '启用' : '禁用' }}
+            </el-tag>
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" width="150" align="center" fixed="right">
+        <el-table-column label="操作" width="250" align="center" fixed="right">
           <template #default="{ row }">
             <div class="table-actions">
               <el-link type="primary" :underline="true" @click="handleEdit(row)">编辑</el-link>
+              <el-link
+                :type="row.status === '启用' ? 'warning' : 'success'"
+                :underline="true"
+                @click="handleToggleStatus(row)"
+              >
+                {{ row.status === '启用' ? '禁用' : '启用' }}
+              </el-link>
               <el-link type="danger" :underline="true" @click="handleDelete(row)">删除</el-link>
             </div>
           </template>
@@ -626,15 +637,21 @@ const handleBatchDelete = async () => {
   }
 }
 
-// 状态切换
-const handleStatusChange = async (row: ProductRisePriceItem) => {
-  const isEnable = row.statusValue === 0
-  const url = isEnable
-    ? '/index/product_rise/setenable.html'
-    : '/index/product_rise/setdisable.html'
-  const action = isEnable ? '启用' : '禁用'
+// 切换启用/禁用状态
+const handleToggleStatus = async (row: ProductRisePriceItem) => {
+  const isEnabled = row.status === '启用'
+  const action = isEnabled ? '禁用' : '启用'
 
   try {
+    await ElMessageBox.confirm(`确定要${action}该涨价分成吗？`, '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
+
+    const url = isEnabled
+      ? '/index/product_rise/setdisable.html'
+      : '/index/product_rise/setenable.html'
     const formData = new URLSearchParams()
     formData.append('ids', String(row.id))
 
@@ -644,21 +661,109 @@ const handleStatusChange = async (row: ProductRisePriceItem) => {
       }
     })
 
-    console.log(`${action}产品涨价分成响应:`, res)
-    // 操作接口：code: 1 表示成功
     if (res.code === 1) {
       ElMessage.success(res.msg || `${action}成功`)
       await getList()
     } else {
       ElMessage.error(res.msg || `${action}失败`)
-      // 失败时恢复原状态
-      row.statusValue = isEnable ? 1 : 0
     }
   } catch (error) {
-    console.error(`${action}失败:`, error)
-    ElMessage.error(`${action}失败，请稍后重试`)
-    // 失败时恢复原状态
-    row.statusValue = isEnable ? 1 : 0
+    if (error !== 'cancel') {
+      console.error(`${action}失败:`, error)
+      ElMessage.error(`${action}失败，请稍后重试`)
+    }
+  }
+}
+
+// 批量启用
+const handleBatchEnable = async () => {
+  if (selectedIds.value.length === 0) {
+    ElMessage.warning('请先选择要启用的涨价分成')
+    return
+  }
+
+  try {
+    await ElMessageBox.confirm(
+      `确定要启用选中的 ${selectedIds.value.length} 个涨价分成吗？`,
+      '提示',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }
+    )
+
+    const formData = new URLSearchParams()
+    formData.append('ids', selectedIds.value.join(','))
+
+    const res = await request.post<OperationResponse>(
+      '/index/product_rise/setenable.html',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    )
+
+    if (res.code === 1) {
+      ElMessage.success(res.msg || '批量启用成功')
+      selectedIds.value = []
+      await getList()
+    } else {
+      ElMessage.error(res.msg || '批量启用失败')
+    }
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('批量启用失败:', error)
+      ElMessage.error('批量启用失败，请稍后重试')
+    }
+  }
+}
+
+// 批量禁用
+const handleBatchDisable = async () => {
+  if (selectedIds.value.length === 0) {
+    ElMessage.warning('请先选择要禁用的涨价分成')
+    return
+  }
+
+  try {
+    await ElMessageBox.confirm(
+      `确定要禁用选中的 ${selectedIds.value.length} 个涨价分成吗？`,
+      '提示',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }
+    )
+
+    const formData = new URLSearchParams()
+    formData.append('ids', selectedIds.value.join(','))
+
+    const res = await request.post<OperationResponse>(
+      '/index/product_rise/setdisable.html',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    )
+
+    if (res.code === 1) {
+      ElMessage.success(res.msg || '批量禁用成功')
+      selectedIds.value = []
+      await getList()
+    } else {
+      ElMessage.error(res.msg || '批量禁用失败')
+    }
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('批量禁用失败:', error)
+      ElMessage.error('批量禁用失败，请稍后重试')
+    }
   }
 }
 

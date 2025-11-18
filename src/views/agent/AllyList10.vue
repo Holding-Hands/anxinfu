@@ -70,7 +70,7 @@
             <el-form-item label=" " class="filter-actions">
               <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
               <el-button :icon="Refresh" @click="handleReset">重置</el-button>
-              <el-button type="success" @click="handleExport">导出</el-button>
+              <el-button type="success" :icon="Download" @click="handleExport">导出</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -504,7 +504,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { Search, Refresh } from '@element-plus/icons-vue'
+import { Search, Refresh, Download } from '@element-plus/icons-vue'
 import {
   getAllyList10Api,
   editLevelApi,

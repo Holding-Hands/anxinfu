@@ -2,37 +2,43 @@
   <div class="employee-manage-container">
     <el-card shadow="never">
       <!-- 搜索表单 -->
-      <el-form :inline="true" :model="queryParams" class="search-form">
-        <el-form-item label="角色">
-          <el-select
-            v-model="queryParams.group"
-            placeholder="请选择角色"
-            clearable
-            style="width: 200px"
-          >
-            <el-option label="全部" :value="0" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="用户名">
-          <el-input
-            v-model="queryParams.username"
-            placeholder="请输入用户名"
-            clearable
-            style="width: 200px"
-          />
-        </el-form-item>
-        <el-form-item label="手机号">
-          <el-input
-            v-model="queryParams.mobile"
-            placeholder="请输入手机号"
-            clearable
-            style="width: 200px"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
-          <el-button :icon="Refresh" @click="handleReset">重置</el-button>
-        </el-form-item>
+      <el-form :model="queryParams" label-width="80px" class="filter-form">
+        <el-row :gutter="20" justify="space-between" align="middle">
+          <el-col :xs="24" :sm="12" :md="6" :lg="5">
+            <el-form-item label="角色">
+              <el-select v-model="queryParams.group" placeholder="请选择角色" clearable>
+                <el-option label="全部" :value="0" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :xs="24" :sm="12" :md="6" :lg="5">
+            <el-form-item label="用户名">
+              <el-input
+                v-model="queryParams.username"
+                placeholder="请输入用户名"
+                clearable
+                @keyup.enter="handleSearch"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col :xs="24" :sm="12" :md="6" :lg="5">
+            <el-form-item label="手机号">
+              <el-input
+                v-model="queryParams.mobile"
+                placeholder="请输入手机号"
+                clearable
+                @keyup.enter="handleSearch"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col :xs="24" :sm="12" :md="6" :lg="9" style="text-align: right">
+            <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
+            <el-button :icon="Refresh" @click="handleReset">重置</el-button>
+          </el-col>
+        </el-row>
       </el-form>
 
       <!-- 操作按钮 -->

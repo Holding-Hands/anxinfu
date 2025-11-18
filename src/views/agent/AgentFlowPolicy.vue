@@ -4,7 +4,7 @@
       <!-- 筛选表单 -->
       <el-form :model="queryParams" label-width="100px" class="filter-form">
         <el-row :gutter="20">
-          <el-col :xs="24" :sm="12" :md="8" :lg="6">
+          <el-col :xs="24" :sm="12" :md="6" :lg="6">
             <el-form-item label="产品">
               <el-select
                 v-model="queryParams.platform_id"
@@ -23,7 +23,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="12" :md="8" :lg="6">
+          <el-col :xs="24" :sm="12" :md="6" :lg="6">
             <el-form-item label="请选择">
               <el-select
                 v-model="queryParams.product_id"
@@ -43,7 +43,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="12" :md="8" :lg="5">
+          <el-col :xs="24" :sm="12" :md="6" :lg="6">
             <el-form-item label="姓名">
               <el-input
                 v-model="queryParams.name"
@@ -54,7 +54,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="12" :md="8" :lg="5">
+          <el-col :xs="24" :sm="12" :md="6" :lg="6">
             <el-form-item label="手机号">
               <el-input
                 v-model="queryParams.mobile"
@@ -65,19 +65,16 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="24" :md="24" :lg="2">
+          <el-col :xs="24" :sm="24" :md="24" :lg="24">
             <el-form-item label=" " class="filter-actions">
               <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
+              <el-button :icon="Refresh" @click="handleReset">重置</el-button>
+              <el-button type="success" :icon="Download" @click="handleExport">导出</el-button>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
     </el-card>
-
-    <!-- 导出按钮 -->
-    <el-button type="success" style="margin-bottom: 20px" @click="handleExport">
-      导出Excel
-    </el-button>
 
     <!-- 数据表格 -->
     <el-card shadow="never">
@@ -191,7 +188,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { Search } from '@element-plus/icons-vue'
+import { Search, Download, Refresh } from '@element-plus/icons-vue'
 import {
   getUserSimListApi,
   editUserSimApi,
@@ -303,6 +300,18 @@ const getList = async () => {
 // 查询
 const handleQuery = () => {
   queryParams.page = 1
+  getList()
+}
+
+// 重置
+const handleReset = () => {
+  queryParams.page = 1
+  queryParams.limit = 15
+  queryParams.platform_id = 0
+  queryParams.product_id = 0
+  queryParams.name = ''
+  queryParams.mobile = ''
+  childProductOptions.value = []
   getList()
 }
 

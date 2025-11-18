@@ -79,16 +79,13 @@
           <el-col :xs="24" :sm="12" :md="8" :lg="18">
             <el-form-item label=" " class="filter-actions">
               <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
+              <el-button :icon="Refresh" @click="handleReset">重置</el-button>
+              <el-button type="success" :icon="Download" @click="handleExport">导出</el-button>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
     </el-card>
-
-    <!-- 导出按钮 -->
-    <el-button type="success" style="margin-bottom: 20px" @click="handleExport">
-      导出Excel
-    </el-button>
 
     <!-- 数据表格 -->
     <el-card shadow="never">
@@ -300,7 +297,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { Search } from '@element-plus/icons-vue'
+import { Search, Download, Refresh } from '@element-plus/icons-vue'
 import {
   getUserSettleListApi,
   editSettlePriceApi,
@@ -432,6 +429,19 @@ const getList = async () => {
 // 查询
 const handleQuery = () => {
   queryParams.page = 1
+  getList()
+}
+
+// 重置
+const handleReset = () => {
+  queryParams.page = 1
+  queryParams.limit = 15
+  queryParams.platform_id = 0
+  queryParams.product_id = 0
+  queryParams.name = ''
+  queryParams.mobile = ''
+  queryParams.tdz_mobile = ''
+  childProductOptions.value = []
   getList()
 }
 

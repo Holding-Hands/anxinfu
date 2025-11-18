@@ -3,7 +3,7 @@
     <el-card class="filter-card" shadow="never">
       <!-- 搜索表单 -->
       <el-form :model="queryParams" label-width="100px" class="filter-form">
-        <el-row :gutter="20">
+        <el-row :gutter="20" justify="space-between" align="middle">
           <el-col :xs="24" :sm="12" :md="8" :lg="6">
             <el-form-item label="平台名称">
               <el-input
@@ -15,9 +15,10 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="24" :md="24" :lg="6">
+          <el-col :xs="24" :sm="12" :md="16" :lg="18" style="text-align: right">
             <el-form-item label=" " class="filter-actions">
               <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
+              <el-button :icon="Refresh" @click="handleReset">重置</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -25,11 +26,17 @@
     </el-card>
 
     <!-- 操作按钮 -->
-    <div style="margin-bottom: 20px">
+    <div class="toolbar">
       <el-button type="primary" @click="handleAdd">新增</el-button>
-      <el-button type="success" @click="handleBatchEnable">启用</el-button>
-      <el-button type="warning" @click="handleBatchDisable">禁用</el-button>
-      <el-button type="danger" @click="handleBatchDelete">删除</el-button>
+      <el-button type="success" :disabled="selectedRows.length === 0" @click="handleBatchEnable">
+        批量启用
+      </el-button>
+      <el-button type="warning" :disabled="selectedRows.length === 0" @click="handleBatchDisable">
+        批量禁用
+      </el-button>
+      <el-button type="danger" :disabled="selectedRows.length === 0" @click="handleBatchDelete">
+        批量删除
+      </el-button>
     </div>
 
     <!-- 数据表格 -->
@@ -47,20 +54,24 @@
         <el-table-column prop="id" label="ID" min-width="80" align="center" />
         <el-table-column prop="title" label="平台名称" min-width="150" align="center" />
         <el-table-column prop="sort" label="排序" min-width="100" align="center" />
-        <el-table-column label="状态" min-width="120" align="center">
+        <el-table-column label="状态" min-width="100" align="center">
           <template #default="{ row }">
-            <el-switch
-              v-model="row.statusValue"
-              active-text="已启用"
-              inactive-text="已禁用"
-              @change="handleStatusChange(row)"
-            />
+            <el-tag :type="row.status === '已启用' ? 'success' : 'danger'">
+              {{ row.status === '已启用' ? '启用' : '禁用' }}
+            </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" min-width="150" align="center" fixed="right">
+        <el-table-column label="操作" min-width="250" align="center" fixed="right">
           <template #default="{ row }">
             <div class="table-actions">
               <el-link type="primary" :underline="true" @click="handleEdit(row)">编辑</el-link>
+              <el-link
+                :type="row.status === '已启用' ? 'warning' : 'success'"
+                :underline="true"
+                @click="handleToggleStatus(row)"
+              >
+                {{ row.status === '已启用' ? '禁用' : '启用' }}
+              </el-link>
               <el-link type="danger" :underline="true" @click="handleDelete(row)">删除</el-link>
             </div>
           </template>
@@ -112,7 +123,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
-import { Search } from '@element-plus/icons-vue'
+import { Search, Refresh } from '@element-plus/icons-vue'
 import {
   getPlatformListApi,
   addPlatformApi,
@@ -178,6 +189,14 @@ const getList = async () => {
 // 查询
 const handleQuery = () => {
   queryParams.page = 1
+  getList()
+}
+
+// 重置
+const handleReset = () => {
+  queryParams.page = 1
+  queryParams.limit = 15
+  queryParams.title = ''
   getList()
 }
 
@@ -298,9 +317,18 @@ const handleBatchDelete = () => {
     })
 }
 
-// 状态切换
-const handleStatusChange = async (row: PlatformListItem) => {
+// 切换启用/禁用状态
+const handleToggleStatus = async (row: PlatformListItem) => {
+  const isEnabled = row.status === '已启用'
+  const action = isEnabled ? '禁用' : '启用'
+
   try {
+    await ElMessageBox.confirm(`确定要${action}吗？`, '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
+
     // 将当前行转换为启用/禁用接口需要的格式
     const jsonData = JSON.stringify([
       {
@@ -312,23 +340,23 @@ const handleStatusChange = async (row: PlatformListItem) => {
         vip_price: row.vip_price,
         sort: row.sort,
         create_time: row.create_time,
-        status: row.statusValue ? '已启用' : '已禁用',
+        status: isEnabled ? '已禁用' : '已启用',
         update_time: row.update_time
       }
     ])
 
     // 根据状态调用不同的接口
-    const res = row.statusValue
-      ? await setPlatformEnableApi({ jsonData })
-      : await setPlatformDisableApi({ jsonData })
+    const res = isEnabled
+      ? await setPlatformDisableApi({ jsonData })
+      : await setPlatformEnableApi({ jsonData })
 
-    ElMessage.success(res.msg || '操作成功')
-    // 刷新列表以确保数据同步
+    ElMessage.success(res.msg || `${action}成功`)
     await getList()
   } catch (error) {
-    console.error('状态切换失败:', error)
-    // 恢复原状态
-    row.statusValue = !row.statusValue
+    if (error !== 'cancel') {
+      console.error(`${action}失败:`, error)
+      ElMessage.error(`${action}失败，请稍后重试`)
+    }
   }
 }
 

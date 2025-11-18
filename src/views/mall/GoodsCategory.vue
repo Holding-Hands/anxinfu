@@ -1,7 +1,16 @@
 <template>
   <div class="page-container">
+    <!-- 查询区域 -->
+    <el-card class="filter-card" shadow="never">
+      <el-row justify="end">
+        <el-col :span="24" style="text-align: right">
+          <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>
+        </el-col>
+      </el-row>
+    </el-card>
+
     <!-- 操作按钮区域 -->
-    <el-card shadow="never">
+    <el-card shadow="never" style="margin-top: 10px">
       <el-row :gutter="10" style="margin-bottom: 10px">
         <el-col :span="24">
           <el-button type="primary" :icon="Plus" @click="handleAdd">增加</el-button>
@@ -111,7 +120,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
-import { Plus, Delete, Check, Close } from '@element-plus/icons-vue'
+import { Plus, Delete, Check, Close, Search } from '@element-plus/icons-vue'
 import { request } from '@/utils/request'
 
 // 定义商品分类列表项接口
@@ -130,6 +139,7 @@ interface GoodsCategoryItem {
 interface QueryParams {
   page: number
   limit: number
+  cat_name?: string
 }
 
 // 定义表单数据接口
@@ -159,7 +169,8 @@ interface OperationResponse {
 // 查询参数
 const queryParams = reactive<QueryParams>({
   page: 1,
-  limit: 15
+  limit: 15,
+  cat_name: ''
 })
 
 // 表格数据
@@ -187,6 +198,12 @@ const formRules: FormRules = {
 
 // 选中的行
 const selectedIds = ref<number[]>([])
+
+// 查询
+const handleQuery = () => {
+  queryParams.page = 1
+  getList()
+}
 
 // 获取列表数据
 const getList = async () => {

@@ -1,35 +1,41 @@
 <template>
   <div class="page-container">
     <!-- 搜索区域 -->
-    <el-card shadow="never" style="margin-bottom: 10px">
-      <el-form :inline="true" :model="queryParams">
-        <el-form-item label="分类">
-          <el-select v-model="queryParams.cat_id" placeholder="全部" clearable style="width: 150px">
-            <el-option label="全部" value="" />
-            <el-option
-              v-for="item in categoryList"
-              :key="item.id"
-              :label="item.cat_name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
+    <el-card class="filter-card" shadow="never">
+      <el-form :model="queryParams" label-width="100px" class="filter-form">
+        <el-row :gutter="20">
+          <el-col :xs="24" :sm="12" :md="6" :lg="6">
+            <el-form-item label="分类">
+              <el-select v-model="queryParams.cat_id" placeholder="全部" clearable>
+                <el-option label="全部" value="" />
+                <el-option
+                  v-for="item in categoryList"
+                  :key="item.id"
+                  :label="item.cat_name"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-        <el-form-item label="状态">
-          <el-select v-model="queryParams.status" placeholder="全部" clearable style="width: 120px">
-            <el-option
-              v-for="item in GOODS_STATUS_OPTIONS"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
+          <el-col :xs="24" :sm="12" :md="6" :lg="6">
+            <el-form-item label="状态">
+              <el-select v-model="queryParams.status" placeholder="全部" clearable>
+                <el-option
+                  v-for="item in GOODS_STATUS_OPTIONS"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-        <el-form-item>
-          <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
-          <el-button :icon="Refresh" @click="handleReset">重置</el-button>
-        </el-form-item>
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" style="text-align: right">
+            <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
+            <el-button :icon="Refresh" @click="handleReset">重置</el-button>
+          </el-col>
+        </el-row>
       </el-form>
     </el-card>
 
