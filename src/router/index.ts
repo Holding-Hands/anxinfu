@@ -280,6 +280,14 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
+        path: 'team-info',
+        name: 'TeamInfo',
+        component: () => import('@/views/system/TeamInfo.vue'),
+        meta: {
+          title: '团队信息'
+        }
+      },
+      {
         path: 'operation-log',
         name: 'OperationLog',
         component: () => import('@/views/system/OperationLog.vue'),
