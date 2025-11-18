@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/app'
 import {
   HomeFilled,
@@ -61,94 +61,82 @@ import {
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
+const router = useRouter()
 const appStore = useAppStore()
 
 const isCollapse = computed(() => appStore.isCollapse)
 const activeMenu = computed(() => route.path)
 
-// 菜单列表
-const menuList = [
-  {
-    path: '/',
-    icon: HomeFilled,
-    meta: { title: '主页' }
-  },
-  {
-    path: '/agent',
-    icon: User,
-    meta: { title: '盟友管理' },
-    children: [
-      { path: '/agent/ally-list', meta: { title: '2.0盟友列表' } },
-      { path: '/agent/ally-list-10', meta: { title: '1.0盟友列表' } },
-      { path: '/agent/list-v1', meta: { title: '1.0盟友结算价' } },
-      { path: '/agent/agent-flow-policy', meta: { title: '代理流量费政策' } },
-      { path: '/agent/ally-summary', meta: { title: '盟友业绩汇总' } },
-      { path: '/agent/business', meta: { title: '盟友业绩' } },
-      { path: '/agent/daily', meta: { title: '每天业绩' } }
-    ]
-  },
-  {
-    path: '/product',
-    icon: Goods,
-    meta: { title: '产品管理' },
-    children: [
-      { path: '/product/platform', meta: { title: '平台管理' } },
-      { path: '/product/list', meta: { title: '产品列表' } },
-      { path: '/product/deposit-policy', meta: { title: '押金政策' } },
-      { path: '/product/traffic-policy', meta: { title: '流量费政策' } },
-      { path: '/product/settle-rise-price', meta: { title: '上涨结算价' } },
-      { path: '/product/product-rise-price', meta: { title: '涨价分成' } }
-    ]
-  },
-  {
-    path: '/mall',
-    icon: ShoppingCart,
-    meta: { title: '商城系统' },
-    children: [
-      { path: '/mall/goods-category', meta: { title: '商品分类' } },
-      { path: '/mall/goods-list', meta: { title: '商品列表' } },
-      { path: '/mall/order-list', meta: { title: '订单列表' } },
-      { path: '/mall/proxy-order', meta: { title: '代下订单' } }
-    ]
-  },
-  {
-    path: '/machine',
-    icon: Printer,
-    meta: { title: '机具管理' }
-  },
-  {
-    path: '/finance',
-    icon: Wallet,
-    meta: { title: '财务管理' }
-  },
-  {
-    path: '/business',
-    icon: Management,
-    meta: { title: '业务管理' }
-  },
-  {
-    path: '/operation',
-    icon: TrendCharts,
-    meta: { title: '运营管理' }
-  },
-  {
-    path: '/system',
-    icon: Setting,
-    meta: { title: '系统设置' },
-    children: [{ path: '/system/permission', meta: { title: '权限管理' } }]
-  },
-  {
-    path: '/download',
-    icon: Download,
-    meta: { title: '下载中心' },
-    children: [{ path: '/download/record', meta: { title: '下载记录' } }]
-  },
-  {
-    path: '/customer',
-    icon: UserFilled,
-    meta: { title: '客户管理' }
-  }
-]
+// 图标映射
+const iconMap: Record<string, any> = {
+  '/': HomeFilled,
+  '/agent': User,
+  '/product': Goods,
+  '/mall': ShoppingCart,
+  '/machine': Printer,
+  '/finance': Wallet,
+  '/business': Management,
+  '/operation': TrendCharts,
+  '/system': Setting,
+  '/download': Download,
+  '/customer': UserFilled
+}
+
+// 从路由自动生成菜单
+const menuList = computed(() => {
+  const routes = router.getRoutes()
+  const menuMap = new Map()
+
+  // 收集所有一级路由
+  routes.forEach((r) => {
+    if (
+      r.path !== '/login' &&
+      r.path !== '/404' &&
+      r.meta?.title &&
+      !r.path.includes(':') &&
+      r.path.split('/').length === 2 // 只要一级路由
+    ) {
+      if (!menuMap.has(r.path)) {
+        menuMap.set(r.path, {
+          path: r.path,
+          meta: r.meta,
+          icon: iconMap[r.path],
+          children: []
+        })
+      }
+
+      // 收集子路由
+      if (r.children && r.children.length > 0) {
+        const children = r.children
+          .filter((child) => child.meta?.title && child.path !== '')
+          .map((child) => ({
+            path: child.path.startsWith('/') ? child.path : `${r.path}/${child.path}`,
+            meta: child.meta
+          }))
+
+        if (children.length > 0) {
+          menuMap.get(r.path).children = children
+        }
+      }
+    }
+  })
+
+  // 按固定顺序排序
+  const order = [
+    '/',
+    '/agent',
+    '/product',
+    '/mall',
+    '/machine',
+    '/finance',
+    '/business',
+    '/operation',
+    '/system',
+    '/download',
+    '/customer'
+  ]
+  return order.map((path) => menuMap.get(path)).filter(Boolean)
+})
 </script>
 
 <style scoped lang="scss">

@@ -270,6 +270,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '权限管理'
         }
+      },
+      {
+        path: 'employee',
+        name: 'EmployeeManage',
+        component: () => import('@/views/system/EmployeeManage.vue'),
+        meta: {
+          title: '员工设置'
+        }
       }
     ]
   },
