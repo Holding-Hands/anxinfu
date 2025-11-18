@@ -278,6 +278,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '员工设置'
         }
+      },
+      {
+        path: 'operation-log',
+        name: 'OperationLog',
+        component: () => import('@/views/system/OperationLog.vue'),
+        meta: {
+          title: '操作日志'
+        }
       }
     ]
   },
