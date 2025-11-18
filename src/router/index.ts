@@ -294,6 +294,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '操作日志'
         }
+      },
+      {
+        path: 'config',
+        name: 'SystemConfig',
+        component: () => import('@/views/system/SystemConfig.vue'),
+        meta: {
+          title: '系统设置'
+        }
       }
     ]
   },

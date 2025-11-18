@@ -100,7 +100,7 @@ const handleCommand = (command: string) => {
       router.push('/profile')
       break
     case 'settings':
-      router.push('/system')
+      router.push('/system/config')
       break
     case 'logout':
       handleLogout()
@@ -114,13 +114,15 @@ const handleLogout = () => {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
-  }).then(() => {
-    userStore.logout()
-    ElMessage.success('退出成功')
-    router.push('/login')
-  }).catch(() => {
-    // 取消退出
   })
+    .then(() => {
+      userStore.logout()
+      ElMessage.success('退出成功')
+      router.push('/login')
+    })
+    .catch(() => {
+      // 取消退出
+    })
 }
 </script>
 
@@ -204,4 +206,3 @@ const handleLogout = () => {
   }
 }
 </style>
-
