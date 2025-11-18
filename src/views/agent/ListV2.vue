@@ -243,17 +243,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {
-  Search,
-  Refresh,
-  Plus,
-  Download,
-  View,
-  Edit,
-  Delete,
-  Check,
-  Close
-} from '@element-plus/icons-vue'
+import { Search, Refresh, Plus, Download, Check, Close } from '@element-plus/icons-vue'
 import { getAgentListApi, type AgentListParams, type AgentListItem } from '@/api/user'
 import {
   USER_LEVEL_OPTIONS,

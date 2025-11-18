@@ -134,7 +134,8 @@ const menuList = [
   {
     path: '/system',
     icon: Setting,
-    meta: { title: '系统设置' }
+    meta: { title: '系统设置' },
+    children: [{ path: '/system/permission', meta: { title: '权限管理' } }]
   },
   {
     path: '/download',

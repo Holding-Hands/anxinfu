@@ -111,7 +111,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
-import { Plus, Delete, Edit, Check, Close } from '@element-plus/icons-vue'
+import { Plus, Delete, Check, Close } from '@element-plus/icons-vue'
 import { request } from '@/utils/request'
 
 // 定义商品分类列表项接口

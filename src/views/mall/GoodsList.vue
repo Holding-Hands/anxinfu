@@ -256,7 +256,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, onBeforeUnmount, shallowRef, nextTick } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
-import { Plus, Delete, Edit, Check, Close, Search, Refresh } from '@element-plus/icons-vue'
+import { Plus, Delete, Check, Close, Search, Refresh } from '@element-plus/icons-vue'
 import { request } from '@/utils/request'
 import { GOODS_STATUS_OPTIONS, SYS_TYPE_OPTIONS, PRODUCT_OPTIONS } from '@/constants'
 import '@wangeditor/editor/dist/css/style.css'

@@ -257,13 +257,18 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/system',
     component: () => import('@/layout/index.vue'),
+    redirect: '/system/permission',
+    meta: {
+      title: '系统设置',
+      icon: 'Setting'
+    },
     children: [
       {
-        path: '',
-        name: 'System',
-        component: () => import('@/views/System.vue'),
+        path: 'permission',
+        name: 'PermissionManage',
+        component: () => import('@/views/system/PermissionManage.vue'),
         meta: {
-          title: '系统设置'
+          title: '权限管理'
         }
       }
     ]

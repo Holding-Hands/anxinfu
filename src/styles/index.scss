@@ -48,59 +48,7 @@ body,
   background: var(--text-secondary);
 }
 
-// 全局 Loading 颜色覆盖 - 最高优先级
-.el-loading-spinner {
-  color: var(--el-color-primary) !important;
-
-  svg {
-    color: var(--el-color-primary) !important;
-    fill: var(--el-color-primary) !important;
-  }
-
-  svg circle {
-    stroke: var(--el-color-primary) !important;
-    color: var(--el-color-primary) !important;
-  }
-
-  svg path {
-    stroke: var(--el-color-primary) !important;
-    fill: var(--el-color-primary) !important;
-  }
-
-  .circular {
-    color: var(--el-color-primary) !important;
-    stroke: var(--el-color-primary) !important;
-  }
-
-  .path {
-    stroke: var(--el-color-primary) !important;
-    stroke-width: 3 !important;
-    stroke-linecap: round !important;
-  }
-}
-
-// 表格 loading 特殊处理
-.el-table .el-loading-spinner,
-.el-table .el-loading-spinner svg,
-.el-table .el-loading-spinner svg circle,
-.el-table .el-loading-spinner svg path {
-  color: var(--el-color-primary) !important;
-  stroke: var(--el-color-primary) !important;
-  fill: var(--el-color-primary) !important;
-}
-
-// 直接覆盖 Element Plus 的 loading 颜色
-.el-loading-mask .el-loading-spinner svg circle {
-  stroke: var(--el-color-primary) !important;
-}
-
-.el-loading-mask .el-loading-spinner .path {
-  stroke: var(--el-color-primary) !important;
-  stroke-width: 3 !important;
-  stroke-linecap: round !important;
-}
-
-// 自定义点状 Loading 动画 - 替换默认圆圈
+// 自定义 Loading 动画
 .el-loading-spinner {
   display: flex !important;
   align-items: center !important;

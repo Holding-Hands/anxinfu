@@ -220,7 +220,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
-import { Search, Refresh, Plus, Delete, Edit } from '@element-plus/icons-vue'
+import { Search, Refresh, Plus, Delete } from '@element-plus/icons-vue'
 import { PRODUCT_OPTIONS } from '@/constants'
 import { request } from '@/utils/request'
 
