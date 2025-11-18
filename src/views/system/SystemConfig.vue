@@ -63,17 +63,8 @@ const fetchConfigContent = async (groupId: string) => {
   loading.value = true
   try {
     const response = await getConfigGroupApi(Number(groupId))
-    console.log('API响应:', response)
-    console.log('response.data类型:', typeof response.data)
-    console.log('response.data内容:', response.data)
-
     // 直接使用response.data作为HTML内容
-    if (response.data) {
-      htmlContent.value[groupId] = response.data
-    } else {
-      console.warn('未找到HTML内容')
-    }
-
+    htmlContent.value[groupId] = response as any as string
     // 等待DOM更新后处理表单
     await nextTick()
     processFormsInContent()
