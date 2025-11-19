@@ -43,8 +43,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, type Component } from 'vue'
+import { useRoute, useRouter, type RouteRecordRaw } from 'vue-router'
 import { useAppStore } from '@/stores/app'
 import {
   HomeFilled,
@@ -68,7 +68,7 @@ const isCollapse = computed(() => appStore.isCollapse)
 const activeMenu = computed(() => route.path)
 
 // 图标映射
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, Component> = {
   '/': HomeFilled,
   '/agent': User,
   '/product': Goods,
@@ -84,15 +84,17 @@ const iconMap: Record<string, any> = {
 
 // 从路由自动生成菜单
 const menuList = computed(() => {
-  const routes = router.getRoutes()
+  const routes = router.options.routes
   const menuMap = new Map()
 
   // 收集所有一级路由
-  routes.forEach((r) => {
+  routes.forEach((r: RouteRecordRaw) => {
     // 特殊处理根路径
     if (r.path === '/') {
       if (r.children && r.children.length > 0) {
-        const dashboardChild = r.children.find((child) => child.path === 'dashboard')
+        const dashboardChild = r.children.find(
+          (child: RouteRecordRaw) => child.path === 'dashboard'
+        )
         if (dashboardChild && dashboardChild.meta?.title) {
           menuMap.set('/dashboard', {
             path: '/dashboard',
@@ -105,35 +107,37 @@ const menuList = computed(() => {
       return
     }
 
+    // 过滤不需要显示的路由
     if (
       r.path !== '/login' &&
-      r.path !== '/404' &&
+      !r.path.includes(':') && // 过滤动态路由如 /:pathMatch(.*)*
       r.meta?.title &&
-      !r.path.includes(':') &&
-      r.path.split('/').length === 2 // 只要一级路由
+      !r.meta?.hidden
     ) {
-      if (!menuMap.has(r.path)) {
-        menuMap.set(r.path, {
-          path: r.path,
-          meta: r.meta,
-          icon: iconMap[r.path],
-          children: []
-        })
+      const menuItem = {
+        path: r.path,
+        meta: r.meta,
+        icon: iconMap[r.path],
+        children: [] as any[]
       }
 
       // 收集子路由
       if (r.children && r.children.length > 0) {
         const children = r.children
-          .filter((child) => child.meta?.title && child.path !== '')
-          .map((child) => ({
+          .filter(
+            (child: RouteRecordRaw) => child.meta?.title && !child.meta?.hidden && child.path !== ''
+          )
+          .map((child: RouteRecordRaw) => ({
             path: child.path.startsWith('/') ? child.path : `${r.path}/${child.path}`,
             meta: child.meta
           }))
 
         if (children.length > 0) {
-          menuMap.get(r.path).children = children
+          menuItem.children = children
         }
       }
+
+      menuMap.set(r.path, menuItem)
     }
   })
 

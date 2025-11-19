@@ -214,6 +214,23 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '机具查询'
         }
+      },
+      {
+        path: 'ruku-list',
+        name: 'RukuList',
+        component: () => import('@/views/machine/RukuList.vue'),
+        meta: {
+          title: '入库/减库'
+        }
+      },
+      {
+        path: 'stock-return',
+        name: 'StockReturn',
+        component: () => import('@/views/machine/StockReturn.vue'),
+        meta: {
+          title: '机具退货',
+          hidden: true
+        }
       }
     ]
   },
