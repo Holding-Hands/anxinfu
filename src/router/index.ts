@@ -335,14 +335,18 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/customer',
     component: () => import('@/layout/index.vue'),
+    redirect: '/customer/list',
+    meta: {
+      title: '客户管理',
+      icon: 'UserFilled'
+    },
     children: [
       {
-        path: '',
-        name: 'Customer',
-        component: () => import('@/views/Customer.vue'),
+        path: 'list',
+        name: 'CustomerList',
+        component: () => import('@/views/customer/CustomerList.vue'),
         meta: {
-          title: '客户管理',
-          icon: 'UserFilled'
+          title: '客户列表'
         }
       }
     ]
