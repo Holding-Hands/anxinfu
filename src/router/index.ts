@@ -302,6 +302,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '系统设置'
         }
+      },
+      {
+        path: 'config-manage',
+        name: 'ConfigManage',
+        component: () => import('@/views/system/ConfigManage.vue'),
+        meta: {
+          title: '配置管理'
+        }
       }
     ]
   },
