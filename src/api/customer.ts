@@ -148,3 +148,51 @@ export const operateCustomerPointApi = (data: OperateCustomerPointParams) => {
     }
   })
 }
+
+// 客户资金明细查询参数
+export interface CustomerProfitListParams {
+  page: number
+  limit: number
+  product_id?: number | string
+  name?: string
+  sn?: string
+  type?: number | string
+  create_time?: string // 时间范围
+}
+
+// 客户资金明细数据项
+export interface CustomerProfitListItem {
+  id?: number
+  m_id?: number
+  customer_id?: number
+  type?: number
+  pre_tax?: string
+  profit: string
+  remark?: string
+  mbefore?: string
+  mafter?: string
+  sn?: string
+  product_id?: number
+  month?: number
+  day?: number
+  trade_id?: number
+  create_time?: string
+  update_time?: string | null
+  product_name?: string
+  customer_name?: string
+  customer_mobile?: string
+  [key: string]: any // 允许其他字段，如合计行
+}
+
+// 客户资金明细响应
+export interface CustomerProfitListResponse {
+  code: number
+  msg: string
+  count: number
+  data: CustomerProfitListItem[]
+}
+
+// 获取客户资金明细列表
+export const getCustomerProfitListApi = (params: CustomerProfitListParams) => {
+  return request.get<CustomerProfitListResponse>('/index/customer_profit/getlist.html', { params })
+}

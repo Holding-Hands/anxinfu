@@ -348,6 +348,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '客户列表'
         }
+      },
+      {
+        path: 'fund-details',
+        name: 'CustomerFundDetails',
+        component: () => import('@/views/customer/CustomerFundDetails.vue'),
+        meta: {
+          title: '客户资金明细'
+        }
       }
     ]
   },
