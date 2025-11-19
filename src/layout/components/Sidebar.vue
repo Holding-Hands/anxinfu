@@ -89,6 +89,22 @@ const menuList = computed(() => {
 
   // 收集所有一级路由
   routes.forEach((r) => {
+    // 特殊处理根路径
+    if (r.path === '/') {
+      if (r.children && r.children.length > 0) {
+        const dashboardChild = r.children.find((child) => child.path === 'dashboard')
+        if (dashboardChild && dashboardChild.meta?.title) {
+          menuMap.set('/dashboard', {
+            path: '/dashboard',
+            meta: dashboardChild.meta,
+            icon: iconMap['/'],
+            children: []
+          })
+        }
+      }
+      return
+    }
+
     if (
       r.path !== '/login' &&
       r.path !== '/404' &&
@@ -123,7 +139,7 @@ const menuList = computed(() => {
 
   // 按固定顺序排序
   const order = [
-    '/',
+    '/dashboard',
     '/agent',
     '/product',
     '/mall',

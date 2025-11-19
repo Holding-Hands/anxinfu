@@ -201,13 +201,18 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/machine',
     component: () => import('@/layout/index.vue'),
+    redirect: '/machine/stock-query',
+    meta: {
+      title: '机具管理',
+      icon: 'Printer'
+    },
     children: [
       {
-        path: '',
-        name: 'Machine',
-        component: () => import('@/views/Machine.vue'),
+        path: 'stock-query',
+        name: 'StockQuery',
+        component: () => import('@/views/machine/StockQuery.vue'),
         meta: {
-          title: '机具管理'
+          title: '机具查询'
         }
       }
     ]
