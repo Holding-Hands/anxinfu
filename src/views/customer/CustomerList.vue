@@ -299,7 +299,7 @@
 
       <!-- 身份证照片 -->
       <div
-        v-if="currentCustomer.positiveImage || currentCustomer.oppositeImage"
+        v-if="currentCustomer && (currentCustomer.positiveImage || currentCustomer.oppositeImage)"
         style="margin-top: 20px"
       >
         <el-divider content-position="left">身份证照片</el-divider>
