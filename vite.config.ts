@@ -12,11 +12,7 @@ export default defineConfig({
     vue(),
     // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
     AutoImport({
-      imports: [
-        'vue',
-        'vue-router',
-        'pinia'
-      ],
+      imports: ['vue', 'vue-router', 'pinia'],
       resolvers: [ElementPlusResolver()],
       dts: 'src/auto-imports.d.ts', // 生成类型声明文件
       eslintrc: {
@@ -69,11 +65,10 @@ export default defineConfig({
         manualChunks: {
           'vue-vendor': ['vue', 'vue-router', 'pinia'],
           'element-plus': ['element-plus', '@element-plus/icons-vue'],
-          'charts': ['echarts'],
-          'three': ['three']
+          charts: ['echarts'],
+          three: ['three']
         }
       }
     }
   }
 })
-

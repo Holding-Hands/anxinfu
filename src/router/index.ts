@@ -356,6 +356,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '客户资金明细'
         }
+      },
+      {
+        path: 'draw-list',
+        name: 'DrawList',
+        component: () => import('@/views/customer/DrawList.vue'),
+        meta: {
+          title: '奖品设置'
+        }
       }
     ]
   },
