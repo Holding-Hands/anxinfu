@@ -225,3 +225,33 @@ export const DOWNLOAD_TYPE_MAP: Record<number | string, string> = {
   10: '分红明细',
   11: '结算价'
 }
+
+// 积分订单状态选项（用于积分订单页面）
+export const COIN_ORDER_STATUS_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '申请中', value: 0 },
+  { label: '已兑换', value: 1 },
+  { label: '已撤销', value: 2 }
+]
+
+// 积分订单状态映射
+export const COIN_ORDER_STATUS_MAP: Record<number | string, string> = {
+  '': '全部',
+  0: '申请中',
+  1: '已兑换',
+  2: '已撤销'
+}
+
+// 发货状态选项（用于积分订单页面）
+export const SHIP_STATUS_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '未发货', value: 0 },
+  { label: '已发货', value: 1 }
+]
+
+// 发货状态映射
+export const SHIP_STATUS_MAP: Record<number | string, string> = {
+  '': '全部',
+  0: '未发货',
+  1: '已发货'
+}

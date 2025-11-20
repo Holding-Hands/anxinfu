@@ -263,6 +263,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '未激活扣款'
         }
+      },
+      {
+        path: 'coin-order',
+        name: 'CoinOrder',
+        component: () => import('@/views/machine/CoinOrder.vue'),
+        meta: {
+          title: '积分订单'
+        }
       }
     ]
   },
