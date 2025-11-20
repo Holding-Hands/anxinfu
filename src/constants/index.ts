@@ -316,3 +316,19 @@ export const PROFIT_TYPE_MAP: Record<number, string> = {
   4: '达标返现',
   5: '后台操作'
 }
+
+// 积分明细类型选项
+export const COIN_LOG_TYPE_OPTIONS = [
+  { label: '全部', value: 0 },
+  { label: '购机赠送', value: 1 },
+  { label: '消费支出', value: 2 },
+  { label: '系统操作', value: 3 }
+]
+
+// 积分明细类型映射
+export const COIN_LOG_TYPE_MAP: Record<number, string> = {
+  0: '全部',
+  1: '购机赠送',
+  2: '消费支出',
+  3: '系统操作'
+}

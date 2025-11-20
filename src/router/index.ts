@@ -306,6 +306,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '收益明细'
         }
+      },
+      {
+        path: 'coin-log',
+        name: 'CoinLog',
+        component: () => import('@/views/finance/CoinLog.vue'),
+        meta: {
+          title: '积分明细'
+        }
       }
     ]
   },
