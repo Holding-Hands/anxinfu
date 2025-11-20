@@ -247,6 +247,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '回调记录'
         }
+      },
+      {
+        path: 'weijihuo-koukuan',
+        name: 'WeijihuoKouKuan',
+        component: () => import('@/views/machine/WeijihuoKouKuan.vue'),
+        meta: {
+          title: '伪激活扣款状态'
+        }
       }
     ]
   },
