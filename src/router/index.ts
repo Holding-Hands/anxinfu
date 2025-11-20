@@ -290,6 +290,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '提现审核'
         }
+      },
+      {
+        path: 'tixian-record',
+        name: 'TixianRecord',
+        component: () => import('@/views/finance/TixianRecord.vue'),
+        meta: {
+          title: '提现记录'
+        }
       }
     ]
   },
