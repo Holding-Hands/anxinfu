@@ -426,6 +426,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '奖品设置'
         }
+      },
+      {
+        path: 'tixian',
+        name: 'CustomerTixian',
+        component: () => import('@/views/customer/CustomerTixian.vue'),
+        meta: {
+          title: '客户提现'
+        }
       }
     ]
   },
