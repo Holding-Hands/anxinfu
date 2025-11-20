@@ -434,6 +434,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '客户提现'
         }
+      },
+      {
+        path: 'draw-log',
+        name: 'DrawLog',
+        component: () => import('@/views/customer/DrawLog.vue'),
+        meta: {
+          title: '抽奖记录'
+        }
       }
     ]
   },
