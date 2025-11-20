@@ -51,15 +51,15 @@
           <el-col :xs="24" :sm="12" :md="6" :lg="6">
             <el-form-item label="时间" label-width="100px">
               <el-date-picker
-                  v-model="timeRange"
-                  teleported
-                  type="datetimerange"
-                  range-separator="-"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="YYYY-MM-DD HH:mm:ss"
-                  style="width: 100%"
-                  @change="handleTimeChange"
+                v-model="timeRange"
+                teleported
+                type="datetimerange"
+                range-separator="-"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                style="width: 100%"
+                @change="handleTimeChange"
               />
             </el-form-item>
           </el-col>

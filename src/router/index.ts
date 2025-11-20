@@ -330,6 +330,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '账单分期'
         }
+      },
+      {
+        path: 'finance-setting',
+        name: 'FinanceSetting',
+        component: () => import('@/views/finance/FinanceSetting.vue'),
+        meta: {
+          title: '财务设置'
+        }
       }
     ]
   },
