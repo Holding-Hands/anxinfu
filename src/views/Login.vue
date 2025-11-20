@@ -37,16 +37,7 @@
           />
         </el-form-item>
 
-        <el-form-item prop="code">
-          <el-input
-            v-model="loginForm.code"
-            placeholder="请输入验证码"
-            size="large"
-            :prefix-icon="Key"
-            clearable
-            maxlength="6"
-          />
-        </el-form-item>
+        <!-- 验证码隐藏，默认传123 -->
 
         <el-form-item>
           <el-checkbox v-model="loginForm.remember">记住密码</el-checkbox>
@@ -64,10 +55,6 @@
           </el-button>
         </el-form-item>
       </el-form>
-
-      <div class="login-footer">
-        <p>默认账号: anxinfuapp / anxinfu@321..</p>
-      </div>
     </div>
   </div>
 </template>
@@ -76,7 +63,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
-import { User, Lock, Key } from '@element-plus/icons-vue'
+import { User, Lock } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
 import * as THREE from 'three'
 import type { LoginForm } from '@/types'
@@ -89,22 +76,15 @@ const formRef = ref<FormInstance>()
 const loading = ref(false)
 
 const loginForm = ref<LoginForm>({
-  username: 'anxinfuapp',
-  password: 'anxinfu@321..',
-  code: '321',
+  username: '',
+  password: '',
+  code: '123',
   remember: true
 })
 
 const loginRules: FormRules = {
-  username: [
-    { required: true, message: '请输入账号', trigger: 'blur' }
-  ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' }
-  ],
-  code: [
-    { required: true, message: '请输入验证码', trigger: 'blur' }
-  ]
+  username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 }
 
 // Three.js 场景
@@ -123,12 +103,7 @@ const initThree = () => {
   scene.fog = new THREE.FogExp2(0x000000, 0.001)
 
   // 创建相机
-  camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  )
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
   camera.position.z = 5
 
   // 创建渲染器
@@ -155,14 +130,8 @@ const initThree = () => {
     colorsArray[i * 3 + 2] = 0.8 + Math.random() * 0.2 // B
   }
 
-  particlesGeometry.setAttribute(
-    'position',
-    new THREE.BufferAttribute(posArray, 3)
-  )
-  particlesGeometry.setAttribute(
-    'color',
-    new THREE.BufferAttribute(colorsArray, 3)
-  )
+  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3))
+  particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3))
 
   // 粒子材质
   const particlesMaterial = new THREE.PointsMaterial({
@@ -367,4 +336,3 @@ onUnmounted(() => {
   }
 }
 </style>
-
