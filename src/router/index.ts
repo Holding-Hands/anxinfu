@@ -239,6 +239,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '划拨记录'
         }
+      },
+      {
+        path: 'tuihuo-log',
+        name: 'TuihuoLog',
+        component: () => import('@/views/machine/TuihuoLog.vue'),
+        meta: {
+          title: '回调记录'
+        }
       }
     ]
   },
