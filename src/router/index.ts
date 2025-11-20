@@ -231,6 +231,14 @@ const routes: RouteRecordRaw[] = [
           title: '机具退货',
           hidden: true
         }
+      },
+      {
+        path: 'transfer-log',
+        name: 'TransferLog',
+        component: () => import('@/views/machine/TransferLog.vue'),
+        meta: {
+          title: '划拨记录'
+        }
       }
     ]
   },
