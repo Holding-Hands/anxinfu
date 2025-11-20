@@ -314,6 +314,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '积分明细'
         }
+      },
+      {
+        path: 'apply-rate-list',
+        name: 'ApplyRateList',
+        component: () => import('@/views/finance/ApplyRateList.vue'),
+        meta: {
+          title: '费率申请列表'
+        }
       }
     ]
   },

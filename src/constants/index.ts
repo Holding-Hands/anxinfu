@@ -332,3 +332,19 @@ export const COIN_LOG_TYPE_MAP: Record<number, string> = {
   2: '消费支出',
   3: '系统操作'
 }
+
+// 费率申请处理状态选项
+export const APPLY_RATE_STATUS_OPTIONS = [
+  { label: '全部', value: 'all' },
+  { label: '处理中', value: 0 },
+  { label: '已处理', value: 1 },
+  { label: '已驳回', value: 2 }
+]
+
+// 费率申请处理状态映射
+export const APPLY_RATE_STATUS_MAP: Record<string | number, string> = {
+  all: '全部',
+  0: '处理中',
+  1: '已处理',
+  2: '已驳回'
+}
