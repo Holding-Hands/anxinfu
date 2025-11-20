@@ -60,7 +60,7 @@
           </el-col>
 
           <!-- 操作按钮 -->
-          <el-col :xs="24" :sm="24" :md="24" :lg="42">
+          <el-col :xs="24" :sm="24" :md="24" :lg="24">
             <el-form-item label="" class="button-form-item">
               <div class="action-buttons">
                 <el-button type="primary" :icon="Search" @click="handleQuery">查询</el-button>

@@ -277,13 +277,18 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/finance',
     component: () => import('@/layout/index.vue'),
+    redirect: '/finance/tixian-order',
+    meta: {
+      title: '财务管理',
+      icon: 'Money'
+    },
     children: [
       {
-        path: '',
-        name: 'Finance',
-        component: () => import('@/views/Finance.vue'),
+        path: 'tixian-order',
+        name: 'TixianOrder',
+        component: () => import('@/views/finance/TixianOrder.vue'),
         meta: {
-          title: '财务管理'
+          title: '提现审核'
         }
       }
     ]

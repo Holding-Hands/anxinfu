@@ -271,3 +271,19 @@ export const POINT_LOG_TYPE_MAP: Record<number | string, string> = {
   2: '其他',
   3: '抽奖消耗'
 }
+
+// 资金类型选项（用于提现审核页面）
+export const WALLET_TYPE_OPTIONS = [
+  { label: '全部', value: 0 },
+  { label: '分润钱包', value: 1 },
+  { label: '返现钱包', value: 2 },
+  { label: '流量费钱包', value: 3 }
+]
+
+// 资金类型映射
+export const WALLET_TYPE_MAP: Record<number | string, string> = {
+  0: '全部',
+  1: '分润钱包',
+  2: '返现钱包',
+  3: '流量费钱包'
+}
