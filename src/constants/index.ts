@@ -255,3 +255,19 @@ export const SHIP_STATUS_MAP: Record<number | string, string> = {
   0: '未发货',
   1: '已发货'
 }
+
+// 抽奖积分类型选项（用于抽奖积分页面）
+export const POINT_LOG_TYPE_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '交易返', value: 1 },
+  { label: '其他', value: 2 },
+  { label: '抽奖消耗', value: 3 }
+]
+
+// 抽奖积分类型映射
+export const POINT_LOG_TYPE_MAP: Record<number | string, string> = {
+  '': '全部',
+  1: '交易返',
+  2: '其他',
+  3: '抽奖消耗'
+}

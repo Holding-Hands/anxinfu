@@ -442,6 +442,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '抽奖记录'
         }
+      },
+      {
+        path: 'point-log',
+        name: 'PointLog',
+        component: () => import('@/views/customer/PointLog.vue'),
+        meta: {
+          title: '抽奖积分'
+        }
       }
     ]
   },
