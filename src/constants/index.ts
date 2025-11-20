@@ -348,3 +348,23 @@ export const APPLY_RATE_STATUS_MAP: Record<string | number, string> = {
   1: '已处理',
   2: '已驳回'
 }
+
+// 账单分期状态选项
+export const ARREARS_STATUS_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '待确认', value: 0 },
+  { label: '已确认', value: 1 },
+  { label: '已退回', value: 2 },
+  { label: '已结束', value: 3 },
+  { label: '已取消', value: 4 }
+]
+
+// 账单分期状态映射
+export const ARREARS_STATUS_MAP: Record<string | number, string> = {
+  '': '全部',
+  0: '待确认',
+  1: '已确认',
+  2: '已退回',
+  3: '已结束',
+  4: '已取消'
+}

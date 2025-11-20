@@ -322,6 +322,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '费率申请列表'
         }
+      },
+      {
+        path: 'arrears-list',
+        name: 'ArrearsList',
+        component: () => import('@/views/finance/ArrearsList.vue'),
+        meta: {
+          title: '账单分期'
+        }
       }
     ]
   },

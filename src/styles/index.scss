@@ -141,10 +141,9 @@ body,
   }
 }
 
-// 全局 tooltip 样式 - 使用更高优先级
-div.el-popper.is-dark,
-div.el-popper.is-light,
-div.el-popper {
+// 全局 tooltip 样式 - 排除日期选择器和下拉框等组件的弹出层
+div.el-popper.is-dark:not([role='dialog']):not(.el-select__popper):not(.el-picker__popper),
+div.el-popper.is-light:not([role='dialog']):not(.el-select__popper):not(.el-picker__popper) {
   max-width: 400px !important;
   word-wrap: break-word !important;
   word-break: break-all !important;
