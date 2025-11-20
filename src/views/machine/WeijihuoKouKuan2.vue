@@ -72,10 +72,10 @@
             <el-form-item label="状态">
               <el-select v-model="queryParams.status" placeholder="全部" clearable>
                 <el-option label="全部" value="" />
-                <el-option label="未划拨" :value="0" />
-                <el-option label="已划拨" :value="1" />
-                <el-option label="已绑定" :value="2" />
-                <el-option label="已激活" :value="3" />
+                <el-option label="未划拨" :value="1" />
+                <el-option label="已划拨" :value="2" />
+                <el-option label="已绑定" :value="3" />
+                <el-option label="已激活" :value="4" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -136,9 +136,6 @@
           show-overflow-tooltip
         />
 
-        <!-- 交易金额 -->
-        <el-table-column prop="kouKuan_money" label="交易金额" min-width="100" align="center" />
-
         <!-- 用户 -->
         <el-table-column prop="username" label="用户" min-width="150" align="center">
           <template #default="{ row }">
@@ -146,11 +143,25 @@
           </template>
         </el-table-column>
 
-        <!-- N天后 -->
-        <el-table-column prop="n_days" label="N天后" min-width="100" align="center" />
+        <!-- 押金 -->
+        <el-table-column prop="yajin_money" label="押金" min-width="100" align="center" />
 
-        <!-- N天交易 -->
-        <el-table-column prop="n_days_money" label="N天交易" min-width="100" align="center" />
+        <!-- 流量费 -->
+        <el-table-column prop="sim_money" label="流量费" min-width="100" align="center" />
+
+        <!-- 扣款金额 -->
+        <el-table-column prop="kouKuan_money" label="扣款金额" min-width="100" align="center" />
+
+        <!-- 状态 -->
+        <el-table-column prop="status" label="状态" min-width="100" align="center">
+          <template #default="{ row }">
+            <el-tag v-if="row.status === 1" type="info">未划拨</el-tag>
+            <el-tag v-else-if="row.status === 2" type="warning">已划拨</el-tag>
+            <el-tag v-else-if="row.status === 3" type="primary">已绑定</el-tag>
+            <el-tag v-else-if="row.status === 4" type="success">已激活</el-tag>
+            <el-tag v-else>未知</el-tag>
+          </template>
+        </el-table-column>
 
         <!-- 激活时间 -->
         <el-table-column prop="merchant_time" label="激活时间" min-width="180" align="center" />
@@ -190,16 +201,16 @@ import { ref, reactive, onMounted, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { Search, Refresh } from '@element-plus/icons-vue'
 import {
-  getWeijihuoListApi,
-  type WeijihuoListParams,
-  type WeijihuoListItem
-} from '@/api/weijihuoKouKuan'
+  getWeijihuoKouKuan2ListApi,
+  type WeijihuoKouKuan2Params,
+  type WeijihuoKouKuan2Item
+} from '@/api/weijihuoKouKuan2'
 import { getChildProductApi } from '@/api/user'
 import { PRODUCT_OPTIONS } from '@/constants'
 import { exportExcel } from '@/utils/export'
 
 // 查询参数
-const queryParams = reactive<WeijihuoListParams>({
+const queryParams = reactive<WeijihuoKouKuan2Params>({
   page: 1,
   limit: 15,
   platform_id: '',
@@ -219,7 +230,7 @@ watch(createTimeRange, (val) => {
 })
 
 // 表格数据
-const tableData = ref<WeijihuoListItem[]>([])
+const tableData = ref<WeijihuoKouKuan2Item[]>([])
 const total = ref(0)
 const loading = ref(false)
 
@@ -265,8 +276,8 @@ const handlePlatformChange = async (value: number | string) => {
 const getList = async () => {
   loading.value = true
   try {
-    const res = await getWeijihuoListApi(queryParams)
-    console.log('伪激活扣款状态响应:', res)
+    const res = await getWeijihuoKouKuan2ListApi(queryParams)
+    console.log('未激活扣款响应:', res)
     tableData.value = res.data || []
     total.value = res.count || 0
   } catch (error) {
@@ -322,7 +333,6 @@ const handleExport = () => {
     { key: 'sys_type_name', title: '模式' },
     { key: 'product_name', title: '产品名称' },
     { key: 'sn', title: 'SN' },
-    { key: 'kouKuan_money', title: '交易金额' },
     {
       key: 'username',
       title: '用户',
@@ -332,8 +342,22 @@ const handleExport = () => {
         return div.textContent || div.innerText || ''
       }
     },
-    { key: 'n_days', title: 'N天后' },
-    { key: 'n_days_money', title: 'N天交易' },
+    { key: 'yajin_money', title: '押金' },
+    { key: 'sim_money', title: '流量费' },
+    { key: 'kouKuan_money', title: '扣款金额' },
+    {
+      key: 'status',
+      title: '状态',
+      formatter: (value: number) => {
+        const statusMap: Record<number, string> = {
+          1: '未划拨',
+          2: '已划拨',
+          3: '已绑定',
+          4: '已激活'
+        }
+        return statusMap[value] || '未知'
+      }
+    },
     { key: 'merchant_time', title: '激活时间' },
     { key: 'kouKuan_time', title: '扣款时间' },
     { key: 'create_time', title: '入库时间' }
@@ -342,12 +366,12 @@ const handleExport = () => {
   exportExcel({
     data: tableData.value,
     columns,
-    filename: '伪激活扣款状态列表'
+    filename: '未激活扣款列表'
   })
 }
 
 // 查看详情
-const handleView = (row: WeijihuoListItem) => {
+const handleView = (row: WeijihuoKouKuan2Item) => {
   ElMessage.info(`查看详情 ID: ${row.id}`)
 }
 
