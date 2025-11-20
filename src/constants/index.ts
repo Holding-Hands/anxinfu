@@ -281,9 +281,38 @@ export const WALLET_TYPE_OPTIONS = [
 ]
 
 // 资金类型映射
-export const WALLET_TYPE_MAP: Record<number | string, string> = {
+export const WALLET_TYPE_MAP: Record<number, string> = {
   0: '全部',
   1: '分润钱包',
   2: '返现钱包',
   3: '流量费钱包'
+}
+
+// 收益明细钱包类型选项
+export const PROFIT_WALLET_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '分润钱包', value: 1 },
+  { label: '返现钱包', value: 2 },
+  { label: '其他钱包', value: 3 }
+]
+
+// 收益明细资金类型选项
+export const PROFIT_TYPE_OPTIONS = [
+  { label: '全部', value: '' },
+  { label: '提现', value: 0 },
+  { label: '直营分润', value: 1 },
+  { label: '级差分润', value: 2 },
+  { label: '激活返现', value: 3 },
+  { label: '达标返现', value: 4 },
+  { label: '后台操作', value: 5 }
+]
+
+// 收益明细资金类型映射
+export const PROFIT_TYPE_MAP: Record<number, string> = {
+  0: '提现',
+  1: '直营分润',
+  2: '级差分润',
+  3: '激活返现',
+  4: '达标返现',
+  5: '后台操作'
 }

@@ -298,6 +298,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '提现记录'
         }
+      },
+      {
+        path: 'profit-detail',
+        name: 'ProfitDetail',
+        component: () => import('@/views/finance/ProfitDetail.vue'),
+        meta: {
+          title: '收益明细'
+        }
       }
     ]
   },
