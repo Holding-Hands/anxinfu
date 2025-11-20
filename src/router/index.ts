@@ -344,13 +344,18 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/business',
     component: () => import('@/layout/index.vue'),
+    redirect: '/business/merchant-list',
+    meta: {
+      title: '业务管理',
+      icon: 'Briefcase'
+    },
     children: [
       {
-        path: '',
-        name: 'Business',
-        component: () => import('@/views/Business.vue'),
+        path: 'merchant-list',
+        name: 'MerchantList',
+        component: () => import('@/views/business/MerchantList.vue'),
         meta: {
-          title: '业务管理'
+          title: '商户列表'
         }
       }
     ]

@@ -271,13 +271,13 @@ const renderLineChart = () => {
           color: '#e74c3c',
           fontSize: 11,
           fontWeight: 'bold',
-          formatter: (params: any) => {
+          formatter: ((params: { value: number }) => {
             const value = params.value
             if (value >= 10000) {
               return (value / 10000).toFixed(2) + '万'
             }
             return value.toFixed(2)
-          }
+          }) as never
         }
       }
     ]

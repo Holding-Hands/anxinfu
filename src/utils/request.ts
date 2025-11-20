@@ -52,6 +52,17 @@ service.interceptors.response.use(
         window.location.hash = '#/login'
         return Promise.reject(new Error('未授权'))
       }
+
+      // 商户不存在，跳转登录
+      if (res.code === 0 && res.msg === '商户不存在！') {
+        ElMessage.warning('商户不存在，请重新登录')
+        const userStore = useUserStore()
+        userStore.logout()
+        setTimeout(() => {
+          window.location.hash = '#/login'
+        }, 1500)
+        return Promise.reject(new Error('商户不存在'))
+      }
     }
 
     // 检查 data 是否为空字符串，如果是则提示 msg（排除登录接口和操作接口）
