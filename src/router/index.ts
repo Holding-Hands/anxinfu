@@ -357,6 +357,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '商户列表'
         }
+      },
+      {
+        path: 'trade-list',
+        name: 'TradeList',
+        component: () => import('@/views/business/TradeList.vue'),
+        meta: {
+          title: '交易流水'
+        }
       }
     ]
   },
