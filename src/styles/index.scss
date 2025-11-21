@@ -148,3 +148,36 @@ div.el-popper.is-light:not([role='dialog']):not(.el-select__popper):not(.el-pick
   word-wrap: break-word !important;
   word-break: break-all !important;
 }
+
+// === 强制覆盖 Element Plus 组件样式 ===
+
+// 1. 下拉框背景覆盖
+.el-select-dropdown__wrap {
+  background-color: var(--el-select-dropdown-bg-color) !important;
+}
+
+// 2. 下拉框选项 hover 颜色
+.el-select-dropdown__item.hover,
+.el-select-dropdown__item:hover {
+  background-color: var(--el-select-option-hover-color) !important;
+}
+
+// 3. Loading 遮罩颜色
+.el-loading-mask {
+  background-color: var(--el-mask-color) !important;
+}
+
+// 4. 输入框 focus 阴影
+.el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--el-input-focus-border-color) inset !important;
+}
+
+// 5. 禁用状态背景
+.el-button.is-disabled,
+.el-button.is-disabled:hover,
+.el-button.is-disabled:focus,
+.el-button.is-disabled:active {
+  background-color: var(--el-disabled-bg-color) !important;
+  border-color: var(--el-disabled-border-color) !important;
+  color: var(--el-disabled-text-color) !important;
+}

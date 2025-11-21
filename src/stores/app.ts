@@ -1,7 +1,23 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
+import { loadTheme, resetTheme } from '@/utils/themeLoader'
 
-export type ThemeType = 'default' | 'dark' | 'blue' | 'green' | 'purple' | 'orange' | 'pink' | 'red'
+export type ThemeType =
+  | 'default'
+  | 'dark'
+  | 'sky-blue'
+  | 'cyan'
+  | 'deep-blue'
+  | 'teal'
+  | 'purple'
+  | 'orange'
+  | 'red'
+  | 'emerald'
+  | 'pink'
+  | 'light-green'
+  | 'light-blue'
+  | 'ink-blue'
+  | 'tech-silver'
 
 export const useAppStore = defineStore('app', () => {
   // 侧边栏是否折叠
@@ -38,6 +54,13 @@ export const useAppStore = defineStore('app', () => {
   // 应用主题到 DOM
   const applyTheme = (themeValue: ThemeType) => {
     document.documentElement.setAttribute('data-theme', themeValue)
+    // 如果是默认主题或暗黑模式，重置自定义样式
+    if (themeValue === 'default' || themeValue === 'dark') {
+      resetTheme()
+    } else {
+      // 否则加载主题颜色
+      loadTheme(themeValue)
+    }
   }
 
   // 初始化主题
@@ -58,4 +81,3 @@ export const useAppStore = defineStore('app', () => {
     setTheme
   }
 })
-

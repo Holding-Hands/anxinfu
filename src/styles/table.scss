@@ -74,7 +74,39 @@
   }
 
   .el-table__fixed-right-patch {
-    background-color: #f5f7fa;
+    background-color: var(--el-fill-color-light);
+  }
+}
+
+// 强制覆盖表格背景色，但使用组件特定变量
+.el-table {
+  background-color: var(--el-table-bg-color);
+
+  tr {
+    background-color: var(--el-table-tr-bg-color);
+  }
+
+  th.el-table__cell {
+    background-color: var(--el-table-header-bg-color);
+    color: var(--el-table-header-text-color);
+  }
+
+  // 使用用户指定的强制样式覆盖
+  td.el-table__cell {
+    border-bottom-color: var(--el-border-color-lighter) !important;
+    border-right-color: var(--el-border-color-lighter) !important;
+    background-color: var(--el-fill-color-blank) !important;
+    color: var(--el-text-color-regular) !important;
+  }
+
+  // 斑马纹 - 使用特定变量
+  &.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+    background-color: var(--el-table-striped-row-bg-color) !important;
+  }
+
+  // 悬停行 - 使用特定变量
+  .el-table__body tr:hover > td.el-table__cell {
+    background-color: var(--el-table-row-hover-bg-color);
   }
 }
 
@@ -84,14 +116,14 @@
   padding: 12px 0;
   display: flex;
   justify-content: flex-end;
-  background-color: #fff;
+  background-color: var(--el-bg-color);
 
   :deep(.el-pagination) {
     font-weight: 400;
 
     .el-pagination__total,
     .el-pagination__jump {
-      color: #606266;
+      color: var(--el-text-color-regular);
       font-size: 13px;
     }
 
@@ -102,6 +134,7 @@
       line-height: 32px;
       border-radius: 4px;
       margin: 0 4px;
+      background-color: var(--el-fill-color-blank); // 使用主题定义的背景色
 
       &.is-active {
         color: #fff;
@@ -111,7 +144,14 @@
 
       &:hover:not(.is-active) {
         color: var(--el-color-primary);
+        background-color: var(--el-fill-color-light); // Hover 时也跟随主题
       }
+    }
+
+    // 修复分页选择器和跳转输入框背景
+    .el-select .el-input__wrapper,
+    .el-input__wrapper {
+      background-color: var(--el-fill-color-blank) !important;
     }
 
     .btn-prev,

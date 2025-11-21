@@ -8,12 +8,16 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import App from './App.vue'
 import router from './router'
 import './styles/index.scss'
+import { initTheme } from './utils/themeLoader'
 
 // 初始化暗黑模式
 const themeMode = localStorage.getItem('theme-mode')
 if (themeMode === 'dark') {
   document.documentElement.classList.add('dark')
 }
+
+// 初始化主题
+initTheme()
 
 const app = createApp(App)
 const pinia = createPinia()

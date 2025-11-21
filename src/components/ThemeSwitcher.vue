@@ -48,39 +48,69 @@ const themes = [
     color: '#2c2c2c'
   },
   {
-    value: 'default' as ThemeType,
-    label: '默认蓝',
-    color: '#409eff'
+    value: 'sky-blue' as ThemeType,
+    label: '天空蓝',
+    color: '#3a8dff'
+  },
+  {
+    value: 'cyan' as ThemeType,
+    label: '青色调',
+    color: '#00bcd4'
+  },
+  {
+    value: 'deep-blue' as ThemeType,
+    label: '海蓝调',
+    color: '#2f54eb'
+  },
+  {
+    value: 'teal' as ThemeType,
+    label: '青绿调',
+    color: '#0aa679'
   },
   {
     value: 'purple' as ThemeType,
-    label: '优雅紫',
-    color: '#9c27b0'
-  },
-  {
-    value: 'green' as ThemeType,
-    label: '清新绿',
-    color: '#52c41a'
+    label: '现代紫',
+    color: '#7c4dff'
   },
   {
     value: 'orange' as ThemeType,
     label: '活力橙',
-    color: '#ff9800'
+    color: '#fa8c16'
+  },
+  {
+    value: 'red' as ThemeType,
+    label: '深红调',
+    color: '#cf1322'
+  },
+  {
+    value: 'emerald' as ThemeType,
+    label: '祖母绿',
+    color: '#13a67b'
   },
   {
     value: 'pink' as ThemeType,
     label: '浪漫粉',
-    color: '#e91e63'
+    color: '#eb2f96'
   },
   {
-    value: 'blue' as ThemeType,
-    label: '商务蓝',
+    value: 'light-green' as ThemeType,
+    label: '浅绿调',
+    color: '#52c41a'
+  },
+  {
+    value: 'light-blue' as ThemeType,
+    label: '淡蓝调',
     color: '#1890ff'
   },
   {
-    value: 'red' as ThemeType,
-    label: '热情红',
-    color: '#f44336'
+    value: 'ink-blue' as ThemeType,
+    label: '墨蓝调',
+    color: '#1d39c4'
+  },
+  {
+    value: 'tech-silver' as ThemeType,
+    label: '科技银',
+    color: '#8c8c8c'
   }
 ]
 
@@ -107,6 +137,7 @@ const handleThemeChange = (theme: ThemeType) => {
     isDark.value = false
   }
 
+  // 通过 store 设置主题（会自动调用 loadTheme）
   appStore.setTheme(theme)
 
   const themeLabel = themes.find((t) => t.value === theme)?.label || '主题'
@@ -124,12 +155,16 @@ const handleThemeChange = (theme: ThemeType) => {
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  box-shadow: 0 2px 12px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(
+    135deg,
+    var(--el-color-primary) 0%,
+    var(--el-color-primary-dark-2) 100%
+  );
+  box-shadow: 0 2px 12px var(--el-color-primary-light-3);
 
   &:hover {
     transform: scale(1.15) rotate(20deg);
-    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.6);
+    box-shadow: 0 4px 16px var(--el-color-primary);
   }
 
   .theme-icon {

@@ -150,8 +150,9 @@
     </el-card>
 
     <!-- 分润明细对话框 -->
-    <el-dialog draggable
+    <el-dialog
       v-model="profitDialogVisible"
+      draggable
       :title="`交易${currentTradeId}的分润`"
       width="60%"
       destroy-on-close
@@ -196,12 +197,18 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref} from 'vue'
-import {ElMessage} from 'element-plus'
-import {Refresh, Search} from '@element-plus/icons-vue'
-import {getProfitListApi, getTradeListApi, type ProfitItem, type TradeItem, type TradeListParams} from '@/api/trade'
-import {getChildProductApi} from '@/api/user'
-import {PRODUCT_OPTIONS} from '@/constants'
+import { onMounted, reactive, ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { Refresh, Search } from '@element-plus/icons-vue'
+import {
+  getProfitListApi,
+  getTradeListApi,
+  type ProfitItem,
+  type TradeItem,
+  type TradeListParams
+} from '@/api/trade'
+import { getChildProductApi } from '@/api/user'
+import { PRODUCT_OPTIONS } from '@/constants'
 
 // 筛选表单
 const filterForm = reactive({
