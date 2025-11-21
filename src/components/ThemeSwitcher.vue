@@ -1,5 +1,11 @@
 <template>
-  <el-popover placement="bottom" :width="240" trigger="click" popper-class="theme-popover">
+    <el-popover
+    v-model:visible="popoverVisible"
+    placement="bottom"
+    :width="240"
+    trigger="click"
+    popper-class="theme-popover"
+  >
     <template #reference>
       <div class="theme-switcher-button" title="一键换肤">
         <el-icon class="theme-icon">
@@ -39,6 +45,9 @@ const appStore = useAppStore()
 
 // 暗黑模式状态
 const isDark = ref(false)
+
+// 弹框显示状态
+const popoverVisible = ref(false)
 
 // 主题配置
 const themes = [
@@ -148,6 +157,9 @@ const handleThemeChange = (theme: ThemeType) => {
 
   const themeLabel = themes.find((t) => t.value === theme)?.label || '主题'
   ElMessage.success(`已切换到${themeLabel}`)
+
+  // 关闭弹框
+  popoverVisible.value = false
 }
 </script>
 
