@@ -365,6 +365,14 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: '交易流水'
         }
+      },
+      {
+        path: 'rate-record',
+        name: 'RateRecord',
+        component: () => import('@/views/business/RateRecord.vue'),
+        meta: {
+          title: '费率记录'
+        }
       }
     ]
   },
