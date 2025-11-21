@@ -9,6 +9,12 @@ import App from './App.vue'
 import router from './router'
 import './styles/index.scss'
 
+// 初始化暗黑模式
+const themeMode = localStorage.getItem('theme-mode')
+if (themeMode === 'dark') {
+  document.documentElement.classList.add('dark')
+}
+
 const app = createApp(App)
 const pinia = createPinia()
 

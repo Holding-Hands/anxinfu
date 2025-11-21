@@ -1,20 +1,15 @@
 <template>
-  <el-popover
-    placement="bottom"
-    :width="200"
-    trigger="click"
-    popper-class="theme-popover"
-  >
+  <el-popover placement="bottom" :width="240" trigger="click" popper-class="theme-popover">
     <template #reference>
       <div class="theme-switcher-button" title="一键换肤">
         <el-icon class="theme-icon">
-          <Sunny />
+          <component :is="isDark ? Moon : Sunny" />
         </el-icon>
       </div>
     </template>
 
     <div class="theme-menu">
-      <div class="theme-menu-title">选择主题</div>
+      <div class="theme-menu-title">主题颜色</div>
       <div class="theme-list">
         <div
           v-for="item in themes"
@@ -35,27 +30,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAppStore, type ThemeType } from '@/stores/app'
 import { ElMessage } from 'element-plus'
-import {
-  Sunny,
-  Check
-} from '@element-plus/icons-vue'
+import { Sunny, Moon, Check } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
+
+// 暗黑模式状态
+const isDark = ref(false)
 
 // 主题配置
 const themes = [
   {
+    value: 'dark' as ThemeType,
+    label: '暗黑夜',
+    color: '#2c2c2c'
+  },
+  {
     value: 'default' as ThemeType,
     label: '默认蓝',
     color: '#409eff'
-  },
-  {
-    value: 'dark' as ThemeType,
-    label: '暗黑夜',
-    color: '#909399'
   },
   {
     value: 'purple' as ThemeType,
@@ -92,13 +87,29 @@ const themes = [
 // 当前主题
 const currentTheme = computed(() => appStore.theme)
 
+// 初始化暗黑模式状态
+onMounted(() => {
+  isDark.value = document.documentElement.classList.contains('dark')
+})
+
 // 切换主题
 const handleThemeChange = (theme: ThemeType) => {
   if (theme === currentTheme.value) return
 
+  // 如果选择暗黑模式
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark')
+    localStorage.setItem('theme-mode', 'dark')
+    isDark.value = true
+  } else {
+    document.documentElement.classList.remove('dark')
+    localStorage.setItem('theme-mode', 'light')
+    isDark.value = false
+  }
+
   appStore.setTheme(theme)
 
-  const themeLabel = themes.find(t => t.value === theme)?.label || '主题'
+  const themeLabel = themes.find((t) => t.value === theme)?.label || '主题'
   ElMessage.success(`已切换到${themeLabel}`)
 }
 </script>
@@ -161,7 +172,6 @@ const handleThemeChange = (theme: ThemeType) => {
     font-size: 13px;
     color: var(--text-secondary);
     font-weight: 500;
-    border-bottom: 1px solid var(--border-lighter);
     margin-bottom: 4px;
   }
 
