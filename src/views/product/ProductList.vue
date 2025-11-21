@@ -202,7 +202,7 @@
     <ProductForm v-model:visible="formVisible" :edit-data="editData" @success="handleFormSuccess" />
 
     <!-- 积分价格编辑弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="coinPriceVisible"
       title="操作1的积分价格"
       width="500px"

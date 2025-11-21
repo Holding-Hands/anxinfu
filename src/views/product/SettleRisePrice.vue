@@ -131,7 +131,7 @@
     </el-card>
 
     <!-- 新增/编辑上涨结算价弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="formVisible"
       :title="editData ? '编辑上涨结算价' : '新增上涨结算价'"
       width="600px"

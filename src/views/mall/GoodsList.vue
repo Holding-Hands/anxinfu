@@ -127,7 +127,7 @@
     </el-card>
 
     <!-- 新增/编辑商品弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="editDialogVisible"
       :title="editForm.id ? '编辑商品' : '新增商品'"
       width="800px"

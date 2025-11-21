@@ -187,7 +187,7 @@
     </el-card>
 
     <!-- 编辑上流结算价弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="dialogVisible"
       title="请输入涨价数值（万0-3之间），同时设置整个团队"
       width="500px"
@@ -210,7 +210,7 @@
     </el-dialog>
 
     <!-- 编辑调价分成弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="tjfcDialogVisible"
       title="请输入调价分成%（0-100之间）"
       width="500px"
@@ -233,7 +233,7 @@
     </el-dialog>
 
     <!-- 编辑用户结算价弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="editDialogVisible"
       title="编辑结算价"
       width="600px"

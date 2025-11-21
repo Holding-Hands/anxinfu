@@ -73,7 +73,7 @@
     </el-card>
 
     <!-- 新增/编辑商品分类弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="formVisible"
       :title="editData ? '编辑商品分类' : '新增商品分类'"
       width="600px"

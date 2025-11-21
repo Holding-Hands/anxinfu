@@ -94,7 +94,7 @@
     </el-card>
 
     <!-- 新增/编辑弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="dialogVisible"
       :title="dialogTitle"
       width="600px"

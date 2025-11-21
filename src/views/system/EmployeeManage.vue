@@ -114,7 +114,7 @@
     </el-card>
 
     <!-- 新增/编辑弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="dialogVisible"
       :title="isEditMode ? '编辑员工' : '新增员工'"
       width="600px"

@@ -137,7 +137,7 @@
     </el-card>
 
     <!-- 查看详情对话框 -->
-    <el-dialog v-model="viewDialogVisible" title="入库/减库详情" width="600px">
+    <el-dialog draggable v-model="viewDialogVisible" title="入库/减库详情" width="600px">
       <el-descriptions :column="1" border>
         <el-descriptions-item label="ID">{{ currentRow?.id }}</el-descriptions-item>
         <el-descriptions-item label="模式">{{ currentRow?.sys_type_name }}</el-descriptions-item>
@@ -157,7 +157,7 @@
     </el-dialog>
 
     <!-- Excel入库对话框 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="excelDialogVisible"
       title="Excel入库"
       width="500px"

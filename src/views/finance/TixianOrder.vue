@@ -193,7 +193,7 @@
     </el-card>
 
     <!-- 审核弹框 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="auditDialogVisible"
       title="审核提现申请"
       width="500px"

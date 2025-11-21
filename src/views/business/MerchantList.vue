@@ -165,7 +165,7 @@
     </el-card>
 
     <!-- 商户转移对话框 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="transferDialogVisible"
       title="商户转移终字"
       width="900px"

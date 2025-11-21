@@ -141,7 +141,7 @@
     </el-card>
 
     <!-- 新增/编辑产品涨价分成弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="formVisible"
       :title="editData ? '编辑产品涨价分成规则' : '新增产品涨价分成规则'"
       width="600px"

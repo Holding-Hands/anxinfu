@@ -150,7 +150,7 @@
     </el-card>
 
     <!-- 分润明细对话框 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="profitDialogVisible"
       :title="`交易${currentTradeId}的分润`"
       width="60%"

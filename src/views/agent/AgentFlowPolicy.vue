@@ -140,7 +140,7 @@
     </el-card>
 
     <!-- 编辑流量费政策弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="editDialogVisible"
       title="编辑流量费政策"
       width="600px"

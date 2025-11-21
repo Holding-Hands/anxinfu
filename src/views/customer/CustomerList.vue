@@ -224,7 +224,7 @@
     </el-card>
 
     <!-- 客户详情弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="detailDialogVisible"
       title="客户详情"
       width="800px"
@@ -331,7 +331,7 @@
     </el-dialog>
 
     <!-- 钱包操作弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="walletDialogVisible"
       :title="`操作用户${currentCustomer?.name || ''}的钱包余额`"
       width="600px"
@@ -377,7 +377,7 @@
     </el-dialog>
 
     <!-- 积分操作弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="pointDialogVisible"
       :title="`操作用户${currentCustomer?.name || ''}的积分`"
       width="600px"

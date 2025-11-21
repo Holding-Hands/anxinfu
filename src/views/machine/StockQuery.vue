@@ -348,7 +348,7 @@
     </el-card>
 
     <!-- 修改到期时间对话框 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="expiryDialogVisible"
       title="选择到期时间"
       width="500px"
@@ -374,7 +374,7 @@
     </el-dialog>
 
     <!-- 改流量费档位对话框 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="simTierDialogVisible"
       title="选择流量费档位"
       width="500px"

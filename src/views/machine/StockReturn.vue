@@ -131,7 +131,7 @@
     </el-card>
 
     <!-- 机具退货对话框 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="returnDialogVisible"
       title="机具退货"
       width="95%"

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog
+  <el-dialog draggable
     v-model="dialogVisible"
     :title="dialogTitle"
     width="900px"

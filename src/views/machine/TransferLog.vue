@@ -138,7 +138,7 @@
     </el-card>
 
     <!-- 查看详情对话框 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="detailDialogVisible"
       title="划拨记录详情"
       width="800px"

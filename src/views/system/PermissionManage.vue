@@ -88,7 +88,7 @@
     </el-card>
 
     <!-- 编辑角色弹窗 -->
-    <el-dialog v-model="dialogVisible" title="权限管理" width="600px" :close-on-click-modal="false">
+    <el-dialog draggable v-model="dialogVisible" title="权限管理" width="600px" :close-on-click-modal="false">
       <el-tabs v-model="activeTab">
         <el-tab-pane label="角色信息" name="info">
           <el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px">

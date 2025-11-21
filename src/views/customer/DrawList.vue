@@ -103,7 +103,7 @@
       </div>
     </el-card>
     <!-- 弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="dialogVisible"
       :title="dialogTitle"
       width="80%"

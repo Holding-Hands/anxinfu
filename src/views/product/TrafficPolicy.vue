@@ -148,7 +148,7 @@
     </el-card>
 
     <!-- 新增/编辑流量费政策弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="formVisible"
       :title="editData ? '编辑流量费政策' : '新增流量费政策'"
       width="600px"

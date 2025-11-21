@@ -303,7 +303,7 @@
     </el-card>
 
     <!-- 设定等级弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="levelDialogVisible"
       :title="`${currentUser?.name ? extractName(currentUser.name) : ''}的分润等级`"
       width="600px"
@@ -348,7 +348,7 @@
     </el-dialog>
 
     <!-- 推荐码弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="codeDialogVisible"
       :title="`${currentUser?.name ? extractName(currentUser.name) : ''}的邀请码`"
       width="600px"
@@ -377,7 +377,7 @@
     </el-dialog>
 
     <!-- 收益状态弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="walletStatusDialogVisible"
       :title="`${currentUser?.name ? extractName(currentUser.name) : ''}的收益状态`"
       width="500px"
@@ -400,7 +400,7 @@
     </el-dialog>
 
     <!-- 实名信息弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="authDialogVisible"
       :title="`修改${currentUser?.name ? extractName(currentUser.name) : ''}的实名信息`"
       width="600px"
@@ -452,7 +452,7 @@
     </el-dialog>
 
     <!-- 钱包操作弹窗 -->
-    <el-dialog
+    <el-dialog draggable
       v-model="walletDialogVisible"
       :title="`操作${currentUser?.name ? extractName(currentUser.name) : ''}的${walletTypeLabel}`"
       width="600px"
