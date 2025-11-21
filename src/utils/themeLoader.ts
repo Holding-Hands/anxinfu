@@ -491,6 +491,7 @@ export const resetTheme = () => {
 // 初始化主题
 export const initTheme = () => {
   const savedTheme = localStorage.getItem('app-theme')
+  // 默认主题和暗黑模式使用 Element Plus 原生样式，不需要加载自定义主题色
   if (savedTheme && savedTheme !== 'default' && savedTheme !== 'dark') {
     loadTheme(savedTheme)
   }

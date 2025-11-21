@@ -54,11 +54,11 @@ export const useAppStore = defineStore('app', () => {
   // 应用主题到 DOM
   const applyTheme = (themeValue: ThemeType) => {
     document.documentElement.setAttribute('data-theme', themeValue)
-    // 如果是默认主题或暗黑模式，重置自定义样式
+    // 默认主题和暗黑模式使用 Element Plus 原生样式，不加载自定义主题色
     if (themeValue === 'default' || themeValue === 'dark') {
       resetTheme()
     } else {
-      // 否则加载主题颜色
+      // 其他主题加载自定义主题颜色
       loadTheme(themeValue)
     }
   }

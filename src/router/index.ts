@@ -543,6 +543,21 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: '/change-password',
+    component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'ChangePassword',
+        component: () => import('@/views/ChangePassword.vue'),
+        meta: {
+          title: '修改密码',
+          hidden: true
+        }
+      }
+    ]
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),

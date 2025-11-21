@@ -43,6 +43,11 @@ const isDark = ref(false)
 // 主题配置
 const themes = [
   {
+    value: 'default' as ThemeType,
+    label: '默认主题',
+    color: '#409eff'
+  },
+  {
     value: 'dark' as ThemeType,
     label: '暗黑夜',
     color: '#2c2c2c'
@@ -132,6 +137,7 @@ const handleThemeChange = (theme: ThemeType) => {
     localStorage.setItem('theme-mode', 'dark')
     isDark.value = true
   } else {
+    // 其他主题（包括默认主题）都移除 dark 类
     document.documentElement.classList.remove('dark')
     localStorage.setItem('theme-mode', 'light')
     isDark.value = false

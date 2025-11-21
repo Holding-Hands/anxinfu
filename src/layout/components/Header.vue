@@ -39,6 +39,10 @@
               <el-icon><Setting /></el-icon>
               系统设置
             </el-dropdown-item>
+            <el-dropdown-item command="changePassword">
+              <el-icon><Lock /></el-icon>
+              修改密码
+            </el-dropdown-item>
             <el-dropdown-item divided command="logout">
               <el-icon><SwitchButton /></el-icon>
               退出登录
@@ -61,6 +65,7 @@ import {
   CaretBottom,
   User,
   Setting,
+  Lock,
   SwitchButton
 } from '@element-plus/icons-vue'
 import { useAppStore } from '@/stores/app'
@@ -101,6 +106,9 @@ const handleCommand = (command: string) => {
       break
     case 'settings':
       router.push('/system/config')
+      break
+    case 'changePassword':
+      router.push('/change-password')
       break
     case 'logout':
       handleLogout()
